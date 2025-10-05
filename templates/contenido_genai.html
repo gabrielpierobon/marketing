@@ -5,97 +5,841 @@
 {% block page_title %}Generación de Contenido con GenAI{% endblock %}
 
 {% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>✍️ Generación de Contenido con GenAI</h2>
+            <p>Guía técnica completa del caso de uso</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <!-- Resumen -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📋</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    La <strong>Generación de Contenido con GenAI</strong> utiliza Large Language Models (LLMs) como 
+                    GPT-4, Claude 3.5, y Gemini 1.5 Pro para generar automáticamente contenido de marketing en múltiples 
+                    formatos. El sistema combina prompting avanzado, RAG (Retrieval Augmented Generation) para mantener 
+                    consistencia de marca, y fine-tuning en datos propios para capturar el tono y estilo corporativo.
+                </p>
+                
+                <p>
+                    <strong>Datos de Entrada Procesados:</strong>
+                </p>
+                <ul>
+                    <li><strong>Prompt del Usuario:</strong> Brief del contenido (tema, objetivo, audiencia, longitud, tono)</li>
+                    <li><strong>Base de Conocimiento (RAG):</strong> Guías de estilo, contenido histórico, glosario de términos, 
+                    mensajes clave de marca (vectorizados en Pinecone/Weaviate)</li>
+                    <li><strong>Datos del Cliente:</strong> Segmento, historial de interacciones, preferencias (para personalización)</li>
+                    <li><strong>Datos de Contexto:</strong> Keywords SEO, competencia, tendencias, estacionalidad</li>
+                    <li><strong>Templates y Estructuras:</strong> Frameworks de copywriting (AIDA, PAS), estructuras de email/blog</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🔄 Pipeline de Generación</strong><br>
+                    Input del usuario → Enriquecimiento con RAG (búsqueda semántica en knowledge base) → 
+                    Construcción de prompt optimizado → Llamada a LLM → Post-procesamiento (formato, SEO) → 
+                    Validación de calidad → Output final (texto + metadatos)
+                </div>
+                
+                <p>
+                    <strong>Output del Sistema:</strong>
+                </p>
+                <ul>
+                    <li><strong>Contenido Generado:</strong> Texto completo en formato solicitado (email, blog, social, landing)</li>
+                    <li><strong>Variaciones:</strong> Múltiples versiones para A/B testing (3-5 variantes)</li>
+                    <li><strong>Metadatos SEO:</strong> Title, meta description, keywords, alt texts sugeridos</li>
+                    <li><strong>Scores de Calidad:</strong> Legibilidad (Flesch-Kincaid), coherencia de marca, SEO score</li>
+                    <li><strong>Sugerencias de Mejora:</strong> Recomendaciones de optimización basadas en análisis</li>
+                </ul>
+            </div>
+                
+                <p>
+                    <strong>Ventajas Competitivas del Sistema:</strong>
+                </p>
+                <ul>
+                    <li><strong>Velocidad de Producción:</strong> Lo que antes tomaba días o semanas, ahora se completa 
+                    en minutos u horas. Un artículo de blog de 2000 palabras puede generarse en 5-10 minutos, incluyendo 
+                    investigación de keywords, estructura SEO, y optimización de legibilidad.</li>
+                    
+                    <li><strong>Consistencia de Marca:</strong> El sistema utiliza RAG (Retrieval Augmented Generation) 
+                    para asegurar que todo el contenido generado sea consistente con las guías de estilo, tono de voz, 
+                    mensajes clave, y posicionamiento de la marca. Acceso a base de conocimiento con 1000+ documentos 
+                    de referencia.</li>
+                    
+                    <li><strong>Optimización SEO Automática:</strong> El contenido se genera ya optimizado para los 
+                    keywords objetivo, con estructura adecuada de H2/H3, meta descriptions, densidad de keywords óptima, 
+                    enlaces internos sugeridos, y alt-text para imágenes. SEO score promedio: 85/100.</li>
+                    
+                    <li><strong>Personalización a Escala:</strong> Capacidad de generar miles de variaciones de contenido 
+                    personalizadas para diferentes segmentos de audiencia, regiones geográficas, industrias, o contextos 
+                    específicos. Ejemplo: 50 versiones de un email para 50 segmentos en 30 minutos.</li>
+                    
+                    <li><strong>Multilingüe Nativo:</strong> Generación de contenido en 25+ idiomas con calidad nativa, 
+                    no simplemente traducción automática. El sistema comprende matices culturales y adapta ejemplos, 
+                    referencias, y tono según el mercado objetivo.</li>
+                    
+                    <li><strong>Aprendizaje Continuo:</strong> El sistema mejora constantemente mediante feedback loops: 
+                    análisis de engagement, conversiones, y feedback de editores humanos. Modelos fine-tuned trimestralmente 
+                    con los mejores contenidos generados.</li>
+                </ul>
+                
+                <div class="doc-metric-grid">
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">-85%</div>
+                        <div class="doc-metric-label">Reducción de Tiempo</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">+500%</div>
+                        <div class="doc-metric-label">Aumento de Volumen</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">-50%</div>
+                        <div class="doc-metric-label">Reducción de Costes</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">€80K</div>
+                        <div class="doc-metric-label">Inversión Inicial</div>
+                    </div>
+                </div>
+                
+                <p>
+                    <strong>ROI Esperado y Casos de Éxito:</strong><br>
+                    Organizaciones que han implementado sistemas similares reportan ahorros de €200K-500K anuales 
+                    en costes de creación de contenido (reducción de freelancers, agencias, y tiempo interno), con 
+                    incrementos de tráfico orgánico del 150-300% debido al mayor volumen y calidad del contenido publicado. 
+                    El ROI típico es de 4-6x en el primer año. Casos de éxito documentados incluyen empresas del sector 
+                    energético que han pasado de publicar 2-3 artículos/mes a 20-30 artículos/mes sin aumentar headcount.
+                </p>
+                
+                <p>
+                    <strong>Diferenciación vs. Competencia:</strong><br>
+                    A diferencia de herramientas genéricas como ChatGPT o Jasper, este sistema está específicamente 
+                    entrenado y configurado para el sector energético, con conocimiento profundo de regulación, 
+                    terminología técnica, y mejores prácticas del sector. Integración nativa con sistemas de marketing 
+                    (CMS, Marketing Automation, Analytics) para un workflow end-to-end sin fricciones.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Modelos de IA -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🦜 GPT-4 / GPT-4 Turbo
+                    </div>
+                    <div class="doc-model-desc">
+                        Modelo de lenguaje de última generación para generación de textos largos, 
+                        artículos de blog, emails marketing y contenido creativo de alta calidad.
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔷</div>
+                            <div class="doc-tech-name">OpenAI API</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">⚡</div>
+                            <div class="doc-tech-name">128K tokens</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🤗 Claude 3 Opus / Sonnet
+                    </div>
+                    <div class="doc-model-desc">
+                        Excelente para contenido técnico, análisis detallados y textos que requieren 
+                        precisión y coherencia a lo largo de documentos extensos.
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔶</div>
+                            <div class="doc-tech-name">Anthropic API</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">📄</div>
+                            <div class="doc-tech-name">200K tokens</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🎨 DALL-E 3 / Midjourney
+                    </div>
+                    <div class="doc-model-desc">
+                        Generación de imágenes y elementos visuales para acompañar el contenido textual, 
+                        creando piezas completas de marketing visual.
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🖼️</div>
+                            <div class="doc-tech-name">DALL-E 3</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🎭</div>
+                            <div class="doc-tech-name">Stable Diffusion</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🔍 Embeddings + RAG (Retrieval Augmented Generation)
+                    </div>
+                    <div class="doc-model-desc">
+                        Sistema que combina búsqueda semántica con generación para crear contenido 
+                        basado en documentación interna, guías de estilo y contenido previo aprobado.
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔎</div>
+                            <div class="doc-tech-name">Azure AI Search</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">📚</div>
+                            <div class="doc-tech-name">Vector DB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Stack Tecnológico:</strong></p>
+                <ul>
+                    <li>Azure OpenAI Service para GPT-4 y embeddings</li>
+                    <li>LangChain para orquestación de prompts y chains</li>
+                    <li>Azure AI Search para RAG y búsqueda semántica</li>
+                    <li>Azure Blob Storage para almacenamiento de contenido</li>
+                    <li>Azure Functions para procesamiento serverless</li>
+                    <li>Power Automate para workflows de aprobación</li>
+                </ul>
+                
+                <p><strong>Flujo de Generación:</strong></p>
+                <ol class="doc-steps">
+                    <li>
+                        <strong>Input del Usuario</strong><br>
+                        Brief de contenido: tema, tono, longitud, audiencia objetivo, keywords SEO.
+                    </li>
+                    <li>
+                        <strong>Búsqueda de Contexto (RAG)</strong><br>
+                        Sistema busca contenido similar previo, guías de estilo y documentación relevante.
+                    </li>
+                    <li>
+                        <strong>Generación con LLM</strong><br>
+                        GPT-4 genera el contenido siguiendo el prompt engineering optimizado.
+                    </li>
+                    <li>
+                        <strong>Post-procesamiento</strong><br>
+                        Validación de calidad, fact-checking automático, optimización SEO.
+                    </li>
+                    <li>
+                        <strong>Revisión Humana</strong><br>
+                        Workflow de aprobación con editores para validación final.
+                    </li>
+                    <li>
+                        <strong>Publicación</strong><br>
+                        Integración con CMS (WordPress, Contentful) para publicación automática.
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Casos de Uso Específicos -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">💡</span>
+                Casos de Uso Específicos
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>1. Artículos de Blog SEO-Optimizados</strong></p>
+                <ul>
+                    <li>Generación de artículos de 1000-2000 palabras</li>
+                    <li>Optimización automática para keywords objetivo</li>
+                    <li>Estructura con H2, H3, meta descriptions</li>
+                </ul>
+                
+                <p><strong>2. Emails Marketing Personalizados</strong></p>
+                <ul>
+                    <li>Subject lines con A/B testing automático</li>
+                    <li>Cuerpo del email adaptado al segmento</li>
+                    <li>CTAs optimizados para conversión</li>
+                </ul>
+                
+                <p><strong>3. Social Media Posts</strong></p>
+                <ul>
+                    <li>Posts para LinkedIn, Twitter, Facebook</li>
+                    <li>Adaptación de tono según plataforma</li>
+                    <li>Hashtags y emojis relevantes</li>
+                </ul>
+                
+                <p><strong>4. Descripciones de Productos</strong></p>
+                <ul>
+                    <li>Descripciones únicas para cada producto</li>
+                    <li>Destacar beneficios y características</li>
+                    <li>Optimización para conversión</li>
+                </ul>
+                
+                <p><strong>5. Landing Pages</strong></p>
+                <ul>
+                    <li>Headlines impactantes</li>
+                    <li>Copy persuasivo orientado a conversión</li>
+                    <li>Estructura optimizada (AIDA, PAS)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- KPIs y Métricas -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Métricas de Eficiencia:</strong></p>
+                <ul>
+                    <li>Tiempo de creación por pieza de contenido</li>
+                    <li>Volumen de contenido generado por mes</li>
+                    <li>Coste por pieza de contenido</li>
+                    <li>Ratio de aprobación en primera revisión</li>
+                </ul>
+                
+                <p><strong>Métricas de Calidad:</strong></p>
+                <ul>
+                    <li>Score de legibilidad (Flesch-Kincaid)</li>
+                    <li>SEO score (keywords, estructura)</li>
+                    <li>Engagement rate del contenido publicado</li>
+                    <li>Tasa de conversión de landing pages</li>
+                </ul>
+                
+                <p><strong>Métricas de Negocio:</strong></p>
+                <ul>
+                    <li>Tráfico orgánico generado</li>
+                    <li>Leads capturados por contenido</li>
+                    <li>ROI de contenido (revenue / coste)</li>
+                    <li>Brand awareness (menciones, shares)</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🎯 Objetivo de Calidad</strong>
+                    El contenido generado debe alcanzar un 85% de aprobación en primera revisión 
+                    y generar al menos 30% más engagement que contenido tradicional.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Implementación -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🚀</span>
+                Roadmap de Implementación
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Fase 1 (Mes 1): Setup Inicial</strong></p>
+                <ul>
+                    <li>Configuración de Azure OpenAI Service</li>
+                    <li>Desarrollo de prompts base</li>
+                    <li>Integración con CMS</li>
+                </ul>
+                
+                <p><strong>Fase 2 (Mes 2): RAG y Personalización</strong></p>
+                <ul>
+                    <li>Implementación de sistema RAG</li>
+                    <li>Indexación de contenido histórico</li>
+                    <li>Guías de estilo y brand voice</li>
+                </ul>
+                
+                <p><strong>Fase 3 (Mes 3): Automatización</strong></p>
+                <ul>
+                    <li>Workflows de aprobación</li>
+                    <li>Publicación automática</li>
+                    <li>Dashboard de métricas</li>
+                </ul>
+                
+                <p><strong>Fase 4 (Mes 4+): Optimización</strong></p>
+                <ul>
+                    <li>A/B testing de prompts</li>
+                    <li>Fine-tuning de modelos</li>
+                    <li>Expansión a nuevos formatos</li>
+                </ul>
+                
+                <div class="doc-badge info">Pilot</div>
+                <div class="doc-badge">Producción</div>
+                <div class="doc-badge warning">Escala</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="use-case-container">
     <div class="use-case-header">
         <div class="use-case-icon">✍️</div>
         <div class="use-case-info">
             <h1>Generación de Contenido con GenAI</h1>
-            <p>Genere contenido de marketing de alta calidad en segundos. Reduzca tiempo de creación un 70-90% y aumente volumen de contenido 500%.</p>
+            <p>Suite completa de generadores de contenido con IA. Crea emails, posts, artículos, scripts y más en segundos.</p>
         </div>
     </div>
 
-    <!-- Métricas del Caso de Uso -->
-    <div class="metrics-row">
-        <div class="metric-box">
-            <div class="metric-box-value">-85%</div>
-            <div class="metric-box-label">Tiempo Creación</div>
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-content">
+        <div class="metric-card-content">
+            <div class="metric-icon-content">📝</div>
+            <div class="metric-data">
+                <div class="metric-value-content">{{ metricas.contenido_generado_mes|format_number }}</div>
+                <div class="metric-label-content">Contenido Generado/Mes</div>
+            </div>
         </div>
-        <div class="metric-box">
-            <div class="metric-box-value">+500%</div>
-            <div class="metric-box-label">Volumen Contenido</div>
+        <div class="metric-card-content">
+            <div class="metric-icon-content">⏱️</div>
+            <div class="metric-data">
+                <div class="metric-value-content">{{ metricas.tiempo_ahorro_horas|format_number }}h</div>
+                <div class="metric-label-content">Tiempo Ahorrado</div>
+            </div>
         </div>
-        <div class="metric-box">
-            <div class="metric-box-value">-50%</div>
-            <div class="metric-box-label">Costes</div>
+        <div class="metric-card-content">
+            <div class="metric-icon-content">💰</div>
+            <div class="metric-data">
+                <div class="metric-value-content">€{{ (metricas.coste_ahorro / 1000)|round(0)|int }}K</div>
+                <div class="metric-label-content">Ahorro Mensual</div>
+            </div>
         </div>
-        <div class="metric-box">
-            <div class="metric-box-value">€50K-150K</div>
-            <div class="metric-box-label">Inversión Inicial</div>
-        </div>
-    </div>
-
-    <!-- Generador de Contenido -->
-    <div class="card">
-        <div class="card-header">
-            <h2>🤖 Generador de Campañas Email con IA</h2>
-            <span class="badge badge-success">GPT-4 Powered</span>
-        </div>
-        <div class="card-body">
-            <form id="content-form" onsubmit="generarContenido(event)">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="objetivo">Objetivo de la Campaña</label>
-                        <select id="objetivo" class="form-control">
-                            <option value="solar">Promoción Solar Residencial</option>
-                            <option value="retencion">Retención Clientes</option>
-                            <option value="eficiencia">Eficiencia Energética</option>
-                            <option value="demand-response">Demand Response</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tono">Tono del Mensaje</label>
-                        <select id="tono" class="form-control">
-                            <option value="profesional">Profesional</option>
-                            <option value="cercano">Cercano</option>
-                            <option value="urgente">Urgente</option>
-                            <option value="educativo">Educativo</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg">
-                    <span>✨</span> Generar Contenido con IA
-                </button>
-            </form>
-
-            <div id="content-output" class="demo-output" style="display: none; margin-top: 2rem;">
-                <!-- Contenido generado -->
+        <div class="metric-card-content">
+            <div class="metric-icon-content">⭐</div>
+            <div class="metric-data">
+                <div class="metric-value-content">{{ metricas.score_calidad }}%</div>
+                <div class="metric-label-content">Score de Calidad</div>
             </div>
         </div>
     </div>
 
-    <!-- Estadísticas de Uso -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">📧</div>
-            <div class="stat-value">1,247</div>
-            <div class="stat-label">Emails Generados Hoy</div>
+    <!-- Casos de Uso / Generadores -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🎯 Generadores de Contenido Disponibles</h2>
+            <span class="badge badge-success">{{ casos_uso|length }} Generadores Activos</span>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">⏱️</div>
-            <div class="stat-value">2.3 seg</div>
-            <div class="stat-label">Tiempo Promedio</div>
+        <div class="card-body">
+            <div class="generadores-grid">
+                {% for caso in casos_uso %}
+                <div class="generador-card" onclick="abrirGenerador('{{ caso.id }}')">
+                    <div class="generador-icon" style="background: {{ caso.color }}20; color: {{ caso.color }};">
+                        {{ caso.icono }}
+                    </div>
+                    <div class="generador-info">
+                        <h3 class="generador-nombre">{{ caso.nombre }}</h3>
+                        <p class="generador-descripcion">{{ caso.descripcion }}</p>
+                        <div class="generador-stats">
+                            <span class="generador-stat">
+                                <span class="stat-icon">📊</span>
+                                {{ caso.uso_mensual|format_number }}/mes
+                            </span>
+                            <span class="generador-stat">
+                                <span class="stat-icon">⚡</span>
+                                {{ caso.tiempo_ahorro }} ahorro
+                            </span>
+                        </div>
+                    </div>
+                    <div class="generador-action">
+                        <button class="btn-generar" style="background: {{ caso.color }};">
+                            Generar →
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-value">92%</div>
-            <div class="stat-label">Score Calidad</div>
+    </div>
+
+    <!-- Ejemplos de Contenido Generado -->
+    <div class="card">
+        <div class="card-header">
+            <h2>✨ Contenido Generado Recientemente</h2>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
-            <div class="stat-value">€42K</div>
-            <div class="stat-label">Ahorro Mensual</div>
+        <div class="card-body">
+            <div class="ejemplos-grid">
+                <!-- Email Campaign -->
+                <div class="ejemplo-card">
+                    <div class="ejemplo-header">
+                        <span class="ejemplo-tipo">📧 Email Campaign</span>
+                        <span class="ejemplo-fecha">Hace 5 min</span>
+                    </div>
+                    <div class="ejemplo-content">
+                        <div class="ejemplo-title">🌞 Descubre el Poder del Sol con Iberdrola</div>
+                        <div class="ejemplo-preview">
+                            ¿Sabías que puedes reducir tu factura eléctrica hasta un 70% con energía solar? 
+                            En Iberdrola te ayudamos a dar el paso hacia la sostenibilidad...
+                        </div>
+                    </div>
+                    <div class="ejemplo-footer">
+                        <span class="badge badge-success">Score: 94/100</span>
+                        <span class="badge badge-info">Open Rate: 42%</span>
+                    </div>
+                </div>
+
+                <!-- Social Media Post -->
+                <div class="ejemplo-card">
+                    <div class="ejemplo-header">
+                        <span class="ejemplo-tipo">📱 LinkedIn Post</span>
+                        <span class="ejemplo-fecha">Hace 12 min</span>
+                    </div>
+                    <div class="ejemplo-content">
+                        <div class="ejemplo-preview">
+                            🌍 El futuro de la energía es renovable y está más cerca de lo que piensas.
+
+                            En Iberdrola, hemos instalado más de 50,000 sistemas solares en hogares españoles...
+                            
+                            #EnergíaRenovable #Sostenibilidad #Iberdrola
+                        </div>
+                    </div>
+                    <div class="ejemplo-footer">
+                        <span class="badge badge-success">Score: 91/100</span>
+                        <span class="badge badge-info">Engagement: 8.2%</span>
+                    </div>
+                </div>
+
+                <!-- Video Script -->
+                <div class="ejemplo-card">
+                    <div class="ejemplo-header">
+                        <span class="ejemplo-tipo">🎬 Video Script</span>
+                        <span class="ejemplo-fecha">Hace 25 min</span>
+                    </div>
+                    <div class="ejemplo-content">
+                        <div class="ejemplo-title">Spot TV - "Tu Hogar, Tu Energía"</div>
+                        <div class="ejemplo-preview">
+                            [ESCENA 1 - EXTERIOR DÍA]
+                            Una familia observa cómo instalan paneles solares en su tejado.
+                            
+                            NARRADOR (V.O.): "Imagina un hogar que se alimenta del sol..."
+                        </div>
+                    </div>
+                    <div class="ejemplo-footer">
+                        <span class="badge badge-success">Score: 89/100</span>
+                        <span class="badge badge-warning">30 seg</span>
+                    </div>
+                </div>
+
+                <!-- Landing Page -->
+                <div class="ejemplo-card">
+                    <div class="ejemplo-header">
+                        <span class="ejemplo-tipo">🌐 Landing Page</span>
+                        <span class="ejemplo-fecha">Hace 1 hora</span>
+                    </div>
+                    <div class="ejemplo-content">
+                        <div class="ejemplo-title">Ahorra Hasta €1,200 al Año con Solar</div>
+                        <div class="ejemplo-preview">
+                            ✓ Instalación gratis con financiación
+                            ✓ Ahorro desde el primer día
+                            ✓ Garantía de 25 años
+                            ✓ Mantenimiento incluido
+                        </div>
+                    </div>
+                    <div class="ejemplo-footer">
+                        <span class="badge badge-success">Score: 96/100</span>
+                        <span class="badge badge-info">CVR: 12.4%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Try It Out - Sección Interactiva -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🎮 Try It Out - Prueba los Generadores</h2>
+            <span class="badge badge-primary">Simulación Interactiva</span>
+        </div>
+        <div class="card-body">
+            <!-- Selector de Tipo de Contenido -->
+            <div class="tryout-selector">
+                <button class="tryout-tab active" onclick="mostrarGenerador('email')">📧 Email</button>
+                <button class="tryout-tab" onclick="mostrarGenerador('social')">📱 Social</button>
+                <button class="tryout-tab" onclick="mostrarGenerador('blog')">📝 Blog</button>
+                <button class="tryout-tab" onclick="mostrarGenerador('landing')">🎯 Landing</button>
+            </div>
+
+            <!-- Email Campaign Generator -->
+            <div id="generator-email" class="tryout-generator active">
+                <div class="tryout-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tema del Email</label>
+                            <select id="email-tema" class="form-control">
+                                <option value="solar">Promoción Energía Solar</option>
+                                <option value="ahorro">Consejos de Ahorro Energético</option>
+                                <option value="ev">Tarifa Vehículo Eléctrico</option>
+                                <option value="renovable">Plan 100% Renovable</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Segmento</label>
+                            <select id="email-segmento" class="form-control">
+                                <option value="eco">Eco-Conscious Premium</option>
+                                <option value="familias">Familias Jóvenes</option>
+                                <option value="pyme">PYME Eficiencia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tono</label>
+                            <select id="email-tono" class="form-control">
+                                <option value="profesional">Profesional</option>
+                                <option value="amigable">Amigable</option>
+                                <option value="urgente">Urgente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-generate" onclick="generarEmail()">
+                        <span class="btn-icon">✨</span> Generar Email
+                    </button>
+                </div>
+
+                <div id="email-resultado" class="tryout-resultado" style="display: none;">
+                    <div class="resultado-header">
+                        <h3>✅ Email Generado</h3>
+                        <div class="resultado-badges">
+                            <span class="badge badge-success">Score: 92/100</span>
+                            <span class="badge badge-info">Tiempo: 3.2s</span>
+                        </div>
+                    </div>
+                    <div class="resultado-content">
+                        <div class="email-preview">
+                            <div class="email-field">
+                                <strong>Asunto:</strong> <span id="email-subject-text"></span>
+                            </div>
+                            <div class="email-field">
+                                <strong>Preheader:</strong> <span id="email-preheader-text"></span>
+                            </div>
+                            <div class="email-body" id="email-body-text"></div>
+                            <div class="email-cta">
+                                <button class="cta-button" id="email-cta-text"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resultado-actions">
+                        <button class="btn btn-outline" onclick="copiarContenido('email')">📋 Copiar</button>
+                        <button class="btn btn-outline" onclick="editarContenido('email')">✏️ Editar</button>
+                        <button class="btn btn-primary" onclick="exportarContenido('email')">💾 Exportar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Generator -->
+            <div id="generator-social" class="tryout-generator">
+                <div class="tryout-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Plataforma</label>
+                            <select id="social-plataforma" class="form-control">
+                                <option value="linkedin">LinkedIn</option>
+                                <option value="twitter">Twitter/X</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="facebook">Facebook</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tema</label>
+                            <select id="social-tema" class="form-control">
+                                <option value="sostenibilidad">Sostenibilidad</option>
+                                <option value="innovacion">Innovación</option>
+                                <option value="consejos">Consejos</option>
+                                <option value="casos">Casos de Éxito</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Longitud</label>
+                            <select id="social-longitud" class="form-control">
+                                <option value="corto">Corto</option>
+                                <option value="medio">Medio</option>
+                                <option value="largo">Largo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-generate" onclick="generarSocial()">
+                        <span class="btn-icon">✨</span> Generar Post
+                    </button>
+                </div>
+
+                <div id="social-resultado" class="tryout-resultado" style="display: none;">
+                    <div class="resultado-header">
+                        <h3>✅ Post Generado</h3>
+                        <div class="resultado-badges">
+                            <span class="badge badge-success">Score: 88/100</span>
+                            <span class="badge badge-info">Tiempo: 2.1s</span>
+                        </div>
+                    </div>
+                    <div class="resultado-content">
+                        <div class="social-preview">
+                            <div class="social-platform-header">
+                                <div class="platform-icon" id="social-platform-icon">💼</div>
+                                <div class="platform-info">
+                                    <strong>Iberdrola España</strong>
+                                    <span id="social-platform-name"></span>
+                                </div>
+                            </div>
+                            <div class="social-body" id="social-body-text"></div>
+                            <div class="social-hashtags" id="social-hashtags-text"></div>
+                            <div class="social-stats">
+                                <span>👍 Engagement: <strong id="social-engagement">4.2%</strong></span>
+                                <span>📊 Alcance: <strong id="social-reach">12.5K</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resultado-actions">
+                        <button class="btn btn-outline" onclick="copiarContenido('social')">📋 Copiar</button>
+                        <button class="btn btn-outline" onclick="regenerarContenido('social')">🔄 Regenerar</button>
+                        <button class="btn btn-primary" onclick="programarPublicacion('social')">📅 Programar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post Generator -->
+            <div id="generator-blog" class="tryout-generator">
+                <div class="tryout-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tema del Artículo</label>
+                            <input type="text" id="blog-tema" class="form-control" placeholder="Ej: Beneficios de la energía solar">
+                        </div>
+                        <div class="form-group">
+                            <label>Longitud</label>
+                            <select id="blog-longitud" class="form-control">
+                                <option value="corto">Corto (500 palabras)</option>
+                                <option value="medio">Medio (1000 palabras)</option>
+                                <option value="largo">Largo (2000 palabras)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Keywords SEO</label>
+                            <input type="text" id="blog-keywords" class="form-control" placeholder="energía solar, paneles">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-generate" onclick="generarBlog()">
+                        <span class="btn-icon">✨</span> Generar Artículo
+                    </button>
+                </div>
+
+                <div id="blog-resultado" class="tryout-resultado" style="display: none;">
+                    <div class="resultado-header">
+                        <h3>✅ Artículo Generado</h3>
+                        <div class="resultado-badges">
+                            <span class="badge badge-success">SEO: 91/100</span>
+                            <span class="badge badge-info">Legibilidad: 85/100</span>
+                        </div>
+                    </div>
+                    <div class="resultado-content">
+                        <div class="blog-preview">
+                            <h1 class="blog-title" id="blog-title-text"></h1>
+                            <div class="blog-meta">
+                                <span>📅 <span id="blog-fecha"></span></span>
+                                <span>⏱️ <span id="blog-lectura"></span> min lectura</span>
+                            </div>
+                            <div class="blog-excerpt" id="blog-excerpt-text"></div>
+                            <div class="blog-structure">
+                                <h4>📋 Estructura:</h4>
+                                <ul id="blog-structure-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resultado-actions">
+                        <button class="btn btn-outline" onclick="verArticuloCompleto()">👁️ Ver Completo</button>
+                        <button class="btn btn-outline" onclick="optimizarSEO()">🎯 Optimizar SEO</button>
+                        <button class="btn btn-primary" onclick="exportarContenido('blog')">💾 Exportar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Landing Page Generator -->
+            <div id="generator-landing" class="tryout-generator">
+                <div class="tryout-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Objetivo</label>
+                            <select id="landing-objetivo" class="form-control">
+                                <option value="captacion">Captación Leads</option>
+                                <option value="venta">Venta Directa</option>
+                                <option value="registro">Registro Evento</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Producto/Servicio</label>
+                            <select id="landing-producto" class="form-control">
+                                <option value="solar">Instalación Solar</option>
+                                <option value="tarifa-ev">Tarifa EV</option>
+                                <option value="auditoria">Auditoría</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Estilo</label>
+                            <select id="landing-estilo" class="form-control">
+                                <option value="minimalista">Minimalista</option>
+                                <option value="moderno">Moderno</option>
+                                <option value="corporativo">Corporativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-generate" onclick="generarLanding()">
+                        <span class="btn-icon">✨</span> Generar Landing
+                    </button>
+                </div>
+
+                <div id="landing-resultado" class="tryout-resultado" style="display: none;">
+                    <div class="resultado-header">
+                        <h3>✅ Landing Page Generada</h3>
+                        <div class="resultado-badges">
+                            <span class="badge badge-success">CVR Est: 8.5%</span>
+                            <span class="badge badge-info">Tiempo: 5.8s</span>
+                        </div>
+                    </div>
+                    <div class="resultado-content">
+                        <div class="landing-preview">
+                            <div class="landing-hero">
+                                <h1 class="landing-headline" id="landing-headline-text"></h1>
+                                <p class="landing-subheadline" id="landing-subheadline-text"></p>
+                                <button class="landing-cta-primary" id="landing-cta-text"></button>
+                            </div>
+                            <div class="landing-sections">
+                                <h4>📄 Secciones:</h4>
+                                <div class="sections-grid" id="landing-sections-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resultado-actions">
+                        <button class="btn btn-outline" onclick="previsualizarLanding()">👁️ Vista Previa</button>
+                        <button class="btn btn-outline" onclick="editarLanding()">✏️ Editar</button>
+                        <button class="btn btn-primary" onclick="exportarHTML()">💾 Exportar HTML</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -105,48 +849,713 @@
             <h2>🧠 Modelos de IA Disponibles</h2>
         </div>
         <div class="card-body">
-            <div class="models-grid">
-                <div class="model-card">
-                    <div class="model-header">
-                        <span class="model-name">GPT-4 Turbo</span>
-                        <span class="badge badge-success">Activo</span>
+            <div class="models-grid-genai">
+                <div class="model-card-genai">
+                    <div class="model-icon">🤖</div>
+                    <div class="model-info">
+                        <div class="model-name">GPT-4 Turbo</div>
+                        <div class="model-desc">Texto de alta calidad, razonamiento avanzado</div>
+                        <div class="model-stats-bar">
+                            <div class="model-usage-bar">
+                                <div class="model-usage-fill" style="width: 80%; background: linear-gradient(90deg, #0078D4, #106EBE);"></div>
+                            </div>
+                            <span class="model-usage-text">80% uso</span>
+                        </div>
                     </div>
-                    <div class="model-desc">Texto de alta calidad, razonamiento avanzado</div>
-                    <div class="model-stats">
-                        <span>📊 80% uso</span>
-                        <span>⚡ 2.1s promedio</span>
-                    </div>
+                    <span class="badge badge-success">Activo</span>
                 </div>
-                <div class="model-card">
-                    <div class="model-header">
-                        <span class="model-name">Claude 3.5 Sonnet</span>
-                        <span class="badge badge-info">Disponible</span>
+
+                <div class="model-card-genai">
+                    <div class="model-icon">🧠</div>
+                    <div class="model-info">
+                        <div class="model-name">Claude 3.5 Sonnet</div>
+                        <div class="model-desc">Contenido ético, análisis profundo</div>
+                        <div class="model-stats-bar">
+                            <div class="model-usage-bar">
+                                <div class="model-usage-fill" style="width: 15%; background: linear-gradient(90deg, #107C10, #0E700E);"></div>
+                            </div>
+                            <span class="model-usage-text">15% uso</span>
+                        </div>
                     </div>
-                    <div class="model-desc">Contenido ético, análisis profundo</div>
-                    <div class="model-stats">
-                        <span>📊 15% uso</span>
-                        <span>⚡ 1.8s promedio</span>
-                    </div>
+                    <span class="badge badge-info">Disponible</span>
                 </div>
-                <div class="model-card">
-                    <div class="model-header">
-                        <span class="model-name">Gemini 1.5 Pro</span>
-                        <span class="badge badge-info">Disponible</span>
+
+                <div class="model-card-genai">
+                    <div class="model-icon">✨</div>
+                    <div class="model-info">
+                        <div class="model-name">Gemini 1.5 Pro</div>
+                        <div class="model-desc">Multimodal, contexto 2M tokens</div>
+                        <div class="model-stats-bar">
+                            <div class="model-usage-bar">
+                                <div class="model-usage-fill" style="width: 5%; background: linear-gradient(90deg, #FFB900, #F7630C);"></div>
+                            </div>
+                            <span class="model-usage-text">5% uso</span>
+                        </div>
                     </div>
-                    <div class="model-desc">Multimodal, contexto 2M tokens</div>
-                    <div class="model-stats">
-                        <span>📊 5% uso</span>
-                        <span>⚡ 2.4s promedio</span>
-                    </div>
+                    <span class="badge badge-info">Disponible</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Estilos específicos para Generación de Contenido */
+.metrics-grid-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card-content {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.metric-card-content:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+}
+
+.metric-icon-content {
+    font-size: 40px;
+}
+
+.metric-value-content {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.metric-label-content {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+/* Generadores Grid */
+.generadores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.generador-card {
+    background: var(--neutral-background-2);
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.generador-card:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.generador-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.generador-info {
+    flex: 1;
+}
+
+.generador-nombre {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.generador-descripcion {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    margin: 0 0 var(--spacing-s) 0;
+}
+
+.generador-stats {
+    display: flex;
+    gap: var(--spacing-m);
+}
+
+.generador-stat {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-2);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-icon {
+    font-size: 14px;
+}
+
+.generador-action {
+    flex-shrink: 0;
+}
+
+.btn-generar {
+    padding: var(--spacing-s) var(--spacing-l);
+    border: none;
+    border-radius: var(--border-radius-medium);
+    color: white;
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.btn-generar:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-8);
+}
+
+/* Ejemplos de Contenido */
+.ejemplos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.ejemplo-card {
+    background: var(--neutral-background-2);
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.ejemplo-card:hover {
+    box-shadow: var(--shadow-4);
+    border-color: var(--primary-light);
+}
+
+.ejemplo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-m);
+}
+
+.ejemplo-tipo {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-2);
+}
+
+.ejemplo-fecha {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.ejemplo-content {
+    margin-bottom: var(--spacing-m);
+}
+
+.ejemplo-title {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: var(--spacing-s);
+}
+
+.ejemplo-preview {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-2);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ejemplo-footer {
+    display: flex;
+    gap: var(--spacing-s);
+    flex-wrap: wrap;
+}
+
+/* Modelos IA */
+.models-grid-genai {
+    display: grid;
+    gap: var(--spacing-l);
+}
+
+.model-card-genai {
+    background: var(--neutral-background-2);
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.model-card-genai:hover {
+    box-shadow: var(--shadow-4);
+    border-color: var(--primary-light);
+}
+
+.model-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.model-info {
+    flex: 1;
+}
+
+.model-name {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: var(--spacing-xs);
+}
+
+.model-desc {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    margin-bottom: var(--spacing-s);
+}
+
+.model-stats-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+}
+
+.model-usage-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--neutral-background-4);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.model-usage-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width var(--duration-slow) var(--curve-decelerate-max);
+}
+
+.model-usage-text {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-2);
+    min-width: 60px;
+}
+
+/* Try It Out Section */
+.tryout-selector {
+    display: flex;
+    gap: var(--spacing-s);
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 2px solid var(--neutral-stroke-1);
+}
+
+.tryout-tab {
+    padding: var(--spacing-m) var(--spacing-l);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--neutral-foreground-3);
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+    margin-bottom: -2px;
+}
+
+.tryout-tab:hover {
+    color: var(--neutral-foreground-1);
+    background: var(--neutral-background-2);
+}
+
+.tryout-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.tryout-generator {
+    display: none;
+}
+
+.tryout-generator.active {
+    display: block;
+}
+
+.tryout-form {
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-l);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-s);
+}
+
+.form-group label {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-2);
+}
+
+.btn-generate {
+    width: 100%;
+    padding: var(--spacing-m) var(--spacing-l);
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-s);
+}
+
+.btn-icon {
+    font-size: 20px;
+}
+
+.tryout-resultado {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.resultado-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-l);
+    padding-bottom: var(--spacing-l);
+    border-bottom: 2px solid var(--neutral-stroke-1);
+}
+
+.resultado-header h3 {
+    margin: 0;
+    font-size: var(--font-size-500);
+    color: var(--success);
+}
+
+.resultado-badges {
+    display: flex;
+    gap: var(--spacing-s);
+}
+
+.resultado-content {
+    margin-bottom: var(--spacing-l);
+}
+
+.resultado-actions {
+    display: flex;
+    gap: var(--spacing-m);
+    padding-top: var(--spacing-l);
+    border-top: 1px solid var(--neutral-stroke-1);
+}
+
+/* Email Preview */
+.email-preview {
+    background: white;
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+}
+
+.email-field {
+    margin-bottom: var(--spacing-m);
+    font-size: var(--font-size-200);
+}
+
+.email-field strong {
+    color: var(--neutral-foreground-3);
+    display: inline-block;
+    min-width: 100px;
+}
+
+.email-body {
+    padding: var(--spacing-l) 0;
+    line-height: 1.8;
+    color: var(--neutral-foreground-1);
+    font-size: var(--font-size-300);
+}
+
+.email-cta {
+    margin-top: var(--spacing-l);
+}
+
+.cta-button {
+    background: var(--primary);
+    color: white;
+    padding: var(--spacing-m) var(--spacing-xl);
+    border: none;
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+}
+
+/* Social Preview */
+.social-preview {
+    background: white;
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+}
+
+.social-platform-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-l);
+    padding-bottom: var(--spacing-m);
+    border-bottom: 1px solid var(--neutral-stroke-1);
+}
+
+.platform-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.platform-info strong {
+    display: block;
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-1);
+}
+
+.platform-info span {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.social-body {
+    margin-bottom: var(--spacing-m);
+    line-height: 1.6;
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-1);
+}
+
+.social-hashtags {
+    margin-bottom: var(--spacing-m);
+    color: var(--primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.social-stats {
+    display: flex;
+    gap: var(--spacing-l);
+    padding-top: var(--spacing-m);
+    border-top: 1px solid var(--neutral-stroke-1);
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+/* Blog Preview */
+.blog-preview {
+    background: white;
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+}
+
+.blog-title {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+    margin: 0 0 var(--spacing-m) 0;
+    line-height: 1.2;
+}
+
+.blog-meta {
+    display: flex;
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-l);
+    padding-bottom: var(--spacing-l);
+    border-bottom: 1px solid var(--neutral-stroke-1);
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.blog-excerpt {
+    line-height: 1.8;
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-2);
+    margin-bottom: var(--spacing-l);
+}
+
+.blog-structure {
+    background: var(--neutral-background-2);
+    padding: var(--spacing-l);
+    border-radius: var(--border-radius-medium);
+}
+
+.blog-structure h4 {
+    margin: 0 0 var(--spacing-m) 0;
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-2);
+}
+
+.blog-structure ul {
+    margin: 0;
+    padding-left: var(--spacing-l);
+}
+
+.blog-structure li {
+    margin-bottom: var(--spacing-s);
+    color: var(--neutral-foreground-2);
+}
+
+/* Landing Preview */
+.landing-preview {
+    background: white;
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    overflow: hidden;
+}
+
+.landing-hero {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: var(--spacing-xxl);
+    text-align: center;
+}
+
+.landing-headline {
+    font-size: var(--font-size-800);
+    font-weight: var(--font-weight-bold);
+    margin: 0 0 var(--spacing-m) 0;
+    line-height: 1.2;
+}
+
+.landing-subheadline {
+    font-size: var(--font-size-400);
+    margin: 0 0 var(--spacing-xl) 0;
+    opacity: 0.9;
+}
+
+.landing-cta-primary {
+    background: white;
+    color: var(--primary);
+    padding: var(--spacing-l) var(--spacing-xxl);
+    border: none;
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    box-shadow: var(--shadow-8);
+}
+
+.landing-sections {
+    padding: var(--spacing-xl);
+}
+
+.landing-sections h4 {
+    margin: 0 0 var(--spacing-m) 0;
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-2);
+}
+
+.sections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-m);
+}
+
+.section-badge {
+    padding: var(--spacing-s) var(--spacing-m);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-200);
+    text-align: center;
+}
+
+.landing-features {
+    padding: 0 var(--spacing-xl) var(--spacing-xl);
+}
+
+.landing-features h4 {
+    margin: 0 0 var(--spacing-m) 0;
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-2);
+}
+
+.landing-features ul {
+    margin: 0;
+    padding-left: var(--spacing-l);
+}
+
+.landing-features li {
+    margin-bottom: var(--spacing-s);
+    color: var(--neutral-foreground-2);
+}
+</style>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
+function abrirGenerador(tipoGenerador) {
+    const nombres = {
+        'email-campaigns': 'Campañas de Email',
+        'social-media': 'Posts Redes Sociales',
+        'landing-pages': 'Landing Pages',
+        'blog-articles': 'Artículos de Blog',
+        'video-scripts': 'Guiones para Video',
+        'press-releases': 'Notas de Prensa'
+    };
+    
+    alert(`Abriendo generador: ${nombres[tipoGenerador]}\n\nEn un entorno real, esto abriría una interfaz específica con:\n\n✓ Formulario de parámetros\n✓ Opciones de tono y estilo\n✓ Templates predefinidos\n✓ Preview en tiempo real\n✓ Opciones de exportación`);
+}
+
 function generarContenido(event) {
     event.preventDefault();
     
@@ -226,6 +1635,242 @@ function generarContenido(event) {
     .catch(error => {
         output.innerHTML = '<div class="alert alert-error">Error al generar contenido. Por favor, intenta de nuevo.</div>';
     });
+}
+
+// Try It Out Functions
+function mostrarGenerador(tipo) {
+    // Ocultar todos los generadores
+    document.querySelectorAll('.tryout-generator').forEach(gen => {
+        gen.classList.remove('active');
+    });
+    
+    // Desactivar todos los tabs
+    document.querySelectorAll('.tryout-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Activar el generador seleccionado
+    document.getElementById(`generator-${tipo}`).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function generarEmail() {
+    const tema = document.getElementById('email-tema').value;
+    const segmento = document.getElementById('email-segmento').value;
+    const tono = document.getElementById('email-tono').value;
+    
+    // Contenido simulado basado en selecciones
+    const contenidos = {
+        solar: {
+            subject: '☀️ Reduce tu factura hasta un 70% con Energía Solar',
+            preheader: 'Instalación gratuita con financiación. Ahorra desde el primer día.',
+            body: `Hola,\n\n¿Sabías que puedes reducir tu factura eléctrica hasta un 70% con energía solar?\n\nEn Iberdrola te ayudamos a dar el paso hacia la sostenibilidad con:\n\n✓ Instalación GRATIS con financiación a tu medida\n✓ Ahorro desde el primer día\n✓ Garantía de 25 años en paneles\n✓ Mantenimiento incluido\n✓ Asesoramiento personalizado\n\nNuestros expertos analizarán tu consumo y diseñarán la solución perfecta para tu hogar. Sin letra pequeña, sin sorpresas.\n\n¿Quieres saber cuánto puedes ahorrar?\n\nUn saludo,\nEquipo Iberdrola Solar`,
+            cta: 'Calcular Mi Ahorro →'
+        },
+        ahorro: {
+            subject: '💡 5 Trucos para Reducir tu Factura de Luz Este Mes',
+            preheader: 'Ahorra hasta €50/mes con estos consejos simples.',
+            body: `Hola,\n\nTe compartimos 5 trucos sencillos para reducir tu consumo eléctrico:\n\n1️⃣ Ajusta la temperatura del termostato (18-21°C en invierno)\n2️⃣ Desenchufa aparatos en stand-by\n3️⃣ Usa electrodomésticos en horario valle\n4️⃣ Cambia a iluminación LED\n5️⃣ Revisa el aislamiento de tu hogar\n\nAplicando estos consejos, nuestros clientes ahorran una media de €50/mes.\n\n¿Quieres un análisis personalizado de tu consumo?\n\nSaludos,\nEquipo Iberdrola Eficiencia`,
+            cta: 'Solicitar Auditoría Gratuita →'
+        },
+        ev: {
+            subject: '⚡ Tarifa Especial para tu Vehículo Eléctrico',
+            preheader: 'Carga por la noche y ahorra hasta un 60% en electricidad.',
+            body: `Hola,\n\nSi tienes un vehículo eléctrico, tenemos la tarifa perfecta para ti.\n\nNuestra Tarifa Super Valle EV te ofrece:\n\n⚡ Hasta 60% de descuento en horario nocturno\n🔌 Wallbox con instalación incluida\n📱 App para monitorizar tu carga\n🌱 100% energía renovable\n💰 Sin permanencia\n\nCarga tu coche por la noche y paga menos de €3 por cada 100 km.\n\n¿Quieres cambiar a nuestra tarifa EV?\n\nSaludos,\nEquipo Iberdrola Movilidad`,
+            cta: 'Contratar Tarifa EV →'
+        },
+        renovable: {
+            subject: '🌱 Pásate a 100% Energía Renovable Sin Coste Extra',
+            preheader: 'Cuida el planeta sin aumentar tu factura.',
+            body: `Hola,\n\n¿Y si pudieras contribuir al planeta sin pagar más?\n\nCon nuestro Plan 100% Renovable:\n\n🌍 Tu energía proviene de fuentes limpias\n💚 Reduces tu huella de carbono\n📊 Certificado de origen renovable\n💰 Mismo precio que tu tarifa actual\n🎁 Ventajas exclusivas para clientes renovables\n\nMás de 2 millones de hogares ya han dado el paso.\n\n¿Te unes al cambio?\n\nSaludos,\nEquipo Iberdrola Sostenible`,
+            cta: 'Cambiar a Renovable →'
+        }
+    };
+    
+    const contenido = contenidos[tema];
+    
+    // Mostrar resultado con animación
+    document.getElementById('email-subject-text').textContent = contenido.subject;
+    document.getElementById('email-preheader-text').textContent = contenido.preheader;
+    document.getElementById('email-body-text').textContent = contenido.body;
+    document.getElementById('email-cta-text').textContent = contenido.cta;
+    document.getElementById('email-resultado').style.display = 'block';
+    
+    // Scroll suave al resultado
+    document.getElementById('email-resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function generarSocial() {
+    const plataforma = document.getElementById('social-plataforma').value;
+    const tema = document.getElementById('social-tema').value;
+    
+    const contenidos = {
+        linkedin: {
+            sostenibilidad: {
+                icon: '💼',
+                name: 'LinkedIn',
+                body: '🌍 La transición energética no es solo una necesidad, es una oportunidad.\n\nEn Iberdrola llevamos más de 20 años liderando el cambio hacia un futuro sostenible:\n\n✅ 40 GW de capacidad renovable instalada\n✅ Reducción del 80% en emisiones de CO2\n✅ €150.000M invertidos en energías limpias\n✅ Líderes mundiales en eólica marina\n\n¿El resultado? Energía más limpia, más barata y más segura para todos.\n\nLa sostenibilidad no es el futuro. Es el presente. 💚',
+                hashtags: '#Sostenibilidad #EnergíaRenovable #TransiciónEnergética #Iberdrola #ESG',
+                engagement: '5.8%',
+                reach: '28.5K'
+            },
+            innovacion: {
+                icon: '💼',
+                name: 'LinkedIn',
+                body: '🚀 La IA está transformando el sector energético.\n\nEn Iberdrola utilizamos Machine Learning para:\n\n🔹 Predecir la demanda con 98% de precisión\n🔹 Optimizar la producción renovable en tiempo real\n🔹 Detectar fallos antes de que ocurran\n🔹 Personalizar tarifas para cada cliente\n\nResultado: -30% costes operativos, +40% eficiencia, mejor servicio.\n\nLa combinación de energía limpia + tecnología = el futuro que queremos construir.',
+                hashtags: '#Innovación #IA #MachineLearning #Energía #Tecnología',
+                engagement: '6.2%',
+                reach: '32.1K'
+            }
+        },
+        twitter: {
+            sostenibilidad: {
+                icon: '🐦',
+                name: 'Twitter/X',
+                body: '🌱 ¿Sabías que cada hogar que se pasa a energía 100% renovable evita 1.5 toneladas de CO2 al año?\n\nEso equivale a plantar 75 árboles. 🌳\n\nCambiar es fácil, rápido y sin coste extra.\n\n¿A qué esperas para dar el paso? 💚',
+                hashtags: '#EnergíaVerde #Sostenibilidad #CambioClimático',
+                engagement: '3.8%',
+                reach: '15.2K'
+            }
+        },
+        instagram: {
+            consejos: {
+                icon: '📸',
+                name: 'Instagram',
+                body: '💡 CONSEJO DEL DÍA\n\n¿Sabías que bajar la calefacción solo 1°C puede ahorrarte hasta €70 al año?\n\n🌡️ Temperatura ideal:\n• Día: 20-21°C\n• Noche: 17-18°C\n\n¡Pequeños cambios, grandes ahorros! 💰\n\n¿Qué otros trucos de ahorro conoces? Compártelos en comentarios 👇',
+                hashtags: '#AhorroEnergético #TipsDeAhorro #Sostenibilidad #Iberdrola #VidaSostenible',
+                engagement: '4.5%',
+                reach: '18.7K'
+            }
+        }
+    };
+    
+    const contenido = contenidos[plataforma]?.[tema] || contenidos.linkedin.sostenibilidad;
+    
+    document.getElementById('social-platform-icon').textContent = contenido.icon;
+    document.getElementById('social-platform-name').textContent = contenido.name;
+    document.getElementById('social-body-text').textContent = contenido.body;
+    document.getElementById('social-hashtags-text').textContent = contenido.hashtags;
+    document.getElementById('social-engagement').textContent = contenido.engagement;
+    document.getElementById('social-reach').textContent = contenido.reach;
+    document.getElementById('social-resultado').style.display = 'block';
+    
+    document.getElementById('social-resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function generarBlog() {
+    const tema = document.getElementById('blog-tema').value || 'Beneficios de la energía solar';
+    const longitud = document.getElementById('blog-longitud').value;
+    
+    const longitudes = {
+        corto: { palabras: 500, lectura: 3 },
+        medio: { palabras: 1000, lectura: 5 },
+        largo: { palabras: 2000, lectura: 10 }
+    };
+    
+    const info = longitudes[longitud];
+    const fecha = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+    
+    document.getElementById('blog-title-text').textContent = tema;
+    document.getElementById('blog-fecha').textContent = fecha;
+    document.getElementById('blog-lectura').textContent = info.lectura;
+    document.getElementById('blog-excerpt-text').textContent = `La energía solar se ha convertido en una de las alternativas más viables y sostenibles para reducir nuestra dependencia de los combustibles fósiles. En este artículo exploramos en profundidad los beneficios económicos, ambientales y sociales de instalar paneles solares en tu hogar o negocio, así como las últimas innovaciones tecnológicas que están haciendo esta opción más accesible que nunca...`;
+    
+    const estructura = [
+        'Introducción: El auge de la energía solar en España',
+        '¿Cómo funcionan los paneles solares?',
+        'Beneficios económicos: ROI y ahorro a largo plazo',
+        'Impacto ambiental positivo',
+        'Incentivos y ayudas disponibles en 2025',
+        'Casos de éxito: Testimonios reales',
+        'Proceso de instalación paso a paso',
+        'Mantenimiento y vida útil',
+        'Conclusión y próximos pasos'
+    ];
+    
+    const listHtml = estructura.map(item => `<li>${item}</li>`).join('');
+    document.getElementById('blog-structure-list').innerHTML = listHtml;
+    document.getElementById('blog-resultado').style.display = 'block';
+    
+    document.getElementById('blog-resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function generarLanding() {
+    const objetivo = document.getElementById('landing-objetivo').value;
+    const producto = document.getElementById('landing-producto').value;
+    
+    const contenidos = {
+        solar: {
+            headline: 'Reduce Tu Factura de Luz Hasta un 70% con Energía Solar',
+            subheadline: 'Instalación gratuita con financiación. Ahorra desde el primer día. Garantía de 25 años.',
+            cta: 'Calcular Mi Ahorro Gratis',
+            secciones: ['Hero con formulario', 'Beneficios clave', 'Cómo funciona', 'Calculadora de ahorro', 'Casos de éxito', 'FAQ', 'CTA final'],
+            features: ['Formulario de captación optimizado', 'Calculadora interactiva de ahorro', 'Testimonios con fotos reales', 'Trust badges (garantía, certificaciones)', 'Chat en vivo', 'Contador de urgencia', 'Video explicativo']
+        },
+        'tarifa-ev': {
+            headline: 'Carga Tu Coche Eléctrico por Menos de €3 cada 100km',
+            subheadline: 'Tarifa especial para vehículos eléctricos. Hasta 60% descuento en horario nocturno.',
+            cta: 'Contratar Tarifa EV',
+            secciones: ['Hero con beneficios', 'Comparativa de tarifas', 'Wallbox incluido', 'App de control', 'Testimonios EV', 'Preguntas frecuentes', 'Formulario de contratación'],
+            features: ['Comparador de ahorro vs gasolina', 'Simulador de carga', 'Galería de wallbox', 'Mapa de puntos de carga', 'Calculadora de ROI', 'Proceso de instalación visual']
+        }
+    };
+    
+    const contenido = contenidos[producto] || contenidos.solar;
+    
+    document.getElementById('landing-headline-text').textContent = contenido.headline;
+    document.getElementById('landing-subheadline-text').textContent = contenido.subheadline;
+    document.getElementById('landing-cta-text').textContent = contenido.cta;
+    
+    const seccionesHtml = contenido.secciones.map(sec => `<div class="section-badge">${sec}</div>`).join('');
+    document.getElementById('landing-sections-list').innerHTML = seccionesHtml;
+    
+    const featuresHtml = contenido.features.map(feat => `<li>${feat}</li>`).join('');
+    document.getElementById('landing-features-list').innerHTML = featuresHtml;
+    
+    document.getElementById('landing-resultado').style.display = 'block';
+    document.getElementById('landing-resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Funciones de acciones
+function copiarContenido(tipo) {
+    alert(`📋 Contenido copiado al portapapeles\n\nEn un entorno real, esto copiaría el contenido generado para que puedas pegarlo donde necesites.`);
+}
+
+function editarContenido(tipo) {
+    alert(`✏️ Abrir Editor\n\nEn un entorno real, esto abriría un editor WYSIWYG donde podrías modificar el contenido generado antes de exportarlo.`);
+}
+
+function exportarContenido(tipo) {
+    alert(`💾 Exportar Contenido\n\nEn un entorno real, esto te permitiría exportar en múltiples formatos:\n\n✓ HTML\n✓ Markdown\n✓ PDF\n✓ Integración directa con CMS`);
+}
+
+function regenerarContenido(tipo) {
+    alert(`🔄 Regenerando contenido...\n\nEn un entorno real, esto generaría una nueva versión del contenido con diferentes variaciones.`);
+}
+
+function programarPublicacion(tipo) {
+    alert(`📅 Programar Publicación\n\nEn un entorno real, esto abriría un calendario donde podrías:\n\n✓ Seleccionar fecha y hora\n✓ Elegir plataformas\n✓ Configurar auto-publicación\n✓ Ver calendario editorial`);
+}
+
+function verArticuloCompleto() {
+    alert(`👁️ Ver Artículo Completo\n\nEn un entorno real, esto mostraría el artículo completo de ${document.getElementById('blog-lectura').textContent} minutos de lectura con:\n\n✓ Contenido completo desarrollado\n✓ Imágenes sugeridas\n✓ Enlaces internos\n✓ Meta description\n✓ Alt text para imágenes`);
+}
+
+function optimizarSEO() {
+    alert(`🎯 Optimización SEO\n\nEn un entorno real, esto analizaría y optimizaría:\n\n✓ Densidad de keywords\n✓ Estructura de headings\n✓ Meta tags\n✓ Enlaces internos/externos\n✓ Legibilidad\n✓ Sugerencias de mejora`);
+}
+
+function previsualizarLanding() {
+    alert(`👁️ Vista Previa de Landing Page\n\nEn un entorno real, esto abriría una vista previa interactiva de la landing page completa con:\n\n✓ Diseño responsive\n✓ Todos los elementos funcionales\n✓ Formularios operativos\n✓ Vista mobile/tablet/desktop`);
+}
+
+function editarLanding() {
+    alert(`✏️ Editor de Landing Page\n\nEn un entorno real, esto abriría un editor visual drag-and-drop donde podrías:\n\n✓ Modificar secciones\n✓ Cambiar colores y fuentes\n✓ Añadir/quitar elementos\n✓ Personalizar formularios\n✓ A/B testing`);
+}
+
+function exportarHTML() {
+    alert(`💾 Exportar HTML\n\nEn un entorno real, esto exportaría:\n\n✓ HTML completo optimizado\n✓ CSS inline o externo\n✓ JavaScript necesario\n✓ Assets (imágenes, iconos)\n✓ Listo para subir a servidor`);
 }
 </script>
 {% endblock %}

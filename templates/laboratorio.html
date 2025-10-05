@@ -1,0 +1,823 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="laboratorio-container">
+    <div class="laboratorio-header">
+        <div class="header-content">
+            <h1>🧪 Laboratorio de Análisis con Python</h1>
+            <p class="subtitle">Experimenta con tus datos usando Python, pandas, y scikit-learn</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="abrirDocumentacion()">
+                <span>📖</span> Documentación
+            </button>
+            <button class="btn btn-primary" onclick="crearNotebook()">
+                <span>➕</span> Nuevo Notebook
+            </button>
+        </div>
+    </div>
+
+    <!-- Notebooks de Ejemplo -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📚 Notebooks de Ejemplo</h2>
+            <p class="card-subtitle">Plantillas listas para usar con datos reales</p>
+        </div>
+        <div class="notebooks-grid">
+            {% for notebook in notebooks_ejemplos %}
+            <div class="notebook-card">
+                <div class="notebook-header">
+                    <span class="notebook-icon">📓</span>
+                    <span class="notebook-nivel nivel-{{ notebook.nivel.lower() }}">{{ notebook.nivel }}</span>
+                </div>
+                <h3 class="notebook-nombre">{{ notebook.nombre }}</h3>
+                <p class="notebook-descripcion">{{ notebook.descripcion }}</p>
+                <div class="notebook-meta">
+                    <span class="notebook-categoria">{{ notebook.categoria }}</span>
+                    <span class="notebook-duracion">⏱️ {{ notebook.duracion }}</span>
+                </div>
+                <button class="btn-notebook" onclick="abrirNotebook('{{ notebook.id }}')">
+                    Abrir Notebook →
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Editor de Notebook -->
+    <div class="card notebook-editor" id="notebook-editor" style="display: none;">
+        <div class="notebook-toolbar">
+            <div class="toolbar-left">
+                <button class="toolbar-btn" onclick="guardarNotebook()" title="Guardar">
+                    💾
+                </button>
+                <button class="toolbar-btn" onclick="ejecutarTodo()" title="Ejecutar Todo">
+                    ▶️ Ejecutar Todo
+                </button>
+                <button class="toolbar-btn" onclick="agregarCelda('code')" title="Agregar Celda de Código">
+                    ➕ Código
+                </button>
+                <button class="toolbar-btn" onclick="agregarCelda('markdown')" title="Agregar Celda Markdown">
+                    ➕ Markdown
+                </button>
+            </div>
+            <div class="toolbar-right">
+                <select class="kernel-select">
+                    <option>Python 3.11</option>
+                    <option>Python 3.10</option>
+                </select>
+                <span class="kernel-status">
+                    <span class="status-dot status-ready"></span>
+                    Kernel listo
+                </span>
+            </div>
+        </div>
+
+        <div class="notebook-content" id="notebook-content">
+            <!-- Las celdas se agregarán dinámicamente aquí -->
+        </div>
+    </div>
+
+    <!-- Fuentes de Datos Disponibles -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔌 Fuentes de Datos Disponibles</h2>
+            <p class="card-subtitle">Conecta a estas fuentes desde tu notebook</p>
+        </div>
+        <div class="fuentes-grid-lab">
+            {% for fuente in fuentes_disponibles %}
+            <div class="fuente-card-lab">
+                <div class="fuente-icon-lab">{{ fuente.icon }}</div>
+                <div class="fuente-info-lab">
+                    <div class="fuente-nombre-lab">{{ fuente.nombre }}</div>
+                    <div class="fuente-registros-lab">{{ fuente.registros }} registros</div>
+                </div>
+                <button class="btn-conectar" onclick="mostrarCodigoConexion('{{ fuente.nombre }}')">
+                    Código de Conexión
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Ejemplos de Código Rápido -->
+    <div class="card">
+        <div class="card-header">
+            <h2>💻 Snippets de Código</h2>
+            <p class="card-subtitle">Copia y pega estos ejemplos en tu notebook</p>
+        </div>
+        <div class="snippets-grid">
+            <div class="snippet-card">
+                <div class="snippet-header">
+                    <h4>Conectar a Salesforce CRM</h4>
+                    <button class="btn-copy-snippet" onclick="copiarSnippet('salesforce')">📋</button>
+                </div>
+                <pre class="snippet-code" id="snippet-salesforce"><code>import pandas as pd
+from iberdrola_data import connect
+
+# Conectar a Salesforce CRM
+conn = connect('salesforce_crm')
+
+# Cargar datos de clientes
+df_clientes = pd.read_sql("""
+    SELECT customer_id, name, segment, 
+           ltv, churn_risk, last_interaction
+    FROM customers
+    WHERE active = true
+    LIMIT 1000
+""", conn)
+
+print(f"Clientes cargados: {len(df_clientes)}")
+df_clientes.head()</code></pre>
+            </div>
+
+            <div class="snippet-card">
+                <div class="snippet-header">
+                    <h4>Análisis de Segmentación</h4>
+                    <button class="btn-copy-snippet" onclick="copiarSnippet('segmentacion')">📋</button>
+                </div>
+                <pre class="snippet-code" id="snippet-segmentacion"><code>import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+# Preparar datos para clustering
+features = df_clientes[['ltv', 'engagement_score', 'consumption']]
+features_scaled = (features - features.mean()) / features.std()
+
+# Aplicar K-Means
+kmeans = KMeans(n_clusters=5, random_state=42)
+df_clientes['segment'] = kmeans.fit_predict(features_scaled)
+
+# Visualizar segmentos
+df_clientes.groupby('segment').agg({
+    'ltv': 'mean',
+    'engagement_score': 'mean',
+    'customer_id': 'count'
+}).round(2)</code></pre>
+            </div>
+
+            <div class="snippet-card">
+                <div class="snippet-header">
+                    <h4>Predicción de Churn</h4>
+                    <button class="btn-copy-snippet" onclick="copiarSnippet('churn')">📋</button>
+                </div>
+                <pre class="snippet-code" id="snippet-churn"><code>from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+# Preparar datos
+X = df_clientes[['ltv', 'engagement_score', 'consumption', 
+                  'support_tickets', 'payment_delays']]
+y = df_clientes['churned']
+
+# Split train/test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Entrenar modelo
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+# Evaluar
+print(classification_report(y_test, rf.predict(X_test)))</code></pre>
+            </div>
+
+            <div class="snippet-card">
+                <div class="snippet-header">
+                    <h4>Análisis de Campañas</h4>
+                    <button class="btn-copy-snippet" onclick="copiarSnippet('campanas')">📋</button>
+                </div>
+                <pre class="snippet-code" id="snippet-campanas"><code>import pandas as pd
+import seaborn as sns
+
+# Cargar datos de campañas
+df_campanas = pd.read_sql("""
+    SELECT campaign_name, sent, opened, clicked, 
+           converted, revenue
+    FROM email_campaigns
+    WHERE sent_date >= '2024-01-01'
+""", conn)
+
+# Calcular métricas
+df_campanas['open_rate'] = df_campanas['opened'] / df_campanas['sent']
+df_campanas['ctr'] = df_campanas['clicked'] / df_campanas['opened']
+df_campanas['cvr'] = df_campanas['converted'] / df_campanas['clicked']
+df_campanas['roi'] = df_campanas['revenue'] / df_campanas['cost']
+
+# Top 10 campañas por ROI
+df_campanas.nlargest(10, 'roi')[['campaign_name', 'roi']]</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.laboratorio-container {
+    padding: 30px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.laboratorio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header-content h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Notebooks Grid */
+.notebooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.notebook-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.notebook-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+    transform: translateY(-4px);
+}
+
+.notebook-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.notebook-icon {
+    font-size: 32px;
+}
+
+.notebook-nivel {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nivel-básico {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.nivel-intermedio {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.nivel-avanzado {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+.notebook-nombre {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+}
+
+.notebook-descripcion {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.notebook-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.notebook-categoria {
+    font-size: 12px;
+    color: #667eea;
+    font-weight: 600;
+}
+
+.notebook-duracion {
+    font-size: 12px;
+    color: #666;
+}
+
+.btn-notebook {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-notebook:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Notebook Editor */
+.notebook-editor {
+    margin: 30px 0;
+}
+
+.notebook-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbar-btn {
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.toolbar-btn:hover {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.kernel-select {
+    padding: 6px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+}
+
+.kernel-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+}
+
+.status-dot.status-ready {
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.notebook-content {
+    padding: 20px;
+    min-height: 400px;
+}
+
+/* Celdas del Notebook */
+.notebook-cell {
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cell-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.cell-type {
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+}
+
+.cell-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.cell-btn {
+    padding: 4px 8px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.cell-btn:hover {
+    transform: scale(1.2);
+}
+
+.cell-input {
+    padding: 16px;
+    background: #1e1e1e;
+}
+
+.cell-input textarea {
+    width: 100%;
+    min-height: 100px;
+    background: transparent;
+    border: none;
+    color: #d4d4d4;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.cell-output {
+    padding: 16px;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+}
+
+/* Fuentes de Datos */
+.fuentes-grid-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.fuente-card-lab {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.fuente-card-lab:hover {
+    border-color: #667eea;
+    background: white;
+}
+
+.fuente-icon-lab {
+    font-size: 32px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 10px;
+}
+
+.fuente-info-lab {
+    flex: 1;
+}
+
+.fuente-nombre-lab {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.fuente-registros-lab {
+    font-size: 12px;
+    color: #666;
+}
+
+.btn-conectar {
+    padding: 6px 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.btn-conectar:hover {
+    background: #5568d3;
+}
+
+/* Snippets */
+.snippets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.snippet-card {
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #f0f0f0;
+    overflow: hidden;
+}
+
+.snippet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.snippet-header h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.btn-copy-snippet {
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-copy-snippet:hover {
+    background: #667eea;
+    border-color: #667eea;
+    transform: scale(1.1);
+}
+
+.snippet-code {
+    margin: 0;
+    padding: 16px;
+    background: #1e1e1e;
+    overflow-x: auto;
+}
+
+.snippet-code code {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #d4d4d4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .laboratorio-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .snippets-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+function crearNotebook() {
+    const editor = document.getElementById('notebook-editor');
+    editor.style.display = 'block';
+    editor.scrollIntoView({ behavior: 'smooth' });
+    
+    // Inicializar con una celda de código vacía
+    const content = document.getElementById('notebook-content');
+    content.innerHTML = '';
+    agregarCelda('code');
+}
+
+function abrirNotebook(notebookId) {
+    const editor = document.getElementById('notebook-editor');
+    editor.style.display = 'block';
+    editor.scrollIntoView({ behavior: 'smooth' });
+    
+    const content = document.getElementById('notebook-content');
+    content.innerHTML = '';
+    
+    // Cargar contenido según el notebook
+    if (notebookId === 'analisis_churn') {
+        cargarNotebookChurn();
+    } else if (notebookId === 'segmentacion_rfm') {
+        cargarNotebookRFM();
+    } else if (notebookId === 'analisis_campanas') {
+        cargarNotebookCampanas();
+    } else if (notebookId === 'prediccion_ltv') {
+        cargarNotebookLTV();
+    }
+}
+
+function cargarNotebookChurn() {
+    const content = document.getElementById('notebook-content');
+    
+    // Celda Markdown
+    agregarCeldaConContenido('markdown', '# Análisis de Churn con Python\n\nEste notebook explora patrones de abandono de clientes usando datos de Salesforce CRM.');
+    
+    // Celda de código 1
+    agregarCeldaConContenido('code', `import pandas as pd
+import numpy as np
+from iberdrola_data import connect
+
+# Conectar a Salesforce CRM
+conn = connect('salesforce_crm')
+
+# Cargar datos de clientes
+df = pd.read_sql("""
+    SELECT customer_id, ltv, engagement_score, 
+           support_tickets, payment_delays, churned
+    FROM customers
+    WHERE active = true
+    LIMIT 5000
+""", conn)
+
+print(f"Clientes cargados: {len(df)}")
+df.head()`);
+    
+    // Celda de código 2
+    agregarCeldaConContenido('code', `# Análisis exploratorio
+print("Distribución de Churn:")
+print(df['churned'].value_counts())
+print(f"\\nTasa de Churn: {df['churned'].mean():.2%}")`);
+}
+
+function cargarNotebookRFM() {
+    agregarCeldaConContenido('markdown', '# Segmentación RFM\n\nSegmentación de clientes por Recency, Frequency y Monetary value.');
+    agregarCeldaConContenido('code', `import pandas as pd
+from datetime import datetime
+
+# Cargar datos transaccionales
+df_trans = pd.read_sql("""
+    SELECT customer_id, transaction_date, amount
+    FROM transactions
+    WHERE transaction_date >= '2023-01-01'
+""", conn)
+
+# Calcular RFM
+today = datetime.now()
+rfm = df_trans.groupby('customer_id').agg({
+    'transaction_date': lambda x: (today - x.max()).days,  # Recency
+    'customer_id': 'count',  # Frequency
+    'amount': 'sum'  # Monetary
+}).rename(columns={
+    'transaction_date': 'recency',
+    'customer_id': 'frequency',
+    'amount': 'monetary'
+})
+
+rfm.head()`);
+}
+
+function cargarNotebookCampanas() {
+    agregarCeldaConContenido('markdown', '# Performance de Campañas\n\nAnálisis de métricas de campañas de email marketing.');
+    agregarCeldaConContenido('code', `import pandas as pd
+import matplotlib.pyplot as plt
+
+# Cargar datos de campañas
+df_camp = pd.read_sql("""
+    SELECT campaign_name, sent, opened, clicked, converted
+    FROM email_campaigns
+    WHERE sent_date >= '2024-01-01'
+""", conn)
+
+# Calcular métricas
+df_camp['open_rate'] = df_camp['opened'] / df_camp['sent']
+df_camp['ctr'] = df_camp['clicked'] / df_camp['opened']
+df_camp['cvr'] = df_camp['converted'] / df_camp['clicked']
+
+df_camp[['campaign_name', 'open_rate', 'ctr', 'cvr']].head(10)`);
+}
+
+function cargarNotebookLTV() {
+    agregarCeldaConContenido('markdown', '# Predicción de LTV\n\nPredice el valor de vida del cliente con modelos de Machine Learning.');
+    agregarCeldaConContenido('code', `from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+
+# Preparar datos
+X = df[['engagement_score', 'avg_transaction', 'frequency', 'recency']]
+y = df['ltv']
+
+# Split y entrenamiento
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+model = RandomForestRegressor(n_estimators=100)
+model.fit(X_train, y_train)
+
+print(f"R² Score: {model.score(X_test, y_test):.3f}")`);
+}
+
+function agregarCelda(tipo) {
+    agregarCeldaConContenido(tipo, '');
+}
+
+function agregarCeldaConContenido(tipo, contenido) {
+    const content = document.getElementById('notebook-content');
+    const cellId = 'cell-' + Date.now();
+    
+    const cellHTML = `
+        <div class="notebook-cell" id="${cellId}">
+            <div class="cell-toolbar">
+                <span class="cell-type">${tipo === 'code' ? '🐍 Código' : '📝 Markdown'}</span>
+                <div class="cell-actions">
+                    <button class="cell-btn" onclick="ejecutarCelda('${cellId}')" title="Ejecutar">▶️</button>
+                    <button class="cell-btn" onclick="eliminarCelda('${cellId}')" title="Eliminar">🗑️</button>
+                </div>
+            </div>
+            <div class="cell-input">
+                <textarea placeholder="${tipo === 'code' ? 'Escribe tu código Python aquí...' : 'Escribe Markdown aquí...'}">${contenido}</textarea>
+            </div>
+            <div class="cell-output" style="display: none;"></div>
+        </div>
+    `;
+    
+    content.insertAdjacentHTML('beforeend', cellHTML);
+}
+
+function ejecutarCelda(cellId) {
+    const cell = document.getElementById(cellId);
+    const output = cell.querySelector('.cell-output');
+    const input = cell.querySelector('textarea').value;
+    
+    output.style.display = 'block';
+    output.innerHTML = '<div style="color: #4caf50;">✓ Celda ejecutada (simulación)</div><pre style="margin-top: 8px; color: #666;">Output simulado para:\n' + input.substring(0, 100) + '...</pre>';
+}
+
+function eliminarCelda(cellId) {
+    if (confirm('¿Eliminar esta celda?')) {
+        document.getElementById(cellId).remove();
+    }
+}
+
+function ejecutarTodo() {
+    const celdas = document.querySelectorAll('.notebook-cell');
+    celdas.forEach((celda, index) => {
+        setTimeout(() => {
+            ejecutarCelda(celda.id);
+        }, index * 500);
+    });
+}
+
+function guardarNotebook() {
+    alert('✅ Notebook guardado correctamente!\n\nUbicación: /notebooks/mi_notebook_' + Date.now() + '.ipynb');
+}
+
+function mostrarCodigoConexion(fuente) {
+    alert(`Código de conexión para ${fuente}:\n\nfrom iberdrola_data import connect\nconn = connect('${fuente.toLowerCase().replace(/ /g, '_')}')\ndf = pd.read_sql("SELECT * FROM tabla LIMIT 100", conn)`);
+}
+
+function copiarSnippet(snippetId) {
+    const code = document.getElementById('snippet-' + snippetId).textContent;
+    navigator.clipboard.writeText(code);
+    alert('✅ Código copiado al portapapeles!');
+}
+
+function abrirDocumentacion() {
+    alert('📖 Documentación del Laboratorio\n\nIncluye:\n- Guía de inicio rápido\n- Referencia de APIs\n- Ejemplos avanzados\n- Best practices');
+}
+</script>
+{% endblock %}

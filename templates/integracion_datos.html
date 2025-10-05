@@ -1,0 +1,746 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <h1>🔌 Integración de Datos Empresariales</h1>
+        <p class="subtitle">Conecta tus fuentes de datos con los casos de uso de IA</p>
+    </div>
+
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-integration">
+        <div class="metric-card-integration">
+            <div class="metric-icon-integration">🔗</div>
+            <div class="metric-content">
+                <div class="metric-value-integration">{{ metricas.fuentes_conectadas }}/{{ metricas.total_fuentes }}</div>
+                <div class="metric-label-integration">Fuentes Conectadas</div>
+            </div>
+        </div>
+        <div class="metric-card-integration">
+            <div class="metric-icon-integration">📊</div>
+            <div class="metric-content">
+                <div class="metric-value-integration">{{ '{:,.0f}'.format(metricas.registros_totales / 1000000) }}M</div>
+                <div class="metric-label-integration">Registros Totales</div>
+            </div>
+        </div>
+        <div class="metric-card-integration">
+            <div class="metric-icon-integration">🎯</div>
+            <div class="metric-content">
+                <div class="metric-value-integration">{{ metricas.casos_uso_activos }}</div>
+                <div class="metric-label-integration">Casos de Uso Activos</div>
+            </div>
+        </div>
+        <div class="metric-card-integration">
+            <div class="metric-icon-integration">⚡</div>
+            <div class="metric-content">
+                <div class="metric-value-integration">{{ metricas.latencia_promedio }}ms</div>
+                <div class="metric-label-integration">Latencia Promedio</div>
+            </div>
+        </div>
+        <div class="metric-card-integration">
+            <div class="metric-icon-integration">✅</div>
+            <div class="metric-content">
+                <div class="metric-value-integration">{{ metricas.uptime }}%</div>
+                <div class="metric-label-integration">Uptime</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fuentes de Datos -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📁 Fuentes de Datos Conectadas</h2>
+            <button class="btn btn-primary" onclick="agregarFuente()">
+                <span>➕</span> Agregar Fuente
+            </button>
+        </div>
+        <div class="table-container">
+            <table class="fuentes-table">
+                <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Fuente de Datos</th>
+                        <th>Tipo</th>
+                        <th>Registros</th>
+                        <th>Última Sync</th>
+                        <th>Frecuencia</th>
+                        <th>Casos de Uso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fuente in fuentes_datos %}
+                    <tr class="fuente-row" data-fuente-id="{{ fuente.id }}">
+                        <td>
+                            <div class="fuente-estado estado-{{ fuente.estado }}">
+                                <span class="status-dot"></span>
+                                <span class="status-text">{{ fuente.estado.capitalize() }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="fuente-nombre-cell">
+                                <strong>{{ fuente.nombre }}</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fuente-tipo-badge tipo-{{ fuente.tipo.lower() }}">{{ fuente.tipo }}</span>
+                        </td>
+                        <td>
+                            <div class="registros-cell">
+                                <span class="registros-icon">📊</span>
+                                <strong>{{ '{:,.0f}'.format(fuente.registros / 1000000) }}M</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="sync-time">{{ fuente.ultima_sync }}</span>
+                        </td>
+                        <td>
+                            <span class="frecuencia-badge">{{ fuente.frecuencia }}</span>
+                        </td>
+                        <td>
+                            <div class="casos-uso-cell">
+                                <span class="casos-count">{{ fuente.casos_uso|length }}</span>
+                                <button class="btn-ver-casos" onclick="verCasosUso('{{ fuente.id }}')">Ver</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="acciones-cell">
+                                <button class="btn-icon-table" onclick="verDetallesFuente('{{ fuente.id }}')" title="Ver Detalles">
+                                    👁️
+                                </button>
+                                <button class="btn-icon-table" onclick="configurarFuente('{{ fuente.id }}')" title="Configurar">
+                                    ⚙️
+                                </button>
+                                <button class="btn-icon-table" onclick="testConexion('{{ fuente.id }}')" title="Test Conexión">
+                                    🔌
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Mapeo de Datos por Caso de Uso -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🎯 Datos Necesarios por Caso de Uso</h2>
+            <p class="card-subtitle">Visualiza qué datos alimentan cada caso de uso de IA</p>
+        </div>
+        <div class="casos-uso-data-grid">
+            {% for caso_id, caso_data in casos_uso_datos.items() %}
+            <div class="caso-uso-data-card">
+                <div class="caso-uso-data-header">
+                    <span class="caso-uso-icon">{{ caso_data.icon }}</span>
+                    <h3>{{ caso_data.nombre }}</h3>
+                </div>
+                <div class="datos-necesarios-list">
+                    {% for dato in caso_data.datos_necesarios %}
+                    <div class="dato-necesario-item">
+                        <div class="dato-fuente">
+                            <span class="fuente-icon">📁</span>
+                            <strong>{{ dato.fuente }}</strong>
+                        </div>
+                        <div class="dato-tipo">{{ dato.tipo }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="caso-uso-data-footer">
+                    <span class="data-sources-count">{{ caso_data.datos_necesarios|length }} fuentes de datos</span>
+                    <button class="btn-view-pipeline" onclick="verPipeline('{{ caso_id }}')">
+                        Ver Pipeline →
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Diagrama de Flujo de Datos -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔄 Arquitectura de Integración de Datos</h2>
+            <p class="card-subtitle">Flujo de datos desde las fuentes hasta los modelos de IA</p>
+        </div>
+        <div class="arquitectura-diagram">
+            <div class="arquitectura-layer">
+                <div class="layer-title">1. Fuentes de Datos</div>
+                <div class="layer-items">
+                    <div class="layer-item">CRM</div>
+                    <div class="layer-item">ERP</div>
+                    <div class="layer-item">IoT</div>
+                    <div class="layer-item">Analytics</div>
+                    <div class="layer-item">Social</div>
+                </div>
+            </div>
+            <div class="arquitectura-arrow">↓</div>
+            <div class="arquitectura-layer">
+                <div class="layer-title">2. Ingesta & ETL</div>
+                <div class="layer-items">
+                    <div class="layer-item">Azure Data Factory</div>
+                    <div class="layer-item">Apache Kafka</div>
+                    <div class="layer-item">Databricks</div>
+                </div>
+            </div>
+            <div class="arquitectura-arrow">↓</div>
+            <div class="arquitectura-layer">
+                <div class="layer-title">3. Almacenamiento</div>
+                <div class="layer-items">
+                    <div class="layer-item">Data Lake (ADLS)</div>
+                    <div class="layer-item">Data Warehouse (Synapse)</div>
+                    <div class="layer-item">Feature Store</div>
+                </div>
+            </div>
+            <div class="arquitectura-arrow">↓</div>
+            <div class="arquitectura-layer">
+                <div class="layer-title">4. Procesamiento & ML</div>
+                <div class="layer-items">
+                    <div class="layer-item">Feature Engineering</div>
+                    <div class="layer-item">Model Training</div>
+                    <div class="layer-item">Model Serving</div>
+                </div>
+            </div>
+            <div class="arquitectura-arrow">↓</div>
+            <div class="arquitectura-layer">
+                <div class="layer-title">5. Casos de Uso IA</div>
+                <div class="layer-items">
+                    <div class="layer-item">Personalización</div>
+                    <div class="layer-item">Churn</div>
+                    <div class="layer-item">Segmentación</div>
+                    <div class="layer-item">Chatbot</div>
+                    <div class="layer-item">GenAI</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calidad de Datos -->
+    <div class="card">
+        <div class="card-header">
+            <h2>✅ Calidad y Gobernanza de Datos</h2>
+        </div>
+        <div class="calidad-grid">
+            <div class="calidad-card">
+                <div class="calidad-icon">📊</div>
+                <div class="calidad-metric">98.5%</div>
+                <div class="calidad-label">Completitud de Datos</div>
+                <div class="calidad-bar">
+                    <div class="calidad-bar-fill" style="width: 98.5%"></div>
+                </div>
+            </div>
+            <div class="calidad-card">
+                <div class="calidad-icon">✓</div>
+                <div class="calidad-metric">99.2%</div>
+                <div class="calidad-label">Precisión de Datos</div>
+                <div class="calidad-bar">
+                    <div class="calidad-bar-fill" style="width: 99.2%"></div>
+                </div>
+            </div>
+            <div class="calidad-card">
+                <div class="calidad-icon">⏱️</div>
+                <div class="calidad-metric">97.8%</div>
+                <div class="calidad-label">Frescura de Datos</div>
+                <div class="calidad-bar">
+                    <div class="calidad-bar-fill" style="width: 97.8%"></div>
+                </div>
+            </div>
+            <div class="calidad-card">
+                <div class="calidad-icon">🔒</div>
+                <div class="calidad-metric">100%</div>
+                <div class="calidad-label">Cumplimiento GDPR</div>
+                <div class="calidad-bar">
+                    <div class="calidad-bar-fill" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Métricas de Integración */
+.metrics-grid-integration {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric-card-integration {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.metric-card-integration:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.metric-icon-integration {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+}
+
+.metric-content {
+    flex: 1;
+}
+
+.metric-value-integration {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.metric-label-integration {
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Tabla de Fuentes de Datos */
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.fuentes-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.fuentes-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.fuentes-table th {
+    padding: 16px 12px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.fuentes-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.fuentes-table tbody tr:hover {
+    background: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.fuentes-table td {
+    padding: 16px 12px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.fuente-estado {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.estado-conectado .status-dot {
+    background: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.status-text {
+    color: #4caf50;
+}
+
+.fuente-nombre-cell strong {
+    color: #1a1a1a;
+    font-size: 15px;
+}
+
+.fuente-tipo-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.tipo-crm { background: #e3f2fd; color: #1976d2; }
+.tipo-erp { background: #f3e5f5; color: #7b1fa2; }
+.tipo-iot { background: #e8f5e9; color: #388e3c; }
+.tipo-analytics { background: #fff3e0; color: #f57c00; }
+.tipo-social { background: #fce4ec; color: #c2185b; }
+.tipo-advertising { background: #e0f2f1; color: #00796b; }
+.tipo-marketing { background: #f1f8e9; color: #689f38; }
+.tipo-support { background: #ede7f6; color: #5e35b1; }
+.tipo-data { background: #e1f5fe; color: #0277bd; }
+
+.registros-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.registros-icon {
+    font-size: 18px;
+}
+
+.sync-time {
+    color: #666;
+    font-size: 13px;
+}
+
+.frecuencia-badge {
+    padding: 4px 10px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    display: inline-block;
+}
+
+.casos-uso-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.casos-count {
+    font-size: 16px;
+    font-weight: 700;
+    color: #667eea;
+    min-width: 20px;
+}
+
+.btn-ver-casos {
+    padding: 4px 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-ver-casos:hover {
+    background: #5568d3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.acciones-cell {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-icon-table {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon-table:hover {
+    background: #667eea;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .table-container {
+        overflow-x: scroll;
+    }
+    
+    .fuentes-table {
+        min-width: 1000px;
+    }
+}
+
+/* Casos de Uso Data Grid */
+.casos-uso-data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.caso-uso-data-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.caso-uso-data-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+}
+
+.caso-uso-data-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.caso-uso-icon {
+    font-size: 32px;
+}
+
+.caso-uso-data-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.datos-necesarios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.dato-necesario-item {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.dato-fuente {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.fuente-icon {
+    font-size: 16px;
+}
+
+.dato-tipo {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.caso-uso-data-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.data-sources-count {
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+}
+
+.btn-view-pipeline {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-view-pipeline:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Arquitectura Diagram */
+.arquitectura-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.arquitectura-layer {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.layer-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.layer-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.layer-item {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.arquitectura-arrow {
+    text-align: center;
+    font-size: 32px;
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* Calidad de Datos */
+.calidad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.calidad-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.calidad-card:hover {
+    border-color: #4caf50;
+    box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+}
+
+.calidad-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.calidad-metric {
+    font-size: 36px;
+    font-weight: 700;
+    color: #4caf50;
+    margin-bottom: 8px;
+}
+
+.calidad-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.calidad-bar {
+    width: 100%;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.calidad-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+</style>
+
+<script>
+function agregarFuente() {
+    alert('Funcionalidad de agregar fuente de datos - En desarrollo');
+}
+
+function verDetallesFuente(fuenteId) {
+    alert(`Ver detalles de la fuente: ${fuenteId}`);
+}
+
+function configurarFuente(fuenteId) {
+    alert(`Configurar fuente: ${fuenteId}`);
+}
+
+function testConexion(fuenteId) {
+    alert(`Probando conexión con: ${fuenteId}...\n\n✅ Conexión exitosa!\nLatencia: 45ms\nEstado: Operativo`);
+}
+
+function verCasosUso(fuenteId) {
+    alert(`Ver casos de uso conectados a: ${fuenteId}`);
+}
+
+function verPipeline(casoUsoId) {
+    alert(`Ver pipeline de datos para: ${casoUsoId}`);
+}
+</script>
+{% endblock %}

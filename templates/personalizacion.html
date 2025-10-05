@@ -5,6 +5,804 @@
 {% block page_title %}Personalización Hiperpersonalizada{% endblock %}
 
 {% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>👤 Personalización Hiperpersonalizada</h2>
+            <p>Guía técnica completa del caso de uso</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <!-- Resumen -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📋</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    La <strong>Personalización Hiperpersonalizada</strong> utiliza sistemas de recomendación basados en 
+                    Machine Learning para generar ofertas y contenidos únicos para cada cliente. El sistema combina 
+                    Collaborative Filtering, Content-Based Filtering y Deep Learning para crear un modelo híbrido 
+                    que aprende de las interacciones históricas y predice preferencias futuras.
+                </p>
+                
+                <p>
+                    <strong>Fuentes de Datos Procesadas:</strong>
+                </p>
+                <ul>
+                    <li><strong>Datos de Consumo:</strong> Series temporales de consumo eléctrico (kWh por hora/día), 
+                    patrones estacionales, picos de demanda, horarios de uso</li>
+                    <li><strong>Datos de Interacción:</strong> Clicks en web/app, tiempo en página, productos vistos, 
+                    emails abiertos, respuestas a campañas</li>
+                    <li><strong>Datos Transaccionales:</strong> Historial de productos contratados, upgrades, 
+                    cancelaciones, cambios de tarifa</li>
+                    <li><strong>Datos Contextuales:</strong> Ubicación geográfica, tipo de vivienda, meteorología, 
+                    eventos locales, día de la semana</li>
+                    <li><strong>Datos Demográficos:</strong> Edad, composición familiar, ingresos estimados, 
+                    segmento de cliente</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🔄 Pipeline de Procesamiento</strong><br>
+                    Los datos se ingestan en tiempo real → Se normalizan y transforman → Se generan features 
+                    (embeddings de usuario/producto) → Los modelos predicen scores de afinidad → Se rankean 
+                    las recomendaciones → Se aplican reglas de negocio → Se entregan vía API en <200ms
+                </div>
+                
+                <p>
+                    <strong>Output del Sistema:</strong>
+                </p>
+                <ul>
+                    <li><strong>Recomendaciones de Productos:</strong> Lista rankeada de productos/servicios con 
+                    scores de probabilidad de conversión (0-1)</li>
+                    <li><strong>Contenido Personalizado:</strong> Banners, emails, notificaciones adaptados al 
+                    perfil del usuario</li>
+                    <li><strong>Ofertas Dinámicas:</strong> Descuentos y promociones calculados según propensión 
+                    a comprar y valor del cliente</li>
+                    <li><strong>Momento Óptimo:</strong> Predicción del mejor momento para contactar (hora/día) 
+                    basado en patrones históricos</li>
+                    <li><strong>Canal Preferido:</strong> Email, SMS, push notification, o llamada según historial 
+                    de respuesta</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Modelos de IA -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    El sistema de personalización utiliza un <strong>ensemble de modelos de IA</strong> que trabajan 
+                    en conjunto para proporcionar recomendaciones precisas y contextualizadas. Cada modelo aporta 
+                    una perspectiva única y complementaria, creando un sistema robusto y adaptable.
+                </p>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🧠 Collaborative Filtering (Matrix Factorization)
+                    </div>
+                    <div class="doc-model-desc">
+                        <p>
+                            Identifica patrones de comportamiento entre clientes similares para recomendar 
+                            productos y servicios que han funcionado con perfiles parecidos. Este enfoque se basa 
+                            en la premisa de que usuarios con comportamientos similares en el pasado tendrán 
+                            preferencias similares en el futuro.
+                        </p>
+                        <p>
+                            <strong>Funcionamiento técnico:</strong> Descompone la matriz usuario-producto en matrices 
+                            latentes de menor dimensión, capturando factores ocultos que explican las preferencias. 
+                            Utiliza SVD++ (Singular Value Decomposition) y ALS (Alternating Least Squares) para 
+                            optimización escalable con millones de usuarios.
+                        </p>
+                        <p>
+                            <strong>Aplicación práctica:</strong> Si un cliente con perfil de consumo similar al tuyo 
+                            contrató un plan solar, el sistema te lo recomendará con alta prioridad. Precisión típica: 
+                            RMSE < 0.85 en escala 1-5.
+                        </p>
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">⚙️</div>
+                            <div class="doc-tech-name">SVD++</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">📊</div>
+                            <div class="doc-tech-name">ALS</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🎯 Deep Learning - Neural Collaborative Filtering
+                    </div>
+                    <div class="doc-model-desc">
+                        <p>
+                            Red neuronal profunda que aprende representaciones complejas de usuarios y productos 
+                            para capturar relaciones no lineales en las preferencias. A diferencia del collaborative 
+                            filtering tradicional, este modelo puede descubrir patrones mucho más sofisticados.
+                        </p>
+                        <p>
+                            <strong>Arquitectura:</strong> Utiliza embeddings densos para usuarios y productos, 
+                            seguidos de múltiples capas fully-connected con activaciones ReLU. La arquitectura 
+                            típica incluye 3-5 capas ocultas con 128-512 neuronas cada una, dropout para 
+                            regularización, y batch normalization para estabilidad del entrenamiento.
+                        </p>
+                        <p>
+                            <strong>Ventaja clave:</strong> Supera a métodos lineales en un 15-20% en métricas 
+                            de precisión (NDCG@10 > 0.78). Especialmente efectivo para capturar interacciones 
+                            complejas entre múltiples características del usuario y contexto temporal.
+                        </p>
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔷</div>
+                            <div class="doc-tech-name">TensorFlow</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔶</div>
+                            <div class="doc-tech-name">PyTorch</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        📈 Propensity Scoring (Gradient Boosting)
+                    </div>
+                    <div class="doc-model-desc">
+                        <p>
+                            Calcula la probabilidad de que un cliente acepte una oferta específica basándose 
+                            en características demográficas, comportamentales y contextuales. Este modelo es 
+                            fundamental para priorizar qué ofertas mostrar a qué clientes.
+                        </p>
+                        <p>
+                            <strong>Features utilizadas (200+):</strong> Consumo energético histórico, variabilidad 
+                            estacional, engagement con campañas previas, tiempo como cliente, productos contratados, 
+                            interacciones con servicio al cliente, datos demográficos, señales de navegación web, 
+                            y muchas más variables engineered.
+                        </p>
+                        <p>
+                            <strong>Performance:</strong> AUC-ROC > 0.87 en validación, lo que significa que el 
+                            modelo distingue correctamente entre clientes que aceptarán vs. rechazarán una oferta 
+                            el 87% de las veces. Calibración de probabilidades mediante Platt Scaling para 
+                            estimaciones precisas.
+                        </p>
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🌲</div>
+                            <div class="doc-tech-name">XGBoost</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">💡</div>
+                            <div class="doc-tech-name">LightGBM</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        💬 NLP - Análisis de Sentimiento y Preferencias
+                    </div>
+                    <div class="doc-model-desc">
+                        <p>
+                            Analiza interacciones textuales (emails, chat, encuestas, redes sociales) para extraer 
+                            preferencias implícitas y nivel de satisfacción del cliente. Este componente añade una 
+                            dimensión cualitativa crucial que los datos estructurados no capturan.
+                        </p>
+                        <p>
+                            <strong>Capacidades:</strong> Análisis de sentimiento (positivo/negativo/neutral), 
+                            extracción de entidades (productos mencionados, problemas específicos), clasificación 
+                            de intenciones (queja, consulta, elogio), y detección de temas emergentes mediante 
+                            topic modeling.
+                        </p>
+                        <p>
+                            <strong>Modelos utilizados:</strong> BERT fine-tuned en datos del sector energético 
+                            para análisis de sentimiento (F1-Score: 0.89), GPT-4 para extracción de insights 
+                            complejos y generación de resúmenes de interacciones. Los embeddings textuales se 
+                            integran como features adicionales en los modelos de recomendación.
+                        </p>
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🤗</div>
+                            <div class="doc-tech-name">BERT</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🦜</div>
+                            <div class="doc-tech-name">GPT-4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    La arquitectura del sistema está diseñada para escalar horizontalmente y procesar millones de 
+                    eventos diarios con latencias inferiores a 100ms. Utiliza un enfoque de <strong>microservicios</strong> 
+                    desplegados en Azure Kubernetes Service (AKS) con auto-scaling basado en métricas de carga.
+                </p>
+                
+                <p><strong>Stack Tecnológico Completo:</strong></p>
+                <ul>
+                    <li><strong>Salesforce Marketing Cloud:</strong> Orquestación de campañas multicanal (email, SMS, push, web). 
+                    Journey Builder para automatización de flujos personalizados. Integración bidireccional con el motor 
+                    de recomendaciones mediante APIs REST.</li>
+                    
+                    <li><strong>Azure Machine Learning:</strong> Plataforma MLOps completa para entrenamiento, validación, 
+                    deployment y monitorización de modelos. Pipelines automatizados para reentrenamiento. Model Registry 
+                    para versionado y governance.</li>
+                    
+                    <li><strong>Azure Databricks:</strong> Procesamiento distribuido de datos masivos (petabytes). 
+                    Feature Store centralizado para reutilización de features entre modelos. Notebooks colaborativos 
+                    para experimentación de Data Scientists.</li>
+                    
+                    <li><strong>Azure Cognitive Services:</strong> Text Analytics para NLP (análisis de sentimiento, 
+                    extracción de entidades, detección de idioma). Integración con OpenAI Service para GPT-4.</li>
+                    
+                    <li><strong>Power BI:</strong> Dashboards en tiempo real para monitorización de KPIs de negocio 
+                    y técnicos. Alertas automáticas cuando métricas caen fuera de umbrales. Reportes ejecutivos 
+                    semanales automatizados.</li>
+                    
+                    <li><strong>Azure Synapse Analytics:</strong> Data warehouse centralizado con arquitectura medallion 
+                    (bronze/silver/gold). Integración con 20+ fuentes de datos. Capacidad de consulta de 100TB+ con 
+                    latencias sub-segundo.</li>
+                    
+                    <li><strong>Azure Kubernetes Service (AKS):</strong> Orquestación de contenedores para microservicios 
+                    de inferencia. Auto-scaling horizontal basado en CPU/memoria. Blue-green deployments para zero-downtime.</li>
+                    
+                    <li><strong>Azure API Management:</strong> Gateway centralizado para APIs de recomendaciones. 
+                    Rate limiting, caching, autenticación OAuth 2.0. Monitorización de latencias y errores.</li>
+                </ul>
+                
+                <p><strong>Flujo de Datos End-to-End:</strong></p>
+                <ol class="doc-steps">
+                    <li>
+                        <strong>Ingesta de Datos en Tiempo Real</strong><br>
+                        Azure Event Hubs recibe eventos de consumo energético (smart meters), interacciones web 
+                        (Google Analytics 4), CRM (Salesforce), sistemas transaccionales, y canales digitales. 
+                        Throughput: 1M+ eventos/segundo. Latencia: <5 segundos desde generación hasta disponibilidad.
+                    </li>
+                    <li>
+                        <strong>Procesamiento y Limpieza</strong><br>
+                        Azure Stream Analytics procesa eventos en tiempo real, filtra anomalías, enriquece con 
+                        datos de referencia, y persiste en Data Lake (formato Delta). Databricks ejecuta jobs 
+                        batch nocturnos para agregaciones y cálculos complejos.
+                    </li>
+                    <li>
+                        <strong>Feature Engineering Avanzado</strong><br>
+                        Creación de 200+ variables predictivas: consumo promedio/mediana/percentiles por hora del día, 
+                        día de la semana, mes; variabilidad estacional; engagement score (weighted sum de interacciones); 
+                        recency/frequency/monetary (RFM); propensión histórica a ofertas; similitud con clusters; 
+                        embeddings de comportamiento (dimensión 64); y muchas más. Feature Store centralizado en 
+                        Databricks para consistencia entre entrenamiento e inferencia.
+                    </li>
+                    <li>
+                        <strong>Entrenamiento de Modelos (MLOps)</strong><br>
+                        Entrenamiento batch diario con datos de los últimos 12 meses (ventana deslizante). 
+                        Validación cruzada temporal (time-series split) para evitar data leakage. Hyperparameter 
+                        tuning con Optuna (100+ trials). A/B testing de modelos candidatos antes de promoción a 
+                        producción. Reentrenamiento automático cuando métricas de performance degradan >5%.
+                    </li>
+                    <li>
+                        <strong>Deployment y Scoring en Tiempo Real</strong><br>
+                        Modelos desplegados como APIs REST en AKS con 10+ réplicas para alta disponibilidad. 
+                        Latencia p95 < 80ms, p99 < 150ms. Caching inteligente de recomendaciones con TTL de 1 hora. 
+                        Fallback a recomendaciones basadas en reglas si el modelo falla. Canary deployments para 
+                        validación gradual de nuevas versiones.
+                    </li>
+                    <li>
+                        <strong>Orquestación de Campañas</strong><br>
+                        Salesforce Marketing Cloud consume recomendaciones vía API y ejecuta campañas personalizadas. 
+                        Journey Builder define flujos multi-step con condiciones dinámicas. Contenido dinámico 
+                        (AMPscript) renderiza ofertas personalizadas. Frecuency capping para evitar fatiga del cliente.
+                    </li>
+                    <li>
+                        <strong>Medición, A/B Testing y Optimización Continua</strong><br>
+                        Tracking de conversiones y atribución multi-touch. A/B testing continuo de estrategias de 
+                        recomendación (collaborative filtering vs. deep learning vs. hybrid). Análisis de uplift 
+                        incremental vs. grupo de control. Reentrenamiento automático semanal con feedback loop de 
+                        conversiones reales. Dashboard ejecutivo con ROI actualizado diariamente.
+                    </li>
+                </ol>
+                
+                <p><strong>Consideraciones de Escalabilidad y Performance:</strong></p>
+                <ul>
+                    <li><strong>Throughput:</strong> Sistema dimensionado para 10M de clientes activos, 50M de 
+                    recomendaciones diarias, 1000 requests/segundo en picos.</li>
+                    
+                    <li><strong>Alta Disponibilidad:</strong> SLA 99.9% uptime. Multi-región activo-pasivo para 
+                    disaster recovery. Backups automáticos cada 6 horas.</li>
+                    
+                    <li><strong>Seguridad:</strong> Encriptación end-to-end (TLS 1.3, AES-256). Datos PII anonimizados 
+                    en entornos no-productivos. GDPR compliant con derecho al olvido implementado.</li>
+                    
+                    <li><strong>Monitorización:</strong> Azure Monitor + Application Insights para observabilidad 
+                    completa. Alertas proactivas en Slack/Teams. On-call rotation 24/7 para incidentes críticos.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Casos de Uso Específicos -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">💡</span>
+                Casos de Uso Específicos
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    El sistema de personalización se aplica a través de múltiples puntos de contacto con el cliente, 
+                    creando una experiencia omnicanal coherente y personalizada. A continuación se detallan los casos 
+                    de uso más impactantes con ejemplos concretos de implementación:
+                </p>
+                
+                <p><strong>1. Recomendación de Tarifas Personalizadas</strong></p>
+                <p>
+                    El sistema analiza el perfil de consumo energético del cliente para recomendar la tarifa óptima 
+                    que maximice su ahorro. Este es uno de los casos de uso con mayor impacto directo en satisfacción 
+                    y retención.
+                </p>
+                <ul>
+                    <li><strong>Análisis del perfil de consumo horario:</strong> Procesamiento de datos de smart meters 
+                    con granularidad horaria. Identificación de patrones: ¿el cliente consume más durante el día o la noche? 
+                    ¿Tiene picos de consumo en fines de semana? ¿Varía estacionalmente?</li>
+                    
+                    <li><strong>Predicción de consumo futuro:</strong> Modelos de series temporales (Prophet, LSTM) 
+                    predicen el consumo de los próximos 12 meses considerando tendencias, estacionalidad, y eventos 
+                    especiales. Precisión: MAPE < 8%.</li>
+                    
+                    <li><strong>Optimización de tarifa:</strong> Algoritmo de optimización calcula el ahorro potencial 
+                    para cada tarifa disponible (fija, discriminación horaria, indexada). Recomendación incluye ahorro 
+                    estimado en €/año y periodo de amortización si hay cambio de contador.</li>
+                    
+                    <li><strong>Ejemplo real:</strong> Cliente con consumo nocturno elevado (carga de vehículo eléctrico) 
+                    recibe recomendación de tarifa discriminación horaria con ahorro estimado de €450/año. Tasa de 
+                    conversión: 42% vs. 8% en campañas genéricas.</li>
+                </ul>
+                
+                <p><strong>2. Ofertas de Servicios Adicionales (Cross-selling Inteligente)</strong></p>
+                <p>
+                    Identificación proactiva de necesidades del cliente y recomendación de servicios complementarios 
+                    con alta probabilidad de aceptación.
+                </p>
+                <ul>
+                    <li><strong>Instalación Solar:</strong> Clientes con consumo elevado, vivienda en propiedad, y 
+                    ubicación con alta irradiación solar reciben propuesta personalizada de instalación fotovoltaica. 
+                    Cálculo de ROI incluido (típicamente 6-8 años). Propensión score > 0.7 → contacto proactivo.</li>
+                    
+                    <li><strong>Mantenimiento de Calderas:</strong> Clientes con caldera de gas >8 años reciben oferta 
+                    de mantenimiento preventivo antes de la temporada de invierno. Timing optimizado mediante análisis 
+                    de datos meteorológicos. Conversión: 28%.</li>
+                    
+                    <li><strong>Seguros del Hogar:</strong> Clientes sin seguro contratado (inferido por ausencia de 
+                    producto) reciben oferta bundled con descuento. Segmentación por valor de vivienda estimado.</li>
+                    
+                    <li><strong>Movilidad Eléctrica:</strong> Clientes con incremento súbito de consumo nocturno 
+                    (indicador de VE) reciben ofertas de tarifa específica + wallbox + puntos de recarga públicos.</li>
+                    
+                    <li><strong>Eventos de vida:</strong> Sistema detecta mudanzas (cambio de dirección), compra de 
+                    vivienda (incremento de consumo), nacimientos (aumento de consumo diurno), y activa campañas 
+                    contextualizadas. Timing es crítico: ventana de oportunidad de 30-60 días.</li>
+                </ul>
+                
+                <p><strong>3. Contenido Dinámico en Emails (1:1 Personalization)</strong></p>
+                <p>
+                    Cada email es único, generado dinámicamente en el momento de apertura con contenido ultra-relevante 
+                    para ese cliente específico.
+                </p>
+                <ul>
+                    <li><strong>Subject Line Personalizado:</strong> A/B testing automático de 5-10 variantes de subject 
+                    line por segmento. Ganador se aplica al resto del segmento. Incluye nombre, localización, o beneficio 
+                    específico. Incremento de open rate: +35%.</li>
+                    
+                    <li><strong>Hero Image Dinámica:</strong> Imagen principal del email varía según perfil: familia con 
+                    niños ve imagen familiar, joven urbano ve imagen de ciudad, senior ve imagen de tranquilidad. 
+                    Generación con IA (DALL-E) si no hay imagen en biblioteca.</li>
+                    
+                    <li><strong>Recomendaciones de Productos:</strong> Bloque de 3-4 productos recomendados por el motor 
+                    de ML, renderizados dinámicamente. Cada producto incluye beneficio personalizado ("Ahorra €X/año 
+                    basado en tu consumo").</li>
+                    
+                    <li><strong>Consejos de Ahorro:</strong> Tips personalizados basados en análisis de consumo. Ejemplo: 
+                    "Tu consumo en standby representa el 12% de tu factura (€18/mes). Aquí tienes 3 formas de reducirlo..."</li>
+                    
+                    <li><strong>CTAs Optimizados:</strong> Texto, color, y posición del CTA optimizados mediante 
+                    reinforcement learning. Variantes: "Ver mi ahorro", "Calcular mi plan", "Quiero ahorrar", etc.</li>
+                </ul>
+                
+                <p><strong>4. Experiencia Web Personalizada (Real-Time Personalization)</strong></p>
+                <p>
+                    El sitio web se adapta en tiempo real al perfil y comportamiento del usuario, creando una experiencia 
+                    única para cada visitante.
+                </p>
+                <ul>
+                    <li><strong>Homepage Adaptativa:</strong> Layout, hero section, y contenido destacado varían según 
+                    segmento. Cliente nuevo ve propuesta de valor y proceso de alta. Cliente existente ve dashboard 
+                    personalizado con consumo, facturas, y recomendaciones.</li>
+                    
+                    <li><strong>Banners Contextuales:</strong> Sistema de gestión de banners con targeting avanzado: 
+                    ubicación geográfica, hora del día, dispositivo, historial de navegación, productos contratados, 
+                    propensión a ofertas. Rotación automática con Thompson Sampling para optimización continua.</li>
+                    
+                    <li><strong>Simuladores Personalizados:</strong> Simulador de tarifas pre-poblado con datos reales 
+                    del cliente (consumo, potencia). Resultados ordenados por ahorro potencial. Integración con CRM 
+                    para seguimiento de leads.</li>
+                    
+                    <li><strong>Chatbot Contextualizado:</strong> Chatbot con acceso al perfil completo del cliente. 
+                    Respuestas personalizadas: "Tu última factura fue de €X el día Y", "Tu consumo este mes va un Z% 
+                    por encima de lo habitual". Escalado inteligente a agente humano cuando detecta frustración o 
+                    consulta compleja.</li>
+                    
+                    <li><strong>Notificaciones Push Web:</strong> Alertas personalizadas: "Tu consumo de hoy va un 30% 
+                    por encima de lo normal", "Tienes una factura pendiente de €X", "Nueva oferta disponible con ahorro 
+                    de €Y/año". Opt-in con tasa de aceptación del 35%.</li>
+                </ul>
+                
+                <p><strong>5. Retención Proactiva (Churn Prevention)</strong></p>
+                <p>
+                    Identificación temprana de clientes en riesgo de abandono y activación de campañas de retención 
+                    personalizadas.
+                </p>
+                <ul>
+                    <li><strong>Detección de Señales de Churn:</strong> Reducción de engagement, visitas a sección de 
+                    "darme de baja", búsquedas de competidores, llamadas a atención al cliente con tono negativo, 
+                    comparación de tarifas en web.</li>
+                    
+                    <li><strong>Intervención Proactiva:</strong> Clientes con churn score > 0.7 reciben llamada de 
+                    account manager con oferta personalizada de retención. Descuentos, mejoras de servicio, o cambio 
+                    de tarifa sin penalización.</li>
+                    
+                    <li><strong>Win-back Campaigns:</strong> Clientes que se dieron de baja reciben serie de emails 
+                    personalizados durante 90 días con ofertas de reactivación. Tasa de win-back: 18%.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- KPIs y Métricas -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    La evaluación del sistema de personalización se basa en métricas técnicas que miden la calidad 
+                    de las predicciones y recomendaciones generadas por los modelos de IA. Estas métricas permiten 
+                    monitorizar el rendimiento del sistema y detectar degradaciones que requieran reentrenamiento.
+                </p>
+                
+                <p><strong>Métricas de Ranking y Recomendación:</strong></p>
+                <ul>
+                    <li><strong>NDCG@K (Normalized Discounted Cumulative Gain):</strong> Mide la calidad del ranking 
+                    de recomendaciones. Penaliza productos relevantes que aparecen en posiciones bajas. NDCG@10 > 0.75 
+                    se considera bueno. Fórmula: DCG = Σ (2^rel_i - 1) / log2(i + 1), normalizado por el DCG ideal.</li>
+                    
+                    <li><strong>MAP@K (Mean Average Precision):</strong> Promedio de precisión calculado en cada 
+                    posición donde aparece un item relevante. MAP@10 > 0.65 indica buen rendimiento. Útil cuando 
+                    hay múltiples items relevantes por usuario.</li>
+                    
+                    <li><strong>Hit Rate@K:</strong> Porcentaje de usuarios para los que al menos 1 de los top-K 
+                    items recomendados es relevante. Hit Rate@10 > 0.80 es el objetivo. Métrica simple pero efectiva 
+                    para evaluar cobertura de recomendaciones.</li>
+                    
+                    <li><strong>MRR (Mean Reciprocal Rank):</strong> Inverso de la posición del primer item relevante. 
+                    MRR = 1/rank_first_relevant. MRR > 0.70 indica que items relevantes aparecen en posiciones altas.</li>
+                </ul>
+                
+                <p><strong>Métricas de Clasificación (Propensión a Comprar):</strong></p>
+                <ul>
+                    <li><strong>AUC-ROC (Area Under ROC Curve):</strong> Mide la capacidad del modelo para distinguir 
+                    entre clases (compra vs no compra). AUC > 0.85 indica excelente discriminación. Independiente del 
+                    threshold de clasificación.</li>
+                    
+                    <li><strong>Precision y Recall:</strong> Precision = TP/(TP+FP) mide exactitud de predicciones 
+                    positivas. Recall = TP/(TP+FN) mide cobertura de casos positivos. Trade-off entre ambas según 
+                    caso de uso. F1-Score = 2 × (Precision × Recall) / (Precision + Recall) combina ambas.</li>
+                    
+                    <li><strong>Log Loss (Cross-Entropy):</strong> Penaliza predicciones confiadas pero incorrectas. 
+                    Log Loss < 0.35 indica buena calibración de probabilidades. Importante cuando se usan scores 
+                    de probabilidad para decisiones.</li>
+                </ul>
+                
+                <p><strong>Métricas de Regresión (Predicción de Valores):</strong></p>
+                <ul>
+                    <li><strong>Precisión del Modelo (Precision, Recall, F1-Score):</strong> Para modelos de clasificación 
+                    (ej: propensión a comprar). Precision = TP / (TP + FP) mide qué porcentaje de predicciones positivas 
+                    fueron correctas. Recall = TP / (TP + FN) mide qué porcentaje de casos positivos reales fueron 
+                    detectados. F1-Score = 2 × (Precision × Recall) / (Precision + Recall) balancea ambas métricas. 
+                    Objetivo: F1-Score > 0.80 para modelos de propensión críticos.</li>
+                    
+                    <li><strong>AUC-ROC (Area Under the Curve - Receiver Operating Characteristic):</strong> Mide la 
+                    capacidad del modelo para distinguir entre clases (ej: comprará vs. no comprará). Valor de 0.5 = 
+                    modelo aleatorio, 1.0 = modelo perfecto. Objetivo: AUC-ROC > 0.85 para modelos de propensión, 
+                    > 0.90 para modelos de churn. Análisis de curvas ROC para seleccionar threshold óptimo según 
+                    trade-off deseado entre precision y recall.</li>
+                    
+                    <li><strong>NDCG (Normalized Discounted Cumulative Gain):</strong> Métrica estándar para sistemas 
+                    de recomendación que considera tanto la relevancia como el ranking de las recomendaciones. 
+                    NDCG@10 mide la calidad de las top-10 recomendaciones. Objetivo: NDCG@10 > 0.75. Complementar 
+                    con métricas de diversidad (Intra-List Diversity) para evitar filter bubbles.</li>
+                    
+                    <li><strong>Latencia de Inferencia (p50, p95, p99):</strong> Tiempo de respuesta del sistema de 
+                    recomendaciones. p50 (mediana) < 50ms, p95 < 100ms, p99 < 200ms. Crítico para experiencia de 
+                    usuario en tiempo real (web, app). Monitorización continua con alertas cuando latencias exceden 
+                    SLAs. Análisis de cuellos de botella: feature retrieval, model scoring, post-processing.</li>
+                    
+                    <li><strong>Cobertura de Recomendaciones:</strong> Porcentaje de usuarios que reciben recomendaciones 
+                    válidas. Objetivo: > 95% de cobertura. Análisis de cold-start problem para usuarios nuevos y 
+                    productos nuevos. Estrategias de fallback para casos sin recomendaciones personalizadas.</li>
+                    
+                    <li><strong>Model Drift Detection:</strong> Monitorización continua de degradación de performance. 
+                    Comparación de distribuciones de features (Population Stability Index - PSI) y métricas de modelo 
+                    entre entrenamiento y producción. Alertas automáticas cuando PSI > 0.25 o AUC-ROC degrada > 5%. 
+                    Trigger de reentrenamiento automático.</li>
+                    
+                    <li><strong>Feature Importance Stability:</strong> Seguimiento de qué features son más importantes 
+                    para las predicciones (SHAP values, permutation importance). Cambios drásticos en feature importance 
+                    pueden indicar cambios en comportamiento de clientes o problemas de calidad de datos.</li>
+                </ul>
+                
+                <p><strong>Métricas de Experiencia de Usuario:</strong></p>
+                <ul>
+                    <li><strong>Relevance Score:</strong> Encuestas post-interacción: "¿Qué tan relevante fue esta 
+                    recomendación?" (escala 1-5). Objetivo: score promedio > 4.0. Análisis de correlación con conversión.</li>
+                    
+                    <li><strong>Diversity Score:</strong> Medida de diversidad en las recomendaciones para evitar 
+                    monotonía. Balance entre personalización (relevancia) y serendipity (descubrimiento).</li>
+                    
+                    <li><strong>Fatigue Metrics:</strong> Monitorización de fatiga del cliente por exceso de comunicaciones. 
+                    Tracking de unsubscribe rate, spam complaints, y engagement decay. Implementación de frequency 
+                    capping inteligente.</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🎯 Objetivos de Precisión Técnica</strong><br>
+                    El sistema debe lograr los siguientes benchmarks técnicos para considerarse production-ready:
+                    <ul style="margin-top: 10px; margin-bottom: 0;">
+                        <li>AUC-ROC > 0.85 en predicción de conversión</li>
+                        <li>NDCG@10 > 0.75 en recomendaciones de productos</li>
+                        <li>F1-Score > 0.80 en propensity scoring</li>
+                        <li>Latencia p95 < 100ms para inferencia en tiempo real</li>
+                        <li>Cobertura > 95% de usuarios activos</li>
+                    </ul>
+                </div>
+                
+                <p><strong>Dashboard de Monitorización:</strong></p>
+                <p>
+                    Power BI dashboard con actualización diaria que integra todas las métricas anteriores. 
+                    Vistas específicas para:
+                </p>
+                <ul>
+                    <li><strong>Executive View:</strong> KPIs de negocio de alto nivel, ROI, impacto en revenue</li>
+                    <li><strong>Marketing View:</strong> Performance de campañas, conversión por canal, engagement</li>
+                    <li><strong>Data Science View:</strong> Métricas de modelos, drift detection, feature importance</li>
+                    <li><strong>Operations View:</strong> SLAs técnicos, latencias, disponibilidad, errores</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Implementación -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🚀</span>
+                Roadmap de Implementación
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    La implementación del sistema de personalización sigue un enfoque iterativo y ágil, con entregas 
+                    incrementales de valor cada 2-3 semanas. El roadmap completo abarca 6 meses desde kick-off hasta 
+                    producción completa, con un MVP funcional disponible al final del mes 2.
+                </p>
+                
+                <p><strong>Fase 1 (Mes 1-2): Fundamentos y MVP</strong></p>
+                <p>
+                    <em>Objetivo: Establecer la infraestructura base y entregar un MVP funcional con recomendaciones 
+                    básicas para validar el concepto y generar primeros resultados.</em>
+                </p>
+                <ul>
+                    <li><strong>Semana 1-2: Setup de Infraestructura</strong>
+                        <ul>
+                            <li>Provisión de recursos Azure (AKS, Databricks, Synapse, ML Workspace)</li>
+                            <li>Configuración de redes, seguridad, y accesos (VPN, Azure AD, RBAC)</li>
+                            <li>Setup de repositorios Git, CI/CD pipelines (Azure DevOps)</li>
+                            <li>Configuración de ambientes: Dev, Staging, Production</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 3-4: Integración de Fuentes de Datos</strong>
+                        <ul>
+                            <li>Conectores a sistemas fuente: CRM (Salesforce), Web Analytics (GA4), Smart Meters, 
+                            Facturación, Transaccional</li>
+                            <li>Ingesta batch inicial (carga histórica de 24 meses)</li>
+                            <li>Ingesta streaming para datos en tiempo real (Event Hubs + Stream Analytics)</li>
+                            <li>Data quality checks y validaciones automáticas</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 5-6: Pipeline de Datos y Feature Engineering</strong>
+                        <ul>
+                            <li>Desarrollo de pipeline ETL en Databricks (medallion architecture: bronze → silver → gold)</li>
+                            <li>Feature engineering inicial: 50+ features básicas (consumo, engagement, demográficas)</li>
+                            <li>Feature Store setup para reutilización y consistencia</li>
+                            <li>Data profiling y análisis exploratorio (EDA)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 7-8: Modelo Baseline y MVP</strong>
+                        <ul>
+                            <li>Entrenamiento de modelo baseline: Collaborative Filtering con ALS</li>
+                            <li>Validación cruzada y tuning de hyperparameters</li>
+                            <li>Deployment de modelo como API REST (Azure ML Endpoints)</li>
+                            <li>Integración con Salesforce Marketing Cloud para campaña piloto</li>
+                            <li><strong>🎯 MVP Release:</strong> Campaña piloto con 10K clientes, recomendaciones 
+                            básicas de productos</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p><strong>Fase 2 (Mes 3-4): Modelos Avanzados y Escalado</strong></p>
+                <p>
+                    <em>Objetivo: Mejorar significativamente la precisión mediante modelos avanzados de deep learning 
+                    y propensity scoring. Escalar a toda la base de clientes.</em>
+                </p>
+                <ul>
+                    <li><strong>Semana 9-10: Deep Learning Models</strong>
+                        <ul>
+                            <li>Implementación de Neural Collaborative Filtering (NCF) con TensorFlow</li>
+                            <li>Arquitectura: Embeddings (128-dim) + 4 capas fully-connected + dropout</li>
+                            <li>Entrenamiento distribuido en GPU cluster (Azure ML Compute)</li>
+                            <li>Comparación A/B vs. modelo baseline: objetivo +15% en NDCG@10</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 11-12: Propensity Scoring System</strong>
+                        <ul>
+                            <li>Feature engineering avanzado: 200+ features con técnicas de aggregation, 
+                            time-series, y embeddings</li>
+                            <li>Entrenamiento de modelos Gradient Boosting (XGBoost, LightGBM) para propensión 
+                            a cada tipo de oferta</li>
+                            <li>Calibración de probabilidades (Platt Scaling, Isotonic Regression)</li>
+                            <li>Validación: AUC-ROC > 0.85, calibration plots, lift curves</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 13-14: API de Inferencia en Tiempo Real</strong>
+                        <ul>
+                            <li>Refactoring de API para latencias < 100ms (p95)</li>
+                            <li>Implementación de caching inteligente (Redis) con TTL adaptativo</li>
+                            <li>Feature serving optimizado: pre-cómputo de features estáticas</li>
+                            <li>Load testing: 1000 req/s con auto-scaling</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 15-16: Escalado a Producción</strong>
+                        <ul>
+                            <li>Rollout gradual: 25% → 50% → 100% de clientes activos</li>
+                            <li>Monitorización intensiva de métricas técnicas y de negocio</li>
+                            <li>Ajustes y optimizaciones basados en feedback real</li>
+                            <li><strong>🚀 Production Release:</strong> Sistema disponible para 100% de clientes</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p><strong>Fase 3 (Mes 5-6): Integración Completa y Optimización Continua</strong></p>
+                <p>
+                    <em>Objetivo: Integración end-to-end con todos los canales de marketing, implementación de 
+                    optimización continua mediante A/B testing, y establecimiento de procesos de MLOps maduros.</em>
+                </p>
+                <ul>
+                    <li><strong>Semana 17-18: Integración Omnicanal</strong>
+                        <ul>
+                            <li>Integración completa con Salesforce Marketing Cloud (Journey Builder, Email Studio, 
+                            Mobile Studio)</li>
+                            <li>Personalización web en tiempo real (Adobe Target o similar)</li>
+                            <li>Personalización en app móvil (push notifications, in-app messages)</li>
+                            <li>Integración con chatbot para recomendaciones contextuales</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 19-20: A/B Testing Framework</strong>
+                        <ul>
+                            <li>Plataforma de experimentación (Optimizely, VWO, o custom)</li>
+                            <li>Framework estadístico: cálculo de sample size, análisis de significancia, 
+                            sequential testing</li>
+                            <li>Testing continuo de estrategias de recomendación, prompts, CTAs, timing</li>
+                            <li>Documentación de learnings y best practices</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 21-22: Dashboard de Monitorización y Alerting</strong>
+                        <ul>
+                            <li>Power BI dashboards con 4 vistas (Executive, Marketing, Data Science, Operations)</li>
+                            <li>Alerting proactivo en Slack/Teams para anomalías y degradaciones</li>
+                            <li>Integración con Azure Monitor y Application Insights</li>
+                            <li>Weekly automated reports para stakeholders</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Semana 23-24: MLOps y Reentrenamiento Automático</strong>
+                        <ul>
+                            <li>Pipeline de reentrenamiento automático (semanal) con validación de calidad</li>
+                            <li>Model registry con versionado y governance</li>
+                            <li>Automated rollback si nuevo modelo degrada performance</li>
+                            <li>Drift detection y alerting automático</li>
+                            <li>Documentación completa de procesos y runbooks</li>
+                            <li><strong>✅ Go-Live Completo:</strong> Sistema en producción con optimización continua</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p><strong>Post-Implementación (Mes 7+): Mejora Continua</strong></p>
+                <ul>
+                    <li><strong>Expansión de Casos de Uso:</strong> Nuevos tipos de recomendaciones (contenido educativo, 
+                    eventos, programas de fidelización)</li>
+                    <li><strong>Modelos Avanzados:</strong> Reinforcement Learning para optimización de secuencias, 
+                    Causal Inference para medir impacto real</li>
+                    <li><strong>Personalización Contextual:</strong> Incorporación de contexto en tiempo real (weather, 
+                    eventos, trending topics)</li>
+                    <li><strong>Explainability:</strong> Implementación de SHAP/LIME para explicar recomendaciones 
+                    a usuarios y reguladores</li>
+                </ul>
+                
+                <p><strong>Equipo Requerido:</strong></p>
+                <ul>
+                    <li>1 Product Owner (dedicación 50%)</li>
+                    <li>1 Scrum Master / Project Manager (dedicación 50%)</li>
+                    <li>2 Data Scientists (ML Engineers)</li>
+                    <li>2 Data Engineers</li>
+                    <li>1 MLOps Engineer</li>
+                    <li>1 Frontend Developer (para integraciones web/app)</li>
+                    <li>1 QA Engineer (testing y validación)</li>
+                    <li>Soporte de arquitectos cloud y seguridad (según necesidad)</li>
+                </ul>
+                
+                <p><strong>Riesgos y Mitigaciones:</strong></p>
+                <ul>
+                    <li><strong>Riesgo:</strong> Calidad de datos insuficiente → <strong>Mitigación:</strong> Data quality 
+                    assessment en semana 1, plan de remediación</li>
+                    <li><strong>Riesgo:</strong> Resistencia al cambio de equipos de marketing → <strong>Mitigación:</strong> 
+                    Change management, training, quick wins tempranos</li>
+                    <li><strong>Riesgo:</strong> Complejidad de integraciones → <strong>Mitigación:</strong> POCs técnicos 
+                    en fase de discovery, arquitectura desacoplada</li>
+                    <li><strong>Riesgo:</strong> Regulación GDPR/privacidad → <strong>Mitigación:</strong> Legal review, 
+                    privacy by design, anonimización</li>
+                </ul>
+                
+                <div class="doc-badge info">MVP - Mes 2</div>
+                <div class="doc-badge">Producción - Mes 4</div>
+                <div class="doc-badge warning">Optimización - Mes 6</div>
+                <div class="doc-badge" style="background: #107C10;">Mejora Continua - Mes 7+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="use-case-container">
     <div class="use-case-header">
         <div class="use-case-icon">👤</div>

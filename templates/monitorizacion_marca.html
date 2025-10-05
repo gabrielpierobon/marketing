@@ -5,42 +5,377 @@
 {% block page_title %}Monitorización de Marca en Tiempo Real{% endblock %}
 
 {% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>👁️ Monitorización de Marca con IA</h2>
+            <p>Guía técnica completa del caso de uso</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <!-- Resumen -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📋</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    <strong>Monitorización de Marca con IA</strong>: Análisis de sentimiento y reputación online
+                </p>
+                
+                <div class="doc-metric-grid">
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">24/7</div>
+                        <div class="doc-metric-label">Monitoreo</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">+300%</div>
+                        <div class="doc-metric-label">Cobertura</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">90%</div>
+                        <div class="doc-metric-label">Precisión</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">€85K</div>
+                        <div class="doc-metric-label">Inversión</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modelos de IA -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        💬 Sentiment Analysis (BERT / RoBERTa)
+                    </div>
+                    <div class="doc-model-desc">
+                        <p>
+                            Análisis de sentimiento avanzado en múltiples idiomas y contextos.
+                        </p>
+                        <p>
+                            <strong>Detalles técnicos:</strong> Este modelo utiliza técnicas avanzadas de machine learning 
+                            para procesar grandes volúmenes de datos y generar predicciones precisas. El sistema está 
+                            optimizado para escalar horizontalmente y procesar millones de registros diariamente.
+                        </p>
+                        <p>
+                            <strong>Aplicación práctica:</strong> El modelo se entrena con datos históricos y se actualiza 
+                            regularmente para mantener su precisión. Las predicciones se integran en tiempo real con los 
+                            sistemas de negocio para automatizar decisiones y acciones.
+                        </p>
+            </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🤗</div>
+                            <div class="doc-tech-name">BERT</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔷</div>
+                            <div class="doc-tech-name">RoBERTa</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🔍 Named Entity Recognition (NER)
+                    </div>
+                    <div class="doc-model-desc">
+                        <p>
+                            Extracción de entidades (marcas, productos, personas) de textos.
+                        </p>
+                        <p>
+                            <strong>Detalles técnicos:</strong> Este modelo utiliza técnicas avanzadas de machine learning 
+                            para procesar grandes volúmenes de datos y generar predicciones precisas. El sistema está 
+                            optimizado para escalar horizontalmente y procesar millones de registros diariamente.
+                        </p>
+                        <p>
+                            <strong>Aplicación práctica:</strong> El modelo se entrena con datos históricos y se actualiza 
+                            regularmente para mantener su precisión. Las predicciones se integran en tiempo real con los 
+                            sistemas de negocio para automatizar decisiones y acciones.
+                        </p>
+            </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🚀</div>
+                            <div class="doc-tech-name">spaCy</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">⚙️</div>
+                            <div class="doc-tech-name">Custom NER</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        📊 Topic Modeling
+                    </div>
+                    <div class="doc-model-desc">
+                        <p>
+                            Identificación automática de temas y tendencias en conversaciones.
+                        </p>
+                        <p>
+                            <strong>Detalles técnicos:</strong> Este modelo utiliza técnicas avanzadas de machine learning 
+                            para procesar grandes volúmenes de datos y generar predicciones precisas. El sistema está 
+                            optimizado para escalar horizontalmente y procesar millones de registros diariamente.
+                        </p>
+                        <p>
+                            <strong>Aplicación práctica:</strong> El modelo se entrena con datos históricos y se actualiza 
+                            regularmente para mantener su precisión. Las predicciones se integran en tiempo real con los 
+                            sistemas de negocio para automatizar decisiones y acciones.
+                        </p>
+            </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">📈</div>
+                            <div class="doc-tech-name">LDA</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🎯</div>
+                            <div class="doc-tech-name">BERTopic</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    La arquitectura del sistema está diseñada siguiendo principios de escalabilidad, alta disponibilidad, 
+                    y seguridad. Utiliza servicios cloud nativos de Azure para garantizar un rendimiento óptimo y costes 
+                    controlados mediante auto-scaling inteligente.
+                </p>
+                
+                <p><strong>Componentes Principales del Stack Tecnológico:</strong></p>
+                <ul><li>Azure Machine Learning para entrenamiento y deployment. Integración completa con el ecosistema de datos empresarial, con conectores nativos y APIs REST para interoperabilidad.</li>
+<li>Azure Databricks para procesamiento de datos. Integración completa con el ecosistema de datos empresarial, con conectores nativos y APIs REST para interoperabilidad.</li>
+<li>Azure Synapse Analytics para data warehousing. Integración completa con el ecosistema de datos empresarial, con conectores nativos y APIs REST para interoperabilidad.</li>
+<li>Power BI para visualización y reporting. Integración completa con el ecosistema de datos empresarial, con conectores nativos y APIs REST para interoperabilidad.</li>
+<li>Azure DevOps para CI/CD de modelos. Integración completa con el ecosistema de datos empresarial, con conectores nativos y APIs REST para interoperabilidad.</li></ul>
+                
+                <p><strong>Flujo de Datos:</strong></p>
+                <ol class="doc-steps">
+                    <li>
+                        <strong>Ingesta de Datos</strong><br>
+                        Recopilación de datos desde múltiples fuentes (CRM, web, transaccional).
+                    </li>
+                    <li>
+                        <strong>Procesamiento y Feature Engineering</strong><br>
+                        Limpieza, transformación y creación de variables predictivas.
+                    </li>
+                    <li>
+                        <strong>Entrenamiento de Modelos</strong><br>
+                        Entrenamiento y validación de modelos con MLOps.
+                    </li>
+                    <li>
+                        <strong>Deployment y Scoring</strong><br>
+                        Despliegue de modelos como APIs REST para inferencia en tiempo real.
+                    </li>
+                    <li>
+                        <strong>Monitorización y Reentrenamiento</strong><br>
+                        Seguimiento de performance y reentrenamiento automático.
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- KPIs -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Métricas Técnicas:</strong></p>
+                <ul>
+                    <li>Precisión, Recall, F1-Score del modelo</li>
+                    <li>AUC-ROC y AUC-PR para clasificación</li>
+                    <li>Latencia de inferencia (p50, p95, p99)</li>
+                    <li>Cobertura de predicciones</li>
+                </ul>
+                
+                <p><strong>Métricas de Negocio:</strong></p>
+                <ul>
+                    <li>ROI del caso de uso</li>
+                    <li>Impacto en KPIs clave de negocio</li>
+                    <li>Adopción por usuarios finales</li>
+                    <li>Satisfacción del cliente</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="use-case-container">
     <div class="use-case-header">
         <div class="use-case-icon">📡</div>
         <div class="use-case-info">
             <h1>Monitorización de Marca en Tiempo Real</h1>
-            <p>Detecte crisis y oportunidades antes de que escalen. Análisis de sentimiento en 100+ idiomas y 100K+ fuentes.</p>
+            <p>Análisis de sentimiento con IA en 100+ idiomas y 100K+ fuentes. Detecta crisis y oportunidades al instante.</p>
         </div>
     </div>
 
-    <!-- Menciones Recientes -->
-    <div class="card">
-        <div class="card-header">
-            <h2>💬 Menciones Recientes</h2>
-            <div class="sentiment-filters">
-                <button class="btn btn-sm btn-success">Positivo (847)</button>
-                <button class="btn btn-sm btn-secondary">Neutral (234)</button>
-                <button class="btn btn-sm btn-danger">Negativo (45)</button>
+    <!-- Métricas Principales -->
+    <div class="metrics-grid-monitor">
+        <div class="metric-card-monitor">
+            <div class="metric-header-monitor">
+                <span class="metric-icon-monitor">💬</span>
+                <span class="metric-label-monitor">Menciones</span>
+            </div>
+            <div class="metric-value-monitor">{{ metricas.menciones_hoy|format_number }}</div>
+            <div class="metric-detail">Hoy | {{ metricas.menciones_semana|format_number }} esta semana</div>
+        </div>
+        
+        <div class="metric-card-monitor sentiment-card">
+            <div class="metric-header-monitor">
+                <span class="metric-icon-monitor">📊</span>
+                <span class="metric-label-monitor">Sentimiento</span>
+            </div>
+            <div class="sentiment-breakdown">
+                <div class="sentiment-item">
+                    <span class="sentiment-emoji">😊</span>
+                    <span class="sentiment-percent">{{ metricas.sentimiento_positivo }}%</span>
+                </div>
+                <div class="sentiment-item">
+                    <span class="sentiment-emoji">😐</span>
+                    <span class="sentiment-percent">{{ metricas.sentimiento_neutral }}%</span>
+                </div>
+                <div class="sentiment-item">
+                    <span class="sentiment-emoji">😟</span>
+                    <span class="sentiment-percent">{{ metricas.sentimiento_negativo }}%</span>
+                </div>
             </div>
         </div>
-        <div class="card-body">
+        
+        <div class="metric-card-monitor">
+            <div class="metric-header-monitor">
+                <span class="metric-icon-monitor">👥</span>
+                <span class="metric-label-monitor">Alcance</span>
+            </div>
+            <div class="metric-value-monitor">{{ (metricas.alcance_total / 1000000)|round(1) }}M</div>
+            <div class="metric-detail">Engagement: {{ metricas.engagement_rate }}%</div>
+        </div>
+        
+        <div class="metric-card-monitor alert-card">
+            <div class="metric-header-monitor">
+                <span class="metric-icon-monitor">🚨</span>
+                <span class="metric-label-monitor">Alertas</span>
+            </div>
+            <div class="alert-stats">
+                <div class="alert-stat crisis">
+                    <span class="alert-number">{{ metricas.crisis_detectadas }}</span>
+                    <span class="alert-label">Crisis</span>
+                </div>
+                <div class="alert-stat opportunity">
+                    <span class="alert-number">{{ metricas.oportunidades_detectadas }}</span>
+                    <span class="alert-label">Oportunidades</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menciones en Tiempo Real -->
+    <div class="card">
+        <div class="card-header">
+            <h2>💬 Menciones en Tiempo Real</h2>
+            <div class="sentiment-filters">
+                <button class="filter-btn filter-all active" onclick="filtrarMenciones('all')">
+                    Todas ({{ menciones|length }})
+                </button>
+                <button class="filter-btn filter-positivo" onclick="filtrarMenciones('positivo')">
+                    😊 Positivo
+                </button>
+                <button class="filter-btn filter-neutral" onclick="filtrarMenciones('neutral')">
+                    😐 Neutral
+                </button>
+                <button class="filter-btn filter-negativo" onclick="filtrarMenciones('negativo')">
+                    😟 Negativo
+                </button>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
             <div class="mentions-list">
                 {% for mencion in menciones %}
-                <div class="mention-item mention-{{ mencion.sentimiento }}">
-                    <div class="mention-icon">
-                        {% if mencion.sentimiento == 'positivo' %}😊
-                        {% elif mencion.sentimiento == 'neutral' %}😐
-                        {% else %}😟{% endif %}
+                <div class="mention-card mention-{{ mencion.sentimiento }}" data-sentimiento="{{ mencion.sentimiento }}">
+                    <div class="mention-header">
+                        <div class="mention-user-info">
+                            <div class="mention-avatar">{{ mencion.usuario[0] if mencion.usuario[0] != '@' else mencion.usuario[1] }}</div>
+                            <div>
+                                <div class="mention-user">{{ mencion.usuario }}</div>
+                                <div class="mention-meta">
+                                    <span class="mention-source-badge source-{{ mencion.fuente|lower }}">{{ mencion.fuente }}</span>
+                                    <span class="mention-followers">{{ mencion.seguidores|format_number }} seguidores</span>
+                                    <span class="mention-time">{{ mencion.tiempo }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mention-sentiment-score">
+                            <div class="sentiment-circle sentiment-{{ mencion.sentimiento }}">
+                                {{ (mencion.score_sentimiento * 100)|round(0)|int }}%
+                            </div>
+                        </div>
                     </div>
-                    <div class="mention-content">
-                        <div class="mention-source">{{ mencion.fuente }}</div>
-                        <div class="mention-text">{{ mencion.texto }}</div>
-                        <div class="mention-time">{{ mencion.tiempo }}</div>
+                    
+                    <div class="mention-text">{{ mencion.texto }}</div>
+                    
+                    <div class="mention-topics">
+                        {% for tema in mencion.temas %}
+                        <span class="topic-badge">{{ tema }}</span>
+                        {% endfor %}
                     </div>
+                    
+                    <div class="mention-stats">
+                        <div class="mention-stat">
+                            <span class="stat-icon">❤️</span>
+                            <span>{{ mencion.engagement }}</span>
+                        </div>
+                        <div class="mention-stat">
+                            <span class="stat-icon">👁️</span>
+                            <span>{{ mencion.alcance|format_number }}</span>
+                        </div>
+                    </div>
+                    
                     <div class="mention-actions">
-                        <button class="btn btn-sm btn-outline">Responder</button>
-                        <button class="btn btn-sm btn-outline">Escalar</button>
+                        <button class="action-btn" onclick="responderMencion('{{ mencion.id }}')">
+                            <span>💬</span> Responder
+                        </button>
+                        <button class="action-btn" onclick="escalarMencion('{{ mencion.id }}')">
+                            <span>⚠️</span> Escalar
+                        </button>
+                        <button class="action-btn" onclick="analizarMencion('{{ mencion.id }}')">
+                            <span>🔍</span> Analizar
+                        </button>
                     </div>
                 </div>
                 {% endfor %}
@@ -48,28 +383,597 @@
         </div>
     </div>
 
-    <!-- Métricas -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">💬</div>
-            <div class="stat-value">1,126</div>
-            <div class="stat-label">Menciones Hoy</div>
+    <!-- Temas Trending -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔥 Temas Trending</h2>
+            <span class="card-subtitle">Últimas 24 horas</span>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">😊</div>
-            <div class="stat-value">75%</div>
-            <div class="stat-label">Sentimiento Positivo</div>
+        <div class="card-body">
+            <div class="trending-topics-list">
+                {% for tema in temas_trending %}
+                <div class="trending-topic-item">
+                    <div class="topic-rank">{{ loop.index }}</div>
+                    <div class="topic-info">
+                        <div class="topic-name">{{ tema.tema }}</div>
+                        <div class="topic-stats-row">
+                            <span class="topic-mentions">{{ tema.menciones|format_number }} menciones</span>
+                            <span class="topic-growth {% if tema.crecimiento > 0 %}positive{% else %}negative{% endif %}">
+                                {% if tema.crecimiento > 0 %}↗{% else %}↘{% endif %} {{ tema.crecimiento|abs }}%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="topic-sentiment">
+                        <div class="sentiment-bar">
+                            <div class="sentiment-fill" style="width: {{ (tema.sentimiento * 100)|round(0) }}%; background: {% if tema.sentimiento > 0.7 %}#107C10{% elif tema.sentimiento > 0.5 %}#FFB900{% else %}#D13438{% endif %};"></div>
+                        </div>
+                        <span class="sentiment-value">{{ (tema.sentimiento * 100)|round(0)|int }}%</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">⚡</div>
-            <div class="stat-value">1.2 min</div>
-            <div class="stat-label">Tiempo Detección</div>
+    </div>
+
+    <!-- Análisis Competencia -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🏆 Share of Voice - Competencia</h2>
+            <span class="card-subtitle">Sector energético</span>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-value">-85%</div>
-            <div class="stat-label">Response Time</div>
+        <div class="card-body">
+            <div class="competencia-grid">
+                {% for comp in competencia %}
+                <div class="competencia-card {% if comp.empresa == 'Iberdrola' %}iberdrola-card{% endif %}">
+                    <div class="competencia-header">
+                        <div class="competencia-name">{{ comp.empresa }}</div>
+                        {% if comp.empresa == 'Iberdrola' %}
+                        <span class="badge badge-primary">Nosotros</span>
+                        {% endif %}
+                    </div>
+                    <div class="competencia-share">
+                        <div class="share-value">{{ comp.share_of_voice }}%</div>
+                        <div class="share-label">Share of Voice</div>
+                    </div>
+                    <div class="competencia-stats">
+                        <div class="comp-stat">
+                            <span class="comp-stat-label">Menciones</span>
+                            <span class="comp-stat-value">{{ comp.menciones|format_number }}</span>
+                        </div>
+                        <div class="comp-stat">
+                            <span class="comp-stat-label">Sentimiento</span>
+                            <span class="comp-stat-value">{{ (comp.sentimiento * 100)|round(0)|int }}%</span>
+                        </div>
+                    </div>
+                    <div class="share-bar">
+                        <div class="share-fill" style="width: {{ comp.share_of_voice }}%; background: {% if comp.empresa == 'Iberdrola' %}#0078D4{% else %}#D1D1D1{% endif %};"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Estilos específicos para Monitorización */
+.metrics-grid-monitor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card-monitor {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.metric-card-monitor:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+}
+
+.metric-header-monitor {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+    margin-bottom: var(--spacing-m);
+}
+
+.metric-icon-monitor {
+    font-size: 24px;
+}
+
+.metric-label-monitor {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    font-weight: var(--font-weight-semibold);
+}
+
+.metric-value-monitor {
+    font-size: var(--font-size-800);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: var(--spacing-xs);
+}
+
+.metric-detail {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.sentiment-breakdown {
+    display: flex;
+    justify-content: space-around;
+    margin-top: var(--spacing-m);
+}
+
+.sentiment-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.sentiment-emoji {
+    font-size: 32px;
+}
+
+.sentiment-percent {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.alert-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: var(--spacing-m);
+}
+
+.alert-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.alert-number {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+}
+
+.alert-stat.crisis .alert-number {
+    color: var(--danger);
+}
+
+.alert-stat.opportunity .alert-number {
+    color: var(--success);
+}
+
+.alert-label {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+/* Filtros */
+.sentiment-filters {
+    display: flex;
+    gap: var(--spacing-s);
+}
+
+.filter-btn {
+    padding: var(--spacing-s) var(--spacing-m);
+    border: 1px solid var(--neutral-stroke-1);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.filter-btn:hover {
+    background: var(--neutral-background-3);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Menciones */
+.mentions-list {
+    display: grid;
+    gap: var(--spacing-m);
+    padding: var(--spacing-l);
+}
+
+.mention-card {
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border-left: 4px solid;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.mention-card.mention-positivo {
+    border-left-color: var(--success);
+}
+
+.mention-card.mention-neutral {
+    border-left-color: var(--warning);
+}
+
+.mention-card.mention-negativo {
+    border-left-color: var(--danger);
+}
+
+.mention-card:hover {
+    box-shadow: var(--shadow-4);
+    transform: translateX(4px);
+}
+
+.mention-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-m);
+}
+
+.mention-user-info {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-m);
+}
+
+.mention-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0078D4, #106EBE);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.mention-user {
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: 4px;
+}
+
+.mention-meta {
+    display: flex;
+    gap: var(--spacing-s);
+    flex-wrap: wrap;
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.mention-source-badge {
+    padding: 2px 8px;
+    border-radius: var(--border-radius-small);
+    font-weight: var(--font-weight-semibold);
+}
+
+.source-twitter { background: #E6F2FA; color: #1DA1F2; }
+.source-facebook { background: #E7F3FF; color: #1877F2; }
+.source-instagram { background: #FDE7E9; color: #E4405F; }
+.source-linkedin { background: #E6F2FA; color: #0A66C2; }
+
+.sentiment-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-200);
+}
+
+.sentiment-circle.sentiment-positivo {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.sentiment-circle.sentiment-neutral {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.sentiment-circle.sentiment-negativo {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.mention-text {
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-1);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-m);
+}
+
+.mention-topics {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-m);
+}
+
+.topic-badge {
+    padding: 4px 10px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+}
+
+.mention-stats {
+    display: flex;
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-m);
+    padding-bottom: var(--spacing-m);
+    border-bottom: 1px solid var(--neutral-stroke-1);
+}
+
+.mention-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-2);
+}
+
+.mention-actions {
+    display: flex;
+    gap: var(--spacing-s);
+}
+
+.action-btn {
+    padding: var(--spacing-s) var(--spacing-m);
+    border: 1px solid var(--neutral-stroke-1);
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-200);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.action-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Trending Topics */
+.trending-topics-list {
+    display: grid;
+    gap: var(--spacing-m);
+}
+
+.trending-topic-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    padding: var(--spacing-m);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-medium);
+}
+
+.topic-rank {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-400);
+    flex-shrink: 0;
+}
+
+.topic-info {
+    flex: 1;
+}
+
+.topic-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: 4px;
+}
+
+.topic-stats-row {
+    display: flex;
+    gap: var(--spacing-m);
+    font-size: var(--font-size-200);
+}
+
+.topic-mentions {
+    color: var(--neutral-foreground-3);
+}
+
+.topic-growth {
+    font-weight: var(--font-weight-semibold);
+}
+
+.topic-growth.positive {
+    color: var(--success);
+}
+
+.topic-growth.negative {
+    color: var(--danger);
+}
+
+.topic-sentiment {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+    min-width: 120px;
+}
+
+.sentiment-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--neutral-background-4);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.sentiment-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width var(--duration-slow) var(--curve-decelerate-max);
+}
+
+.sentiment-value {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-2);
+    min-width: 40px;
+}
+
+/* Competencia */
+.competencia-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.competencia-card {
+    background: var(--neutral-background-2);
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.competencia-card.iberdrola-card {
+    border: 2px solid var(--primary);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--neutral-background-2) 100%);
+}
+
+.competencia-card:hover {
+    box-shadow: var(--shadow-4);
+    transform: translateY(-2px);
+}
+
+.competencia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-m);
+}
+
+.competencia-name {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+.competencia-share {
+    text-align: center;
+    margin-bottom: var(--spacing-m);
+}
+
+.share-value {
+    font-size: var(--font-size-800);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.share-label {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.competencia-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: var(--spacing-m);
+}
+
+.comp-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.comp-stat-label {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.comp-stat-value {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+.share-bar {
+    height: 8px;
+    background: var(--neutral-background-4);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.share-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width var(--duration-slow) var(--curve-decelerate-max);
+}
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function filtrarMenciones(sentimiento) {
+    const menciones = document.querySelectorAll('.mention-card');
+    const filtros = document.querySelectorAll('.filter-btn');
+    
+    // Actualizar botones activos
+    filtros.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filtrar menciones
+    menciones.forEach(mencion => {
+        if (sentimiento === 'all') {
+            mencion.style.display = 'block';
+        } else {
+            const mencionSentimiento = mencion.getAttribute('data-sentimiento');
+            mencion.style.display = mencionSentimiento === sentimiento ? 'block' : 'none';
+        }
+    });
+}
+
+function responderMencion(mencionId) {
+    alert(`Responder a mención: ${mencionId}\n\nEn un entorno real, esto abriría:\n\n✓ Editor de respuesta con sugerencias de IA\n✓ Templates de respuesta predefinidos\n✓ Análisis de tono y sentimiento\n✓ Publicación directa en la plataforma social`);
+}
+
+function escalarMencion(mencionId) {
+    alert(`Escalar mención: ${mencionId}\n\nEn un entorno real, esto:\n\n✓ Crearía un ticket de soporte\n✓ Notificaría al equipo de crisis\n✓ Activaría workflow de escalación\n✓ Registraría en el sistema de gestión`);
+}
+
+function analizarMencion(mencionId) {
+    alert(`Analizar mención: ${mencionId}\n\nEn un entorno real, esto mostraría:\n\n✓ Análisis detallado de sentimiento\n✓ Perfil completo del usuario\n✓ Historial de interacciones\n✓ Influencia y alcance potencial\n✓ Recomendaciones de acción`);
+}
+</script>
 {% endblock %}

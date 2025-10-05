@@ -1,0 +1,998 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <h1>🔗 Integración con Ecosistema Empresarial</h1>
+        <p class="subtitle">Conecta los endpoints de IA con tus aplicaciones empresariales</p>
+    </div>
+
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-apis">
+        <div class="metric-card-apis">
+            <div class="metric-icon-apis">🚀</div>
+            <div class="metric-content">
+                <div class="metric-value-apis">{{ metricas.total_endpoints }}</div>
+                <div class="metric-label-apis">Endpoints de IA</div>
+            </div>
+        </div>
+        <div class="metric-card-apis">
+            <div class="metric-icon-apis">🔌</div>
+            <div class="metric-content">
+                <div class="metric-value-apis">{{ metricas.total_aplicaciones }}</div>
+                <div class="metric-label-apis">Aplicaciones Integradas</div>
+            </div>
+        </div>
+        <div class="metric-card-apis">
+            <div class="metric-icon-apis">📊</div>
+            <div class="metric-content">
+                <div class="metric-value-apis">{{ '{:,.1f}'.format(metricas.requests_totales / 1000000) }}M</div>
+                <div class="metric-label-apis">Requests/Mes</div>
+            </div>
+        </div>
+        <div class="metric-card-apis">
+            <div class="metric-icon-apis">⚡</div>
+            <div class="metric-content">
+                <div class="metric-value-apis">{{ '{:.0f}'.format(metricas.latencia_promedio) }}ms</div>
+                <div class="metric-label-apis">Latencia Promedio</div>
+            </div>
+        </div>
+        <div class="metric-card-apis">
+            <div class="metric-icon-apis">✅</div>
+            <div class="metric-content">
+                <div class="metric-value-apis">{{ '{:.1f}'.format(metricas.uptime_promedio) }}%</div>
+                <div class="metric-label-apis">Uptime Promedio</div>
+            </div>
+        </div>
+        <div class="metric-card-apis">
+            <div class="metric-icon-apis">🔗</div>
+            <div class="metric-content">
+                <div class="metric-value-apis">{{ metricas.integraciones_activas }}</div>
+                <div class="metric-label-apis">Integraciones Activas</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Endpoints de IA Disponibles -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🚀 Endpoints de IA Disponibles</h2>
+            <button class="btn btn-primary" onclick="verDocumentacionAPI()">
+                <span>📖</span> Ver Documentación Completa
+            </button>
+        </div>
+        <div class="endpoints-grid">
+            {% for endpoint in endpoints_ia %}
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <div class="endpoint-metodo metodo-{{ endpoint.metodo.lower() }}">{{ endpoint.metodo }}</div>
+                    <div class="endpoint-uptime">
+                        <span class="uptime-dot"></span>
+                        {{ endpoint.uptime }}% uptime
+                    </div>
+                </div>
+                <h3 class="endpoint-nombre">{{ endpoint.nombre }}</h3>
+                <p class="endpoint-descripcion">{{ endpoint.descripcion }}</p>
+                <div class="endpoint-url">
+                    <code>{{ endpoint.endpoint }}</code>
+                    <button class="btn-copy" onclick="copiarEndpoint('{{ endpoint.endpoint }}')">📋</button>
+                </div>
+                <div class="endpoint-stats">
+                    <div class="endpoint-stat">
+                        <span class="stat-label">Latencia</span>
+                        <span class="stat-value">{{ endpoint.latencia }}</span>
+                    </div>
+                    <div class="endpoint-stat">
+                        <span class="stat-label">Requests/mes</span>
+                        <span class="stat-value">{{ '{:,.0f}'.format(endpoint.requests_mes / 1000) }}K</span>
+                    </div>
+                </div>
+                <div class="endpoint-integraciones">
+                    <div class="integraciones-label">Integrado con:</div>
+                    <div class="integraciones-tags">
+                        {% for app in endpoint.integraciones %}
+                        <span class="integracion-tag">{{ app }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="endpoint-actions">
+                    <button class="btn-endpoint" onclick="probarEndpoint('{{ endpoint.id }}')">
+                        🧪 Probar
+                    </button>
+                    <button class="btn-endpoint" onclick="verEjemplo('{{ endpoint.id }}')">
+                        💻 Ver Ejemplo
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Aplicaciones Empresariales Integradas -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔌 Aplicaciones Empresariales Integradas</h2>
+            <p class="card-subtitle">Sistemas que consumen nuestros endpoints de IA</p>
+        </div>
+        <div class="aplicaciones-grid">
+            {% for app in aplicaciones_empresariales %}
+            <div class="aplicacion-card">
+                <div class="aplicacion-header">
+                    <div class="aplicacion-logo">{{ app.logo }}</div>
+                    <div class="aplicacion-info">
+                        <h3 class="aplicacion-nombre">{{ app.nombre }}</h3>
+                        <span class="aplicacion-categoria">{{ app.categoria }}</span>
+                    </div>
+                    <div class="aplicacion-estado estado-{{ app.estado }}">
+                        <span class="status-dot-app"></span>
+                    </div>
+                </div>
+                <p class="aplicacion-descripcion">{{ app.descripcion }}</p>
+                <div class="aplicacion-integracion">
+                    <div class="integracion-tipo">
+                        <span class="tipo-icon">🔧</span>
+                        <span>{{ app.tipo_integracion }}</span>
+                    </div>
+                </div>
+                <div class="aplicacion-endpoints">
+                    <div class="endpoints-label">Endpoints conectados: <strong>{{ app.endpoints_conectados|length }}</strong></div>
+                    <div class="endpoints-list">
+                        {% for ep_id in app.endpoints_conectados %}
+                        {% set endpoint_info = endpoints_ia|selectattr('id', 'equalto', ep_id)|first %}
+                        {% if endpoint_info %}
+                        <div class="endpoint-badge" title="{{ endpoint_info.nombre }}">
+                            {{ endpoint_info.nombre.split()[0] }}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="aplicacion-actions">
+                    <button class="btn-app-action" onclick="verIntegracion('{{ app.nombre }}')">
+                        Ver Integración
+                    </button>
+                    <button class="btn-app-action" onclick="configurarApp('{{ app.nombre }}')">
+                        Configurar
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Diagrama de Integración -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔄 Flujo de Integración</h2>
+            <p class="card-subtitle">Cómo las aplicaciones empresariales consumen nuestros endpoints</p>
+        </div>
+        <div class="flujo-integracion">
+            <div class="flujo-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Aplicación Empresarial</h4>
+                    <p>Salesforce, Adobe, WhatsApp, etc.</p>
+                </div>
+            </div>
+            <div class="flujo-arrow">→</div>
+            <div class="flujo-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>API Gateway</h4>
+                    <p>Autenticación, Rate Limiting, Logging</p>
+                </div>
+            </div>
+            <div class="flujo-arrow">→</div>
+            <div class="flujo-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Endpoint de IA</h4>
+                    <p>Procesamiento con modelos ML/LLM</p>
+                </div>
+            </div>
+            <div class="flujo-arrow">→</div>
+            <div class="flujo-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Respuesta JSON</h4>
+                    <p>Predicciones, recomendaciones, contenido</p>
+                </div>
+            </div>
+            <div class="flujo-arrow">→</div>
+            <div class="flujo-step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>Aplicación Consume</h4>
+                    <p>Acción automatizada en el sistema</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejemplo de Request/Response -->
+    <div class="card">
+        <div class="card-header">
+            <h2>💻 Ejemplo de Integración: Personalización API</h2>
+            <div class="example-tabs">
+                <button class="tab-btn active" onclick="cambiarTab('request')">Request</button>
+                <button class="tab-btn" onclick="cambiarTab('response')">Response</button>
+                <button class="tab-btn" onclick="cambiarTab('code')">Código de Integración</button>
+            </div>
+        </div>
+        
+        <div class="example-content" id="request-tab">
+            <div class="code-header">
+                <span class="code-lang">POST /api/v1/personalizacion/recomendaciones</span>
+                <button class="btn-copy-code" onclick="copiarCodigo('request')">📋 Copiar</button>
+            </div>
+            <pre class="code-block"><code id="request-code">{
+  "customer_id": "CUS-2024-00123",
+  "context": {
+    "channel": "web",
+    "page": "dashboard",
+    "device": "desktop"
+  },
+  "options": {
+    "max_recommendations": 5,
+    "include_reasoning": true,
+    "filter_categories": ["energia", "servicios"]
+  }
+}</code></pre>
+        </div>
+
+        <div class="example-content hidden" id="response-tab">
+            <div class="code-header">
+                <span class="code-lang">200 OK - application/json</span>
+                <button class="btn-copy-code" onclick="copiarCodigo('response')">📋 Copiar</button>
+            </div>
+            <pre class="code-block"><code id="response-code">{
+  "customer_id": "CUS-2024-00123",
+  "recommendations": [
+    {
+      "product_id": "PROD-SOLAR-001",
+      "product_name": "Instalación Solar Residencial",
+      "score": 0.87,
+      "reasoning": "Alto consumo nocturno + vivienda en propiedad + zona alta irradiación",
+      "estimated_savings": "€450/año",
+      "category": "energia"
+    },
+    {
+      "product_id": "PROD-TARIFA-002",
+      "product_name": "Tarifa Discriminación Horaria",
+      "score": 0.82,
+      "reasoning": "Patrón de consumo con picos nocturnos",
+      "estimated_savings": "€180/año",
+      "category": "energia"
+    }
+  ],
+  "metadata": {
+    "model_version": "v2.3.1",
+    "inference_time_ms": 85,
+    "timestamp": "2024-01-15T10:30:45Z"
+  }
+}</code></pre>
+        </div>
+
+        <div class="example-content hidden" id="code-tab">
+            <div class="code-header">
+                <span class="code-lang">Python - Salesforce Integration</span>
+                <button class="btn-copy-code" onclick="copiarCodigo('code')">📋 Copiar</button>
+            </div>
+            <pre class="code-block"><code id="integration-code">import requests
+from simple_salesforce import Salesforce
+
+# Configuración
+API_ENDPOINT = "https://api.iberdrola-ia.com/v1/personalizacion/recomendaciones"
+API_KEY = "your-api-key-here"
+
+# Conectar a Salesforce
+sf = Salesforce(username='user@iberdrola.com', 
+                password='password', 
+                security_token='token')
+
+# Obtener cliente de Salesforce
+customer = sf.Contact.get('003XXXXXXXXXXXXXXX')
+
+# Llamar a API de Personalización
+response = requests.post(
+    API_ENDPOINT,
+    headers={
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    },
+    json={
+        "customer_id": customer['Customer_ID__c'],
+        "context": {
+            "channel": "crm",
+            "page": "contact_detail"
+        },
+        "options": {
+            "max_recommendations": 3
+        }
+    }
+)
+
+# Procesar recomendaciones
+if response.status_code == 200:
+    recommendations = response.json()['recommendations']
+    
+    # Actualizar campo en Salesforce
+    sf.Contact.update(
+        customer['Id'],
+        {
+            'AI_Recommendations__c': ', '.join([r['product_name'] for r in recommendations]),
+            'Next_Best_Action__c': recommendations[0]['product_name'],
+            'Estimated_Value__c': recommendations[0]['estimated_savings']
+        }
+    )
+    
+    print(f"✅ Recomendaciones actualizadas para {customer['Name']}")
+else:
+    print(f"❌ Error: {response.status_code}")</code></pre>
+        </div>
+    </div>
+
+    <!-- Seguridad y Autenticación -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔒 Seguridad y Autenticación</h2>
+        </div>
+        <div class="seguridad-grid">
+            <div class="seguridad-item">
+                <div class="seguridad-icon">🔑</div>
+                <h4>API Keys</h4>
+                <p>Autenticación mediante Bearer tokens con rotación automática cada 90 días</p>
+            </div>
+            <div class="seguridad-item">
+                <div class="seguridad-icon">🛡️</div>
+                <h4>OAuth 2.0</h4>
+                <p>Soporte para flujos OAuth 2.0 con aplicaciones empresariales</p>
+            </div>
+            <div class="seguridad-item">
+                <div class="seguridad-icon">⚡</div>
+                <h4>Rate Limiting</h4>
+                <p>1000 requests/min por API key con burst de 100 requests/segundo</p>
+            </div>
+            <div class="seguridad-item">
+                <div class="seguridad-icon">📊</div>
+                <h4>Monitoring</h4>
+                <p>Logs detallados, alertas en tiempo real, dashboards de uso</p>
+            </div>
+            <div class="seguridad-item">
+                <div class="seguridad-icon">🔐</div>
+                <h4>Encriptación</h4>
+                <p>TLS 1.3 en tránsito, AES-256 en reposo, datos PII anonimizados</p>
+            </div>
+            <div class="seguridad-item">
+                <div class="seguridad-icon">✅</div>
+                <h4>Compliance</h4>
+                <p>GDPR compliant, ISO 27001, SOC 2 Type II certificado</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Métricas de APIs */
+.metrics-grid-apis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric-card-apis {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.metric-card-apis:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.metric-icon-apis {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+}
+
+.metric-value-apis {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.metric-label-apis {
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Endpoints Grid */
+.endpoints-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.endpoint-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.endpoint-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+    transform: translateY(-4px);
+}
+
+.endpoint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.endpoint-metodo {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.metodo-post {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.metodo-get {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.endpoint-uptime {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #4caf50;
+    font-weight: 600;
+}
+
+.uptime-dot {
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.endpoint-nombre {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.endpoint-descripcion {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.endpoint-url {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    border-left: 3px solid #667eea;
+}
+
+.endpoint-url code {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #667eea;
+    font-weight: 600;
+}
+
+.btn-copy {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-copy:hover {
+    transform: scale(1.2);
+}
+
+.endpoint-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.endpoint-stat {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.stat-value {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.endpoint-integraciones {
+    margin-bottom: 16px;
+}
+
+.integraciones-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.integraciones-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.integracion-tag {
+    padding: 4px 10px;
+    background: #e3f2fd;
+    color: #1565c0;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.endpoint-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-endpoint {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-endpoint:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Aplicaciones Grid */
+.aplicaciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.aplicacion-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.aplicacion-card:hover {
+    border-color: #4caf50;
+    box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+}
+
+.aplicacion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.aplicacion-logo {
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.aplicacion-info {
+    flex: 1;
+}
+
+.aplicacion-nombre {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 4px 0;
+}
+
+.aplicacion-categoria {
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.aplicacion-estado {
+    width: 12px;
+    height: 12px;
+}
+
+.status-dot-app {
+    width: 12px;
+    height: 12px;
+    background: #4caf50;
+    border-radius: 50%;
+    display: block;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    animation: pulse 2s infinite;
+}
+
+.aplicacion-descripcion {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.aplicacion-integracion {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.integracion-tipo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+}
+
+.tipo-icon {
+    font-size: 16px;
+}
+
+.aplicacion-endpoints {
+    margin-bottom: 16px;
+}
+
+.endpoints-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.endpoints-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.endpoint-badge {
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.aplicacion-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-app-action {
+    padding: 10px 16px;
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-app-action:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Flujo de Integración */
+.flujo-integracion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.flujo-step {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0 auto 12px;
+}
+
+.step-content h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+}
+
+.step-content p {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+.flujo-arrow {
+    font-size: 32px;
+    color: #667eea;
+    font-weight: 700;
+    margin: 0 10px;
+}
+
+/* Ejemplo de Código */
+.example-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.example-content {
+    margin-top: 20px;
+}
+
+.example-content.hidden {
+    display: none;
+}
+
+.code-header {
+    background: #2d2d2d;
+    padding: 12px 16px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.code-lang {
+    color: #4caf50;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+.btn-copy-code {
+    padding: 6px 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-copy-code:hover {
+    background: #5568d3;
+}
+
+.code-block {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+    overflow-x: auto;
+    margin: 0;
+}
+
+.code-block code {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #d4d4d4;
+}
+
+/* Seguridad Grid */
+.seguridad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.seguridad-item {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid #f0f0f0;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.seguridad-item:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+}
+
+.seguridad-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.seguridad-item h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+}
+
+.seguridad-item p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .flujo-integracion {
+        flex-direction: column;
+    }
+    
+    .flujo-arrow {
+        transform: rotate(90deg);
+        margin: 10px 0;
+    }
+}
+</style>
+
+<script>
+function verDocumentacionAPI() {
+    alert('Abriendo documentación completa de API...\n\nIncluye:\n- Referencia completa de endpoints\n- Ejemplos de código\n- Guías de integración\n- SDKs disponibles');
+}
+
+function copiarEndpoint(endpoint) {
+    navigator.clipboard.writeText(endpoint);
+    alert('✅ Endpoint copiado al portapapeles:\n' + endpoint);
+}
+
+function probarEndpoint(endpointId) {
+    alert(`🧪 Abriendo playground para probar: ${endpointId}\n\nPodrás:\n- Enviar requests de prueba\n- Ver respuestas en tiempo real\n- Ajustar parámetros\n- Generar código de ejemplo`);
+}
+
+function verEjemplo(endpointId) {
+    alert(`💻 Ver ejemplos de código para: ${endpointId}\n\nDisponible en:\n- Python\n- JavaScript/Node.js\n- Java\n- C#\n- PHP`);
+}
+
+function verIntegracion(appName) {
+    alert(`Ver guía de integración con ${appName}\n\nIncluye:\n- Pasos de configuración\n- Autenticación\n- Ejemplos de código\n- Best practices`);
+}
+
+function configurarApp(appName) {
+    alert(`Configurar integración con ${appName}\n\nOpciones:\n- API Keys\n- Webhooks\n- Rate limits\n- Notificaciones`);
+}
+
+function cambiarTab(tabName) {
+    // Ocultar todos los tabs
+    document.querySelectorAll('.example-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+    
+    // Remover active de todos los botones
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Mostrar tab seleccionado
+    document.getElementById(tabName + '-tab').classList.remove('hidden');
+    
+    // Activar botón correspondiente
+    event.target.classList.add('active');
+}
+
+function copiarCodigo(tipo) {
+    const codeElement = document.getElementById(tipo + '-code');
+    const code = codeElement.textContent;
+    navigator.clipboard.writeText(code);
+    alert('✅ Código copiado al portapapeles!');
+}
+</script>
+{% endblock %}

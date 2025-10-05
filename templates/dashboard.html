@@ -6,135 +6,289 @@
 
 {% block content %}
 <div class="dashboard-container">
-    <!-- Métricas Principales -->
+    <!-- Métricas Principales de Servicios IA -->
     <div class="metrics-grid">
         <div class="metric-card">
-            <div class="metric-icon" style="background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);">👥</div>
+            <div class="metric-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">API</div>
             <div class="metric-content">
-                <div class="metric-label">Clientes Activos</div>
-                <div class="metric-value">{{ metrics.clientes_activos|format_number }}</div>
-                <div class="metric-change positive">+2.3% vs mes anterior</div>
+                <div class="metric-label">Requests API/Mes</div>
+                <div class="metric-value">10.5M</div>
+                <div class="metric-change positive">+18.3% vs mes anterior</div>
             </div>
         </div>
 
         <div class="metric-card">
-            <div class="metric-icon" style="background: linear-gradient(135deg, #107C10 0%, #0B5A0B 100%);">📈</div>
+            <div class="metric-icon" style="background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);">⚡</div>
             <div class="metric-content">
-                <div class="metric-label">ROI Promedio</div>
-                <div class="metric-value">{{ metrics.roi_promedio }}:1</div>
-                <div class="metric-change positive">+0.8 vs objetivo</div>
+                <div class="metric-label">Latencia Promedio</div>
+                <div class="metric-value">653ms</div>
+                <div class="metric-change positive">-12% vs mes anterior</div>
             </div>
         </div>
 
         <div class="metric-card">
-            <div class="metric-icon" style="background: linear-gradient(135deg, #FFB900 0%, #D39D00 100%);">💰</div>
+            <div class="metric-icon" style="background: linear-gradient(135deg, #107C10 0%, #0B5A0B 100%);">✓</div>
             <div class="metric-content">
-                <div class="metric-label">Ahorro Mensual</div>
-                <div class="metric-value">{{ metrics.ahorro_mensual|format_currency }}</div>
-                <div class="metric-change positive">+15.2% vs mes anterior</div>
+                <div class="metric-label">Uptime Servicios</div>
+                <div class="metric-value">99.7%</div>
+                <div class="metric-change positive">SLA cumplido</div>
             </div>
         </div>
 
         <div class="metric-card">
-            <div class="metric-icon" style="background: linear-gradient(135deg, #D13438 0%, #A4262C 100%);">🎯</div>
+            <div class="metric-icon" style="background: linear-gradient(135deg, #FFB900 0%, #D39D00 100%);">🔌</div>
             <div class="metric-content">
-                <div class="metric-label">Campañas Activas</div>
-                <div class="metric-value">{{ metrics.campanas_activas }}</div>
-                <div class="metric-change neutral">12 finalizan esta semana</div>
+                <div class="metric-label">Integraciones Activas</div>
+                <div class="metric-value">18</div>
+                <div class="metric-change positive">+3 este mes</div>
             </div>
         </div>
     </div>
 
-    <!-- KPIs Secundarios -->
-    <div class="kpis-grid">
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">Engagement Rate</span>
-                <span class="kpi-value">{{ metrics.engagement_rate }}%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ metrics.engagement_rate }}%; background: #0078D4;"></div>
-            </div>
+    <!-- Estado de Endpoints de IA -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🚀 Estado de Endpoints de IA</h2>
+            <span class="status-badge status-operational">Todos los servicios operativos</span>
         </div>
+        <div class="endpoints-status-grid">
+            <div class="endpoint-status-card">
+                <div class="endpoint-status-header">
+                    <div class="endpoint-status-name">
+                        <span class="endpoint-icon">👤</span>
+                        <strong>Personalización API</strong>
+                    </div>
+                    <span class="status-dot status-up"></span>
+                </div>
+                <div class="endpoint-metrics">
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Requests/mes</span>
+                        <span class="metric-value-small">2.45M</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Latencia</span>
+                        <span class="metric-value-small">85ms</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Uptime</span>
+                        <span class="metric-value-small">99.9%</span>
+                    </div>
+                </div>
+            </div>
 
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">Reducción Churn</span>
-                <span class="kpi-value">{{ metrics.churn_reduccion }}%</span>
+            <div class="endpoint-status-card">
+                <div class="endpoint-status-header">
+                    <div class="endpoint-status-name">
+                        <span class="endpoint-icon">📈</span>
+                        <strong>Churn Prediction API</strong>
+                    </div>
+                    <span class="status-dot status-up"></span>
+                </div>
+                <div class="endpoint-metrics">
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Requests/mes</span>
+                        <span class="metric-value-small">890K</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Latencia</span>
+                        <span class="metric-value-small">120ms</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Uptime</span>
+                        <span class="metric-value-small">99.8%</span>
+                    </div>
+                </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ metrics.churn_reduccion * 4 }}%; background: #107C10;"></div>
-            </div>
-        </div>
 
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">Leads Generados</span>
-                <span class="kpi-value">{{ metrics.leads_generados|format_number }}</span>
+            <div class="endpoint-status-card">
+                <div class="endpoint-status-header">
+                    <div class="endpoint-status-name">
+                        <span class="endpoint-icon">💬</span>
+                        <strong>Chatbot API</strong>
+                    </div>
+                    <span class="status-dot status-up"></span>
+                </div>
+                <div class="endpoint-metrics">
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Requests/mes</span>
+                        <span class="metric-value-small">5.6M</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Latencia</span>
+                        <span class="metric-value-small">450ms</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Uptime</span>
+                        <span class="metric-value-small">99.7%</span>
+                    </div>
+                </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 78%; background: #FFB900;"></div>
-            </div>
-        </div>
 
-        <div class="kpi-card">
-            <div class="kpi-header">
-                <span class="kpi-title">Conversion Rate</span>
-                <span class="kpi-value">{{ metrics.conversion_rate }}%</span>
+            <div class="endpoint-status-card">
+                <div class="endpoint-status-header">
+                    <div class="endpoint-status-name">
+                        <span class="endpoint-icon">✍️</span>
+                        <strong>Content Generation API</strong>
+                    </div>
+                    <span class="status-dot status-up"></span>
+                </div>
+                <div class="endpoint-metrics">
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Requests/mes</span>
+                        <span class="metric-value-small">145K</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Latencia</span>
+                        <span class="metric-value-small">2800ms</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Uptime</span>
+                        <span class="metric-value-small">99.5%</span>
+                    </div>
+                </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ metrics.conversion_rate * 2.5 }}%; background: #D13438;"></div>
+
+            <div class="endpoint-status-card">
+                <div class="endpoint-status-header">
+                    <div class="endpoint-status-name">
+                        <span class="endpoint-icon">🔍</span>
+                        <strong>Segmentation API</strong>
+                    </div>
+                    <span class="status-dot status-up"></span>
+                </div>
+                <div class="endpoint-metrics">
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Requests/mes</span>
+                        <span class="metric-value-small">450K</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Latencia</span>
+                        <span class="metric-value-small">95ms</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Uptime</span>
+                        <span class="metric-value-small">99.9%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-status-card">
+                <div class="endpoint-status-header">
+                    <div class="endpoint-status-name">
+                        <span class="endpoint-icon">📊</span>
+                        <strong>Sentiment Analysis API</strong>
+                    </div>
+                    <span class="status-dot status-up"></span>
+                </div>
+                <div class="endpoint-metrics">
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Requests/mes</span>
+                        <span class="metric-value-small">1.2M</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Latencia</span>
+                        <span class="metric-value-small">180ms</span>
+                    </div>
+                    <div class="endpoint-metric">
+                        <span class="metric-label-small">Uptime</span>
+                        <span class="metric-value-small">99.6%</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Contenido Principal -->
     <div class="dashboard-main">
-        <!-- Actividad Reciente -->
+        <!-- Integraciones Activas -->
         <div class="card">
             <div class="card-header">
-                <h2>Actividad Reciente</h2>
-                <button class="btn btn-secondary btn-sm">Ver Todo</button>
+                <h2>🔌 Integraciones Empresariales Activas</h2>
+                <a href="{{ url_for('integracion_apis') }}" class="btn btn-secondary btn-sm">Ver Todas</a>
             </div>
-            <div class="activity-list">
-                {% for actividad in actividades %}
-                <div class="activity-item activity-{{ actividad.tipo }}">
-                    <div class="activity-icon">{{ actividad.icono }}</div>
-                    <div class="activity-content">
-                        <div class="activity-title">{{ actividad.titulo }}</div>
-                        <div class="activity-description">{{ actividad.descripcion }}</div>
+            <div class="integraciones-list">
+                <div class="integracion-item">
+                    <div class="integracion-logo">☁️</div>
+                    <div class="integracion-info">
+                        <div class="integracion-nombre">Salesforce CRM</div>
+                        <div class="integracion-desc">3 endpoints conectados • 2.8M requests/mes</div>
                     </div>
-                    <div class="activity-time">{{ actividad.tiempo }}</div>
+                    <span class="status-badge-small status-active">Activo</span>
                 </div>
-                {% endfor %}
+                <div class="integracion-item">
+                    <div class="integracion-logo">💬</div>
+                    <div class="integracion-info">
+                        <div class="integracion-nombre">WhatsApp Business</div>
+                        <div class="integracion-desc">2 endpoints conectados • 5.7M requests/mes</div>
+                    </div>
+                    <span class="status-badge-small status-active">Activo</span>
+                </div>
+                <div class="integracion-item">
+                    <div class="integracion-logo">🎨</div>
+                    <div class="integracion-info">
+                        <div class="integracion-nombre">Adobe Experience Cloud</div>
+                        <div class="integracion-desc">2 endpoints conectados • 2.6M requests/mes</div>
+                    </div>
+                    <span class="status-badge-small status-active">Activo</span>
+                </div>
+                <div class="integracion-item">
+                    <div class="integracion-logo">📧</div>
+                    <div class="integracion-info">
+                        <div class="integracion-nombre">Salesforce Marketing Cloud</div>
+                        <div class="integracion-desc">3 endpoints conectados • 2.9M requests/mes</div>
+                    </div>
+                    <span class="status-badge-small status-active">Activo</span>
+                </div>
             </div>
         </div>
 
-        <!-- Acceso Rápido -->
+        <!-- Acceso Rápido a Casos de Uso -->
         <div class="card">
             <div class="card-header">
-                <h2>Acceso Rápido</h2>
+                <h2>🎯 Casos de Uso IA</h2>
             </div>
-            <div class="quick-actions">
-                <a href="{{ url_for('personalizacion') }}" class="quick-action-card">
-                    <span class="quick-action-icon">👤</span>
-                    <span class="quick-action-title">Personalización</span>
-                    <span class="quick-action-desc">Generar ofertas personalizadas</span>
+            <div class="casos-uso-grid">
+                <a href="{{ url_for('personalizacion') }}" class="caso-uso-card">
+                    <span class="caso-uso-icon">👤</span>
+                    <div class="caso-uso-info">
+                        <span class="caso-uso-title">Personalización</span>
+                        <span class="caso-uso-desc">2.45M requests/mes</span>
+                    </div>
                 </a>
-                <a href="{{ url_for('contenido_genai') }}" class="quick-action-card">
-                    <span class="quick-action-icon">✍️</span>
-                    <span class="quick-action-title">Contenido GenAI</span>
-                    <span class="quick-action-desc">Crear campañas con IA</span>
+                <a href="{{ url_for('chatbot') }}" class="caso-uso-card">
+                    <span class="caso-uso-icon">💬</span>
+                    <div class="caso-uso-info">
+                        <span class="caso-uso-title">Chatbot IA</span>
+                        <span class="caso-uso-desc">5.6M requests/mes</span>
+                    </div>
                 </a>
-                <a href="{{ url_for('chatbot') }}" class="quick-action-card">
-                    <span class="quick-action-icon">💬</span>
-                    <span class="quick-action-title">Chatbot IA</span>
-                    <span class="quick-action-desc">Probar asistente virtual</span>
+                <a href="{{ url_for('prediccion_churn') }}" class="caso-uso-card">
+                    <span class="caso-uso-icon">📈</span>
+                    <div class="caso-uso-info">
+                        <span class="caso-uso-title">Predicción Churn</span>
+                        <span class="caso-uso-desc">890K requests/mes</span>
+                    </div>
                 </a>
-                <a href="{{ url_for('prediccion_churn') }}" class="quick-action-card">
-                    <span class="quick-action-icon">📈</span>
-                    <span class="quick-action-title">Predicción Churn</span>
-                    <span class="quick-action-desc">Analizar riesgo clientes</span>
+                <a href="{{ url_for('contenido_genai') }}" class="caso-uso-card">
+                    <span class="caso-uso-icon">✍️</span>
+                    <div class="caso-uso-info">
+                        <span class="caso-uso-title">Contenido GenAI</span>
+                        <span class="caso-uso-desc">145K requests/mes</span>
+                    </div>
+                </a>
+                <a href="{{ url_for('segmentacion_avanzada') }}" class="caso-uso-card">
+                    <span class="caso-uso-icon">🔍</span>
+                    <div class="caso-uso-info">
+                        <span class="caso-uso-title">Segmentación</span>
+                        <span class="caso-uso-desc">450K requests/mes</span>
+                    </div>
+                </a>
+                <a href="{{ url_for('monitorizacion_marca') }}" class="caso-uso-card">
+                    <span class="caso-uso-icon">📊</span>
+                    <div class="caso-uso-info">
+                        <span class="caso-uso-title">Sentiment Analysis</span>
+                        <span class="caso-uso-desc">1.2M requests/mes</span>
+                    </div>
                 </a>
             </div>
         </div>
@@ -142,62 +296,106 @@
 
     <!-- Sidebar Derecho -->
     <div class="dashboard-sidebar">
-        <!-- Rendimiento Semanal -->
+        <!-- Fuentes de Datos -->
         <div class="card">
             <div class="card-header">
-                <h3>Rendimiento Semanal</h3>
+                <h3>📊 Fuentes de Datos</h3>
+                <a href="{{ url_for('integracion_datos') }}" class="link-small">Ver todas</a>
             </div>
-            <div class="weekly-stats">
-                <div class="stat-item">
-                    <span class="stat-label">Emails Enviados</span>
-                    <span class="stat-value">145,230</span>
-                    <span class="stat-trend positive">+12%</span>
+            <div class="fuentes-stats">
+                <div class="fuente-stat-item">
+                    <div class="fuente-stat-header">
+                        <span class="fuente-stat-icon">☁️</span>
+                        <span class="fuente-stat-name">Salesforce CRM</span>
+                    </div>
+                    <div class="fuente-stat-value">2.45M registros</div>
+                    <div class="fuente-stat-sync">Sync: Hace 5 min</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">Open Rate</span>
-                    <span class="stat-value">67.3%</span>
-                    <span class="stat-trend positive">+8.2%</span>
+                
+                <div class="fuente-stat-item">
+                    <div class="fuente-stat-header">
+                        <span class="fuente-stat-icon">⚡</span>
+                        <span class="fuente-stat-name">Smart Meters IoT</span>
+                    </div>
+                    <div class="fuente-stat-value">15M registros</div>
+                    <div class="fuente-stat-sync">Sync: Hace 1 min</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">Click Rate</span>
-                    <span class="stat-value">23.8%</span>
-                    <span class="stat-trend positive">+5.1%</span>
+                
+                <div class="fuente-stat-item">
+                    <div class="fuente-stat-header">
+                        <span class="fuente-stat-icon">📊</span>
+                        <span class="fuente-stat-name">Google Analytics</span>
+                    </div>
+                    <div class="fuente-stat-value">45M registros</div>
+                    <div class="fuente-stat-sync">Sync: Hace 3 min</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">Conversiones</span>
-                    <span class="stat-value">1,847</span>
-                    <span class="stat-trend positive">+18%</span>
+                
+                <div class="fuente-stat-item">
+                    <div class="fuente-stat-header">
+                        <span class="fuente-stat-icon">💬</span>
+                        <span class="fuente-stat-name">Social Media APIs</span>
+                    </div>
+                    <div class="fuente-stat-value">2.3M registros</div>
+                    <div class="fuente-stat-sync">Sync: Hace 10 min</div>
                 </div>
             </div>
         </div>
 
-        <!-- Alertas IA -->
+        <!-- Alertas del Sistema -->
         <div class="card">
             <div class="card-header">
-                <h3>Alertas IA</h3>
+                <h3>🔔 Alertas del Sistema</h3>
             </div>
             <div class="alerts-list">
-                <div class="alert-item alert-warning">
-                    <span class="alert-icon">⚠️</span>
-                    <div class="alert-content">
-                        <div class="alert-title">12 clientes alto riesgo</div>
-                        <div class="alert-desc">Requieren atención inmediata</div>
-                    </div>
-                </div>
                 <div class="alert-item alert-success">
                     <span class="alert-icon">✅</span>
                     <div class="alert-content">
-                        <div class="alert-title">Campaña Solar optimizada</div>
-                        <div class="alert-desc">ROI +23% en 48 horas</div>
+                        <div class="alert-title">Todos los endpoints operativos</div>
+                        <div class="alert-desc">99.7% uptime promedio</div>
                     </div>
                 </div>
                 <div class="alert-item alert-info">
-                    <span class="alert-icon">💡</span>
+                    <span class="alert-icon">🔄</span>
                     <div class="alert-content">
-                        <div class="alert-title">Nueva oportunidad detectada</div>
-                        <div class="alert-desc">Segmento EV con alto potencial</div>
+                        <div class="alert-title">Modelo de Churn actualizado</div>
+                        <div class="alert-desc">Precisión mejorada a 89%</div>
                     </div>
                 </div>
+                <div class="alert-item alert-warning">
+                    <span class="alert-icon">⚠️</span>
+                    <div class="alert-content">
+                        <div class="alert-title">Latencia elevada en Content API</div>
+                        <div class="alert-desc">2800ms (dentro de SLA)</div>
+                    </div>
+                </div>
+                <div class="alert-item alert-info">
+                    <span class="alert-icon">📈</span>
+                    <div class="alert-content">
+                        <div class="alert-title">Pico de requests detectado</div>
+                        <div class="alert-desc">Chatbot API: +45% vs promedio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Acceso Rápido a Integraciones -->
+        <div class="card">
+            <div class="card-header">
+                <h3>⚡ Acceso Rápido</h3>
+            </div>
+            <div class="quick-links">
+                <a href="{{ url_for('integracion_datos') }}" class="quick-link">
+                    <span class="quick-link-icon">🔌</span>
+                    <span class="quick-link-text">Integración de Datos</span>
+                </a>
+                <a href="{{ url_for('integracion_apis') }}" class="quick-link">
+                    <span class="quick-link-icon">🔗</span>
+                    <span class="quick-link-text">APIs & Conectores</span>
+                </a>
+                <a href="{{ url_for('configuracion') }}" class="quick-link">
+                    <span class="quick-link-icon">⚙️</span>
+                    <span class="quick-link-text">Configuración</span>
+                </a>
             </div>
         </div>
     </div>

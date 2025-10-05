@@ -2,10 +2,103 @@
 
 {% block title %}Configuración - Iberdrola AI{% endblock %}
 
-{% block page_title %}Configuración de la Plataforma{% endblock %}
-
 {% block content %}
 <div class="use-case-container">
+    <!-- Editor de Menú -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📝 Editor de Menú de Navegación</h2>
+            <p style="font-size: 14px; color: var(--neutral-foreground-3); margin-top: 8px;">
+                Personaliza los nombres y títulos del menú. Los cambios se guardan automáticamente.
+            </p>
+        </div>
+        <div class="card-body">
+            <div id="menu-editor">
+                <!-- Dashboard -->
+                <div class="menu-editor-section">
+                    <h3 class="menu-editor-title">Dashboard</h3>
+                    <div class="menu-editor-item">
+                        <div class="form-group">
+                            <label>Nombre en Menú</label>
+                            <input type="text" class="form-control" 
+                                   data-config-path="dashboard.menu_name" 
+                                   value="{{ menu_config.dashboard.menu_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Título de Página</label>
+                            <input type="text" class="form-control" 
+                                   data-config-path="dashboard.page_title" 
+                                   value="{{ menu_config.dashboard.page_title }}">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categorías -->
+                {% for category in menu_config.categories %}
+                {% set category_index = loop.index0 %}
+                <div class="menu-editor-section">
+                    <h3 class="menu-editor-title">
+                        <input type="text" class="form-control category-title-input" 
+                               data-config-path="categories.{{ category_index }}.title" 
+                               value="{{ category.title }}">
+                    </h3>
+                    
+                    {% for item in category.menu_items %}
+                    <div class="menu-editor-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-icon">{{ item.icon }}</span>
+                            <span class="menu-item-endpoint">{{ item.endpoint }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre en Menú</label>
+                            <input type="text" class="form-control" 
+                                   data-config-path="categories.{{ category_index }}.menu_items.{{ loop.index0 }}.menu_name" 
+                                   value="{{ item.menu_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Título de Página</label>
+                            <input type="text" class="form-control" 
+                                   data-config-path="categories.{{ category_index }}.menu_items.{{ loop.index0 }}.page_title" 
+                                   value="{{ item.page_title }}">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                <!-- Configuración -->
+                <div class="menu-editor-section">
+                    <h3 class="menu-editor-title">Configuración</h3>
+                    <div class="menu-editor-item">
+                        <div class="form-group">
+                            <label>Nombre en Menú</label>
+                            <input type="text" class="form-control" 
+                                   data-config-path="configuracion.menu_name" 
+                                   value="{{ menu_config.configuracion.menu_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Título de Página</label>
+                            <input type="text" class="form-control" 
+                                   data-config-path="configuracion.page_title" 
+                                   value="{{ menu_config.configuracion.page_title }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-editor-actions">
+                <button id="save-menu-config" class="btn btn-primary">
+                    💾 Guardar Configuración
+                </button>
+                <button id="reset-menu-config" class="btn btn-secondary">
+                    🔄 Restaurar Valores por Defecto
+                </button>
+                <div id="save-status" class="save-status"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configuración General -->
     <div class="card">
         <div class="card-header">
             <h2>⚙️ Configuración General</h2>
@@ -35,6 +128,7 @@
         </div>
     </div>
 
+    <!-- Seguridad -->
     <div class="card">
         <div class="card-header">
             <h2>🔒 Seguridad y Privacidad</h2>
@@ -60,4 +154,63 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const saveBtn = document.getElementById('save-menu-config');
+    const resetBtn = document.getElementById('reset-menu-config');
+    const saveStatus = document.getElementById('save-status');
+    
+    // Guardar configuración
+    saveBtn.addEventListener('click', async function() {
+        const inputs = document.querySelectorAll('#menu-editor input[data-config-path]');
+        const config = {{ menu_config|tojson }};
+        
+        // Actualizar configuración con los valores de los inputs
+        inputs.forEach(input => {
+            const path = input.dataset.configPath.split('.');
+            let obj = config;
+            
+            for (let i = 0; i < path.length - 1; i++) {
+                obj = obj[path[i]];
+            }
+            
+            obj[path[path.length - 1]] = input.value;
+        });
+        
+        // Enviar al servidor
+        try {
+            const response = await fetch('/api/save-menu-config', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(config)
+            });
+            
+            if (response.ok) {
+                saveStatus.innerHTML = '<span style="color: var(--success-color);">✓ Guardado correctamente</span>';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                saveStatus.innerHTML = '<span style="color: var(--error-color);">✗ Error al guardar</span>';
+            }
+        } catch (error) {
+            saveStatus.innerHTML = '<span style="color: var(--error-color);">✗ Error de conexión</span>';
+        }
+    });
+    
+    // Restaurar valores por defecto
+    resetBtn.addEventListener('click', function() {
+        if (confirm('¿Estás seguro de que quieres restaurar los valores por defecto?')) {
+            fetch('/api/reset-menu-config', {
+                method: 'POST'
+            }).then(() => {
+                window.location.reload();
+            });
+        }
+    });
+});
+</script>
 {% endblock %}

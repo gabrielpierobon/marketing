@@ -1,43 +1,363 @@
 {% extends "base.html" %}
 
-{% block title %}A/B Testing Automatizado - Iberdrola AI{% endblock %}
-
-{% block page_title %}A/B Testing Automatizado con IA{% endblock %}
-
 {% block content %}
+<!-- Panel de Documentación -->
+<button class="doc-panel-toggle" id="docPanelToggle">
+    <span class="toggle-icon">📚</span>
+    <span class="toggle-text">Documentación</span>
+</button>
+
+<div class="doc-panel" id="docPanel">
+    <div class="doc-panel-header">
+        <h2 class="doc-panel-title">📚 A/B Testing Automatizado con IA</h2>
+        <button class="doc-edit-btn" id="docEditBtn">✏️ Editar</button>
+        <button class="doc-panel-close" id="docPanelClose">×</button>
+    </div>
+    
+    <div class="doc-panel-content" id="docPanelContent">
+        <!-- Resumen Ejecutivo -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    <strong>A/B Testing Automatizado</strong> utiliza inferencia estadística bayesiana y Multi-Armed Bandits 
+                    para ejecutar experimentos controlados que determinan qué variante de un elemento (email, landing, ad) 
+                    genera mejor performance. El sistema calcula automáticamente tamaño de muestra, detecta significancia 
+                    estadística, y optimiza la asignación de tráfico dinámicamente.
+                </p>
+                
+                <p>
+                    <strong>Datos de Entrada Procesados:</strong>
+                </p>
+                <ul>
+                    <li><strong>Variantes a Testear:</strong> Versión A vs B (o múltiples) de email subject, landing page, CTA, creativos</li>
+                    <li><strong>Métrica Objetivo:</strong> Conversión, CTR, revenue, engagement (definida por usuario)</li>
+                    <li><strong>Parámetros del Test:</strong> Baseline conversion rate, lift deseado, significancia (95-99%), power (80%)</li>
+                    <li><strong>Datos de Tráfico:</strong> Usuarios asignados a cada variante, exposiciones, conversiones por variante</li>
+                    <li><strong>Datos Contextuales:</strong> Segmento, dispositivo, fuente, hora (para análisis de subgrupos)</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🔄 Pipeline de Testing</strong><br>
+                    Diseño del test → Cálculo de tamaño de muestra (power analysis) → Asignación aleatoria de usuarios → 
+                    Recolección de datos → Test estadístico continuo (t-test/chi-square) → Detección de significancia → 
+                    Implementación del ganador → Análisis post-test y extracción de insights
+                </div>
+                
+                <p>
+                    <strong>Output del Sistema:</strong>
+                </p>
+                <ul>
+                    <li><strong>Ganador del Test:</strong> Variante con mejor performance + nivel de confianza (95-99%)</li>
+                    <li><strong>Lift Observado:</strong> % de mejora de la variante ganadora vs control</li>
+                    <li><strong>Significancia Estadística:</strong> p-value, intervalo de confianza, tamaño del efecto</li>
+                    <li><strong>Análisis por Segmentos:</strong> Performance diferencial por dispositivo, ubicación, segmento</li>
+                    <li><strong>Insights Accionables:</strong> Aprendizajes clave y recomendaciones para futuros tests</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Modelos de IA Aplicados -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-model-card">
+                    <h4>1. Bayesian A/B Testing</h4>
+                    <p>
+                        Utiliza inferencia bayesiana para calcular la probabilidad de que cada variante sea la mejor, 
+                        permitiendo decisiones más rápidas con menos datos que métodos frecuentistas tradicionales.
+                    </p>
+                    <p><strong>Uso:</strong> Detección temprana de ganadores con alta confianza</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>2. Multi-Armed Bandit (Thompson Sampling)</h4>
+                    <p>
+                        Algoritmo de aprendizaje por refuerzo que balancea exploración y explotación, 
+                        asignando más tráfico automáticamente a las variantes con mejor rendimiento durante el test.
+                    </p>
+                    <p><strong>Uso:</strong> Optimización de tráfico en tiempo real</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>3. Sequential Testing</h4>
+                    <p>
+                        Permite monitorear tests continuamente y detenerlos cuando se alcanza significancia, 
+                        reduciendo el tiempo de experimentación hasta un 50%.
+                    </p>
+                    <p><strong>Uso:</strong> Reducción de duración de tests</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-tech-stack">
+                    <div class="doc-tech-item">
+                        <strong>Testing Platform</strong>
+                        <span>Optimizely, VWO, Google Optimize</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Analytics</strong>
+                        <span>Google Analytics 4, Mixpanel</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Statistical Engine</strong>
+                        <span>Python (scipy, statsmodels), R</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Automation</strong>
+                        <span>Apache Airflow, Azure Functions</span>
+                    </div>
+                </div>
+                
+                <p><strong>Workflow Automatizado:</strong></p>
+                <ol>
+                    <li>
+                        <strong>Diseño del Test</strong><br>
+                        Definición de hipótesis, variantes, métricas primarias y secundarias, tamaño de muestra.
+                    </li>
+                    <li>
+                        <strong>Cálculo de Muestra</strong><br>
+                        Algoritmo calcula automáticamente el tamaño de muestra necesario según MDE (Minimum Detectable Effect).
+                    </li>
+                    <li>
+                        <strong>Implementación</strong><br>
+                        Deploy automático de variantes con distribución de tráfico 50/50 o según algoritmo bandit.
+                    </li>
+                    <li>
+                        <strong>Monitoreo Continuo</strong><br>
+                        Sistema monitorea significancia estadística cada hora usando sequential testing.
+                    </li>
+                    <li>
+                        <strong>Detección de Ganador</strong><br>
+                        Cuando se alcanza 95% de confianza, el sistema notifica y puede auto-implementar el ganador.
+                    </li>
+                    <li>
+                        <strong>Extracción de Insights</strong><br>
+                        NLP extrae automáticamente aprendizajes clave y genera recomendaciones para futuros tests.
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- KPIs y Métricas -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Métricas de Testing:</strong></p>
+                <ul>
+                    <li><strong>Lift:</strong> Mejora porcentual de la variante ganadora vs control</li>
+                    <li><strong>Statistical Significance:</strong> Nivel de confianza (95%, 99%)</li>
+                    <li><strong>P-value:</strong> Probabilidad de que la diferencia sea por azar</li>
+                    <li><strong>Conversion Rate:</strong> Tasa de conversión por variante</li>
+                    <li><strong>Revenue per Visitor:</strong> Revenue generado por visitante</li>
+                </ul>
+                
+                <p><strong>Métricas de Programa:</strong></p>
+                <ul>
+                    <li><strong>Test Velocity:</strong> Número de tests ejecutados por mes</li>
+                    <li><strong>Win Rate:</strong> Porcentaje de tests con ganador claro</li>
+                    <li><strong>Average Lift:</strong> Mejora promedio de tests ganadores</li>
+                    <li><strong>Time to Significance:</strong> Días promedio hasta alcanzar significancia</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🎯 Objetivo de Negocio</strong><br>
+                    Ejecutar 50+ tests por trimestre con un lift promedio del 25%, generando €500K+ 
+                    en revenue incremental anual mediante optimización continua de todos los puntos de contacto.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="use-case-container">
     <div class="use-case-header">
         <div class="use-case-icon">🧪</div>
         <div class="use-case-info">
-            <h1>A/B Testing Automatizado</h1>
-            <p>Optimice continuamente sus campañas con testing automatizado. 6 años de experimentación en 3 meses.</p>
+            <h1>A/B Testing Automatizado con IA</h1>
+            <p>Plataforma de experimentación continua. Acelera optimización 6x y aumenta conversiones +27% mediante testing inteligente.</p>
         </div>
     </div>
 
-    <!-- Tests Activos -->
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-abtest">
+        <div class="metric-card-abtest">
+            <div class="metric-icon-abtest">🧪</div>
+            <div class="metric-data">
+                <div class="metric-value-abtest">{{ metricas.tests_activos }}</div>
+                <div class="metric-label-abtest">Tests Activos</div>
+            </div>
+        </div>
+        <div class="metric-card-abtest">
+            <div class="metric-icon-abtest">📈</div>
+            <div class="metric-data">
+                <div class="metric-value-abtest">+{{ metricas.lift_promedio }}%</div>
+                <div class="metric-label-abtest">Lift Promedio</div>
+            </div>
+        </div>
+        <div class="metric-card-abtest">
+            <div class="metric-icon-abtest">✓</div>
+            <div class="metric-data">
+                <div class="metric-value-abtest">{{ metricas.significancia_promedio }}%</div>
+                <div class="metric-label-abtest">Significancia</div>
+            </div>
+        </div>
+        <div class="metric-card-abtest">
+            <div class="metric-icon-abtest">💰</div>
+            <div class="metric-data">
+                <div class="metric-value-abtest">€{{ (metricas.revenue_incremental / 1000)|round(0)|int }}K</div>
+                <div class="metric-label-abtest">Revenue Incremental</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tests en Curso -->
     <div class="card">
         <div class="card-header">
-            <h2>🧪 Tests A/B Activos</h2>
-            <button class="btn btn-primary btn-sm">+ Crear Nuevo Test</button>
+            <h2>🧪 Tests en Curso</h2>
+            <button class="btn btn-primary" onclick="crearNuevoTest()">+ Crear Nuevo Test</button>
         </div>
         <div class="card-body">
-            <div class="tests-list">
-                {% for test in tests %}
-                <div class="test-item">
-                    <div class="test-info">
-                        <h3>{{ test.nombre }}</h3>
-                        <div class="test-variants">
-                            <span class="variant">A: {{ test.variante_a }}</span>
-                            <span class="vs">vs</span>
-                            <span class="variant">B: {{ test.variante_b }}</span>
+            <div class="tests-en-curso-list">
+                {% for test in tests_en_curso %}
+                <div class="test-en-curso-card">
+                    <div class="test-header-section">
+                        <div class="test-info-header">
+                            <h3 class="test-nombre">{{ test.nombre }}</h3>
+                            <span class="test-tipo-badge">{{ test.tipo }}</span>
+                        </div>
+                        <div class="test-meta">
+                            <span class="test-id">{{ test.id }}</span>
+                            <span class="test-dias">{{ test.dias_restantes }} días restantes</span>
                         </div>
                     </div>
-                    <div class="test-result">
-                        <span class="winner-badge">Ganador: {{ test.ganador }}</span>
-                        <span class="improvement">{{ test.mejora }} mejora</span>
+
+                    <!-- Progreso -->
+                    <div class="test-progreso-section">
+                        <div class="progreso-header">
+                            <span>Progreso del Test</span>
+                            <span class="progreso-valor">{{ test.progreso }}%</span>
+                        </div>
+                        <div class="progreso-bar">
+                            <div class="progreso-fill" style="width: {{ test.progreso }}%;"></div>
+                        </div>
                     </div>
-                    <div class="test-actions">
-                        <button class="btn btn-sm btn-primary">Ver Detalles</button>
+
+                    <!-- Significancia -->
+                    <div class="significancia-section">
+                        <div class="significancia-badge {% if test.significancia >= 95 %}significancia-alta{% elif test.significancia >= 90 %}significancia-media{% else %}significancia-baja{% endif %}">
+                            {{ test.significancia }}% Significancia Estadística
+                        </div>
+                    </div>
+
+                    <!-- Comparación A vs B -->
+                    <div class="variantes-comparacion">
+                        <!-- Variante A -->
+                        <div class="variante-card variante-a">
+                            <div class="variante-header">
+                                <span class="variante-label">Variante A (Control)</span>
+                            </div>
+                            <div class="variante-nombre">{{ test.variante_a.nombre }}</div>
+                            <div class="variante-stats">
+                                <div class="variante-stat">
+                                    <span class="stat-label">Impresiones</span>
+                                    <span class="stat-value">{{ test.variante_a.impresiones|format_number }}</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">Clicks</span>
+                                    <span class="stat-value">{{ test.variante_a.clicks|format_number }}</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">CTR</span>
+                                    <span class="stat-value">{{ test.variante_a.ctr }}%</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">Conversiones</span>
+                                    <span class="stat-value">{{ test.variante_a.conversiones }}</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">CVR</span>
+                                    <span class="stat-value">{{ test.variante_a.cvr }}%</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">Revenue</span>
+                                    <span class="stat-value">€{{ (test.variante_a.revenue / 1000)|round(0)|int }}K</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VS -->
+                        <div class="vs-divider">VS</div>
+
+                        <!-- Variante B -->
+                        <div class="variante-card variante-b {% if test.ganador_actual == 'B' %}variante-ganadora{% endif %}">
+                            <div class="variante-header">
+                                <span class="variante-label">Variante B</span>
+                                {% if test.ganador_actual == 'B' %}
+                                <span class="ganador-badge">🏆 Ganando</span>
+                                {% endif %}
+                            </div>
+                            <div class="variante-nombre">{{ test.variante_b.nombre }}</div>
+                            <div class="variante-stats">
+                                <div class="variante-stat">
+                                    <span class="stat-label">Impresiones</span>
+                                    <span class="stat-value">{{ test.variante_b.impresiones|format_number }}</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">Clicks</span>
+                                    <span class="stat-value">{{ test.variante_b.clicks|format_number }}</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">CTR</span>
+                                    <span class="stat-value">{{ test.variante_b.ctr }}%</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">Conversiones</span>
+                                    <span class="stat-value">{{ test.variante_b.conversiones }}</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">CVR</span>
+                                    <span class="stat-value">{{ test.variante_b.cvr }}%</span>
+                                </div>
+                                <div class="variante-stat">
+                                    <span class="stat-label">Revenue</span>
+                                    <span class="stat-value">€{{ (test.variante_b.revenue / 1000)|round(0)|int }}K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mejora Estimada -->
+                    <div class="test-mejora-section">
+                        <div class="mejora-badge">
+                            +{{ test.mejora }}% Mejora Estimada
+                        </div>
+                    </div>
+
+                    <!-- Acciones -->
+                    <div class="test-acciones">
+                        <button class="btn btn-secondary" onclick="verDetallesTest('{{ test.id }}')">
+                            📊 Ver Detalles
+                        </button>
+                        <button class="btn btn-outline" onclick="detenerTest('{{ test.id }}')">
+                            ⏸️ Pausar Test
+                        </button>
                     </div>
                 </div>
                 {% endfor %}
@@ -45,28 +365,556 @@
         </div>
     </div>
 
-    <!-- Métricas -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">🧪</div>
-            <div class="stat-value">47</div>
-            <div class="stat-label">Tests Activos</div>
+    <!-- Tests Completados -->
+    <div class="card">
+        <div class="card-header">
+            <h2>✅ Tests Completados</h2>
+            <span class="badge badge-success">{{ tests_completados|length }} este mes</span>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">⚡</div>
-            <div class="stat-value">6x</div>
-            <div class="stat-label">Velocidad vs Manual</div>
+        <div class="card-body">
+            <div class="tests-completados-list">
+                {% for test in tests_completados %}
+                <div class="test-completado-card">
+                    <div class="test-completado-header">
+                        <div>
+                            <h3 class="test-completado-nombre">{{ test.nombre }}</h3>
+                            <span class="test-tipo-badge">{{ test.tipo }}</span>
+                        </div>
+                        <div class="test-completado-fecha">{{ test.fecha }}</div>
+                    </div>
+
+                    <div class="test-completado-resultado">
+                        <div class="resultado-ganador">
+                            <span class="ganador-icon">🏆</span>
+                            <div>
+                                <div class="ganador-label">Ganador</div>
+                                <div class="ganador-nombre">{{ test.ganador }}</div>
+                            </div>
+                        </div>
+                        <div class="resultado-stats">
+                            <div class="resultado-stat">
+                                <span class="stat-icon">📈</span>
+                                <div>
+                                    <div class="stat-value-big">+{{ test.mejora }}%</div>
+                                    <div class="stat-label-small">Mejora</div>
+                                </div>
+                            </div>
+                            <div class="resultado-stat">
+                                <span class="stat-icon">✓</span>
+                                <div>
+                                    <div class="stat-value-big">{{ test.significancia }}%</div>
+                                    <div class="stat-label-small">Significancia</div>
+                                </div>
+                            </div>
+                            <div class="resultado-stat">
+                                <span class="stat-icon">🎯</span>
+                                <div>
+                                    <div class="stat-value-big">{{ test.conversiones }}</div>
+                                    <div class="stat-label-small">Conversiones</div>
+                                </div>
+                            </div>
+                            <div class="resultado-stat">
+                                <span class="stat-icon">💰</span>
+                                <div>
+                                    <div class="stat-value-big">€{{ (test.revenue / 1000)|round(0)|int }}K</div>
+                                    <div class="stat-label-small">Revenue</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="test-insight">
+                        <div class="insight-icon">💡</div>
+                        <div class="insight-text">
+                            <strong>Insight:</strong> {{ test.insight }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">📈</div>
-            <div class="stat-value">+35%</div>
-            <div class="stat-label">Lift Conversiones</div>
+    </div>
+
+    <!-- Calculadora de Tamaño de Muestra -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🧮 Calculadora de Tamaño de Muestra</h2>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">⏱️</div>
-            <div class="stat-value">-90%</div>
-            <div class="stat-label">Tiempo Análisis</div>
+        <div class="card-body">
+            <div class="calculadora-grid">
+                <div class="form-group">
+                    <label>Tasa de Conversión Actual (%)</label>
+                    <input type="number" class="form-control" id="conversionActual" value="10" min="0" max="100" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>Mejora Mínima Detectable (%)</label>
+                    <input type="number" class="form-control" id="mejoraMinima" value="20" min="1" max="100" step="1">
+                </div>
+                <div class="form-group">
+                    <label>Nivel de Confianza</label>
+                    <select class="form-control" id="nivelConfianza">
+                        <option value="90">90%</option>
+                        <option value="95" selected>95%</option>
+                        <option value="99">99%</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Potencia Estadística</label>
+                    <select class="form-control" id="potencia">
+                        <option value="80" selected>80%</option>
+                        <option value="90">90%</option>
+                        <option value="95">95%</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="calcularMuestra()">
+                🧮 Calcular Tamaño de Muestra
+            </button>
+            <div id="resultadoCalculadora" class="calculadora-resultado" style="display: none;">
+                <!-- Resultado se mostrará aquí -->
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Estilos específicos para A/B Testing */
+.metrics-grid-abtest {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card-abtest {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.metric-card-abtest:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+}
+
+.metric-icon-abtest {
+    font-size: 40px;
+}
+
+.metric-value-abtest {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.metric-label-abtest {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+/* Tests en Curso */
+.tests-en-curso-list {
+    display: grid;
+    gap: var(--spacing-xl);
+}
+
+.test-en-curso-card {
+    background: var(--neutral-background-2);
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+}
+
+.test-header-section {
+    margin-bottom: var(--spacing-l);
+}
+
+.test-info-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-s);
+}
+
+.test-nombre {
+    font-size: var(--font-size-500);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin: 0;
+}
+
+.test-tipo-badge {
+    padding: 4px 12px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+}
+
+.test-meta {
+    display: flex;
+    gap: var(--spacing-m);
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.test-progreso-section {
+    margin-bottom: var(--spacing-l);
+}
+
+.progreso-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-s);
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-2);
+}
+
+.progreso-valor {
+    font-weight: var(--font-weight-semibold);
+}
+
+.progreso-bar {
+    height: 12px;
+    background: var(--neutral-background-4);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progreso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0078D4, #106EBE);
+    border-radius: 6px;
+    transition: width var(--duration-slow) var(--curve-decelerate-max);
+}
+
+.significancia-section {
+    margin-bottom: var(--spacing-l);
+    text-align: center;
+}
+
+.significancia-badge {
+    display: inline-block;
+    padding: var(--spacing-s) var(--spacing-l);
+    border-radius: var(--border-radius-medium);
+    font-weight: var(--font-weight-semibold);
+}
+
+.significancia-alta {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.significancia-media {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.significancia-baja {
+    background: var(--neutral-background-3);
+    color: var(--neutral-foreground-2);
+}
+
+.variantes-comparacion {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-l);
+}
+
+.variante-card {
+    background: var(--neutral-background-1);
+    border: 2px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+}
+
+.variante-ganadora {
+    border-color: var(--success);
+    background: linear-gradient(135deg, var(--success-light) 0%, var(--neutral-background-1) 100%);
+}
+
+.variante-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-m);
+}
+
+.variante-label {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-3);
+    text-transform: uppercase;
+}
+
+.ganador-badge {
+    padding: 4px 12px;
+    background: var(--success);
+    color: white;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+}
+
+.variante-nombre {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: var(--spacing-m);
+}
+
+.variante-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-m);
+}
+
+.variante-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.vs-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-600);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-3);
+}
+
+.test-mejora-section {
+    text-align: center;
+    margin-bottom: var(--spacing-l);
+}
+
+.mejora-badge {
+    display: inline-block;
+    padding: var(--spacing-m) var(--spacing-xl);
+    background: linear-gradient(135deg, #DFF6DD, #C7F0C4);
+    color: var(--success);
+    border-radius: var(--border-radius-large);
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-bold);
+}
+
+.test-acciones {
+    display: flex;
+    gap: var(--spacing-m);
+    justify-content: center;
+}
+
+/* Tests Completados */
+.tests-completados-list {
+    display: grid;
+    gap: var(--spacing-l);
+}
+
+.test-completado-card {
+    background: var(--neutral-background-2);
+    border: 1px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+}
+
+.test-completado-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-l);
+}
+
+.test-completado-nombre {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--spacing-s) 0;
+}
+
+.test-completado-fecha {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.test-completado-resultado {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-l);
+    padding-bottom: var(--spacing-l);
+    border-bottom: 1px solid var(--neutral-stroke-1);
+}
+
+.resultado-ganador {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.ganador-icon {
+    font-size: 48px;
+}
+
+.ganador-label {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    margin-bottom: 4px;
+}
+
+.ganador-nombre {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+.resultado-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-m);
+}
+
+.resultado-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+}
+
+.stat-icon {
+    font-size: 24px;
+}
+
+.stat-value-big {
+    font-size: var(--font-size-500);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.stat-label-small {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.test-insight {
+    display: flex;
+    gap: var(--spacing-m);
+    padding: var(--spacing-m);
+    background: var(--primary-light);
+    border-radius: var(--border-radius-medium);
+}
+
+.insight-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.insight-text {
+    font-size: var(--font-size-200);
+    line-height: 1.6;
+}
+
+/* Calculadora */
+.calculadora-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-l);
+}
+
+.calculadora-resultado {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    background: var(--primary-light);
+    border-radius: var(--border-radius-large);
+    border: 2px solid var(--primary);
+}
+
+.resultado-titulo {
+    font-size: var(--font-size-500);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary);
+    margin-bottom: var(--spacing-l);
+    text-align: center;
+}
+
+.resultado-valor {
+    font-size: var(--font-size-900);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: var(--spacing-m);
+}
+
+.resultado-detalle {
+    text-align: center;
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-2);
+}
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function crearNuevoTest() {
+    alert('Crear Nuevo Test\n\nEn un entorno real, esto abriría un wizard para:\n\n✓ Definir hipótesis\n✓ Seleccionar tipo de test\n✓ Configurar variantes\n✓ Establecer métricas\n✓ Calcular tamaño de muestra\n✓ Programar inicio del test');
+}
+
+function verDetallesTest(testId) {
+    alert(`Ver Detalles del Test: ${testId}\n\nEn un entorno real, esto mostraría:\n\n✓ Gráficos de evolución temporal\n✓ Análisis de segmentos\n✓ Métricas secundarias\n✓ Distribución de tráfico\n✓ Logs de eventos`);
+}
+
+function detenerTest(testId) {
+    if (confirm(`¿Detener test ${testId}?\n\nEsto pausará la recolección de datos.`)) {
+        alert('Test pausado correctamente');
+    }
+}
+
+function calcularMuestra() {
+    const conversionActual = parseFloat(document.getElementById('conversionActual').value) / 100;
+    const mejoraMinima = parseFloat(document.getElementById('mejoraMinima').value) / 100;
+    const nivelConfianza = parseInt(document.getElementById('nivelConfianza').value);
+    const potencia = parseInt(document.getElementById('potencia').value);
+    
+    // Fórmula simplificada para cálculo de muestra
+    // En producción se usaría una librería estadística completa
+    const conversionMejorada = conversionActual * (1 + mejoraMinima);
+    const p = (conversionActual + conversionMejorada) / 2;
+    
+    // Z-scores aproximados
+    const zAlpha = nivelConfianza === 99 ? 2.576 : (nivelConfianza === 95 ? 1.96 : 1.645);
+    const zBeta = potencia === 95 ? 1.645 : (potencia === 90 ? 1.282 : 0.842);
+    
+    const n = Math.ceil(
+        2 * Math.pow(zAlpha + zBeta, 2) * p * (1 - p) / 
+        Math.pow(conversionMejorada - conversionActual, 2)
+    );
+    
+    // Estimar duración (asumiendo 1000 visitantes/día)
+    const visitantesPorDia = 1000;
+    const dias = Math.ceil((n * 2) / visitantesPorDia);
+    
+    const resultado = document.getElementById('resultadoCalculadora');
+    resultado.style.display = 'block';
+    resultado.innerHTML = `
+        <div class="resultado-titulo">Tamaño de Muestra Requerido</div>
+        <div class="resultado-valor">${n.toLocaleString()}</div>
+        <div class="resultado-detalle">visitantes por variante</div>
+        <div style="margin-top: var(--spacing-l); text-align: center;">
+            <div style="font-size: var(--font-size-400); font-weight: var(--font-weight-semibold); color: var(--neutral-foreground-1);">
+                ${n * 2} visitantes totales
+            </div>
+            <div style="font-size: var(--font-size-300); color: var(--neutral-foreground-3); margin-top: var(--spacing-s);">
+                Duración estimada: ${dias} días (asumiendo ${visitantesPorDia.toLocaleString()} visitantes/día)
+            </div>
+        </div>
+    `;
+}
+</script>
 {% endblock %}

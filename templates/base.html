@@ -19,71 +19,64 @@
         </div>
 
         <nav class="sidebar-nav">
+            <!-- Introducción -->
+            <a href="{{ url_for('introduccion') }}" class="nav-item {% if request.endpoint == 'introduccion' %}active{% endif %}">
+                <span class="nav-icon">{{ menu_config.introduccion.icon }}</span>
+                <span class="nav-text">{{ menu_config.introduccion.menu_name }}</span>
+            </a>
+            
+            <!-- Dashboard -->
             <a href="{{ url_for('dashboard') }}" class="nav-item {% if request.endpoint == 'dashboard' %}active{% endif %}">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
+                <span class="nav-icon">{{ menu_config.dashboard.icon }}</span>
+                <span class="nav-text">{{ menu_config.dashboard.menu_name }}</span>
             </a>
 
+            <!-- Categorías dinámicas -->
+            {% for category in menu_config.categories %}
             <div class="nav-section">
-                <div class="nav-section-title">Casos de Uso IA</div>
+                <div class="nav-section-title">{{ category.title }}</div>
                 
-                <a href="{{ url_for('personalizacion') }}" class="nav-item {% if request.endpoint == 'personalizacion' %}active{% endif %}">
-                    <span class="nav-icon">👤</span>
-                    <span class="nav-text">Personalización</span>
+                {% for item in category.menu_items %}
+                <a href="{{ url_for(item.endpoint) }}" class="nav-item {% if request.endpoint == item.endpoint %}active{% endif %}">
+                    <span class="nav-icon">{{ item.icon }}</span>
+                    <span class="nav-text">{{ item.menu_name }}</span>
                 </a>
-
-                <a href="{{ url_for('contenido_genai') }}" class="nav-item {% if request.endpoint == 'contenido_genai' %}active{% endif %}">
-                    <span class="nav-icon">✍️</span>
-                    <span class="nav-text">Contenido GenAI</span>
-                </a>
-
-                <a href="{{ url_for('chatbot') }}" class="nav-item {% if request.endpoint == 'chatbot' %}active{% endif %}">
-                    <span class="nav-icon">💬</span>
-                    <span class="nav-text">Chatbot IA</span>
-                </a>
-
-                <a href="{{ url_for('prediccion_churn') }}" class="nav-item {% if request.endpoint == 'prediccion_churn' %}active{% endif %}">
-                    <span class="nav-icon">📈</span>
-                    <span class="nav-text">Predicción Churn</span>
-                </a>
-
-                <a href="{{ url_for('optimizacion_publicitaria') }}" class="nav-item {% if request.endpoint == 'optimizacion_publicitaria' %}active{% endif %}">
-                    <span class="nav-icon">🎯</span>
-                    <span class="nav-text">Optimización Ads</span>
-                </a>
-
-                <a href="{{ url_for('segmentacion_avanzada') }}" class="nav-item {% if request.endpoint == 'segmentacion_avanzada' %}active{% endif %}">
-                    <span class="nav-icon">🔍</span>
-                    <span class="nav-text">Segmentación</span>
-                </a>
-
-                <a href="{{ url_for('ab_testing') }}" class="nav-item {% if request.endpoint == 'ab_testing' %}active{% endif %}">
-                    <span class="nav-icon">🧪</span>
-                    <span class="nav-text">A/B Testing</span>
-                </a>
-
-                <a href="{{ url_for('monitorizacion_marca') }}" class="nav-item {% if request.endpoint == 'monitorizacion_marca' %}active{% endif %}">
-                    <span class="nav-icon">📡</span>
-                    <span class="nav-text">Monitorización</span>
-                </a>
-
-                <a href="{{ url_for('motor_recomendaciones') }}" class="nav-item {% if request.endpoint == 'motor_recomendaciones' %}active{% endif %}">
-                    <span class="nav-icon">🎁</span>
-                    <span class="nav-text">Recomendaciones</span>
-                </a>
-
-                <a href="{{ url_for('attribution_marketing') }}" class="nav-item {% if request.endpoint == 'attribution_marketing' %}active{% endif %}">
-                    <span class="nav-icon">🔗</span>
-                    <span class="nav-text">Attribution</span>
-                </a>
+                {% endfor %}
             </div>
+            {% endfor %}
 
+            <!-- Configuración -->
             <div class="nav-section">
                 <div class="nav-section-title">Configuración</div>
                 
                 <a href="{{ url_for('configuracion') }}" class="nav-item {% if request.endpoint == 'configuracion' %}active{% endif %}">
-                    <span class="nav-icon">⚙️</span>
-                    <span class="nav-text">Configuración</span>
+                    <span class="nav-icon">{{ menu_config.configuracion.icon }}</span>
+                    <span class="nav-text">{{ menu_config.configuracion.menu_name }}</span>
+                </a>
+            </div>
+
+            <!-- Integración de Datos -->
+            <div class="nav-section">
+                <div class="nav-section-title">Data & Integraciones</div>
+                
+                <a href="{{ url_for('integracion_datos') }}" class="nav-item {% if request.endpoint == 'integracion_datos' %}active{% endif %}">
+                    <span class="nav-icon">{{ menu_config.integracion_datos.icon }}</span>
+                    <span class="nav-text">{{ menu_config.integracion_datos.menu_name }}</span>
+                </a>
+                
+                <a href="{{ url_for('integracion_apis') }}" class="nav-item {% if request.endpoint == 'integracion_apis' %}active{% endif %}">
+                    <span class="nav-icon">{{ menu_config.integracion_apis.icon }}</span>
+                    <span class="nav-text">{{ menu_config.integracion_apis.menu_name }}</span>
+                </a>
+                
+                <a href="{{ url_for('laboratorio') }}" class="nav-item {% if request.endpoint == 'laboratorio' %}active{% endif %}">
+                    <span class="nav-icon">{{ menu_config.laboratorio.icon }}</span>
+                    <span class="nav-text">{{ menu_config.laboratorio.menu_name }}</span>
+                </a>
+                
+                <a href="{{ url_for('monitorizacion') }}" class="nav-item {% if request.endpoint == 'monitorizacion' %}active{% endif %}">
+                    <span class="nav-icon">{{ menu_config.monitorizacion.icon }}</span>
+                    <span class="nav-text">{{ menu_config.monitorizacion.menu_name }}</span>
                 </a>
             </div>
         </nav>
@@ -107,7 +100,7 @@
         <!-- Top Bar -->
         <header class="top-bar">
             <div class="page-title">
-                {% block page_title %}Dashboard{% endblock %}
+                {% block page_title %}{{ get_page_title(request.endpoint) }}{% endblock %}
             </div>
             <div class="top-bar-actions">
                 <button class="icon-btn" title="Notificaciones">

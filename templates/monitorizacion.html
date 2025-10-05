@@ -1,0 +1,762 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="monitorizacion-container">
+    <!-- Header -->
+    <div class="monitorizacion-header">
+        <div class="header-content">
+            <h1>📊 Monitorización y Auditoría</h1>
+            <p class="subtitle">Seguimiento en tiempo real de actividad, rendimiento y eventos del sistema</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="exportarLogs()">
+                <span>📥</span> Exportar Logs
+            </button>
+            <button class="btn btn-secondary" onclick="configurarAlertas()">
+                <span>🔔</span> Configurar Alertas
+            </button>
+            <button class="btn btn-primary" onclick="actualizarDatos()">
+                <span>🔄</span> Actualizar
+            </button>
+        </div>
+    </div>
+
+    <!-- Métricas del Sistema -->
+    <div class="metricas-sistema-grid">
+        <div class="metrica-sistema-card">
+            <div class="metrica-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                👥
+            </div>
+            <div class="metrica-info">
+                <div class="metrica-label">Usuarios Activos</div>
+                <div class="metrica-value">{{ metricas_sistema.usuarios_activos }}</div>
+                <div class="metrica-detail">Conectados ahora</div>
+            </div>
+        </div>
+
+        <div class="metrica-sistema-card">
+            <div class="metrica-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                🔐
+            </div>
+            <div class="metrica-info">
+                <div class="metrica-label">Sesiones Hoy</div>
+                <div class="metrica-value">{{ metricas_sistema.sesiones_hoy }}</div>
+                <div class="metrica-detail">+18% vs ayer</div>
+            </div>
+        </div>
+
+        <div class="metrica-sistema-card">
+            <div class="metrica-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                🔌
+            </div>
+            <div class="metrica-info">
+                <div class="metrica-label">API Calls Hoy</div>
+                <div class="metrica-value">{{ metricas_sistema.api_calls_hoy }}</div>
+                <div class="metrica-detail">Todas las APIs</div>
+            </div>
+        </div>
+
+        <div class="metrica-sistema-card">
+            <div class="metrica-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                ✅
+            </div>
+            <div class="metrica-info">
+                <div class="metrica-label">Uptime</div>
+                <div class="metrica-value">{{ metricas_sistema.uptime }}</div>
+                <div class="metrica-detail">Últimos 30 días</div>
+            </div>
+        </div>
+
+        <div class="metrica-sistema-card">
+            <div class="metrica-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                ⚡
+            </div>
+            <div class="metrica-info">
+                <div class="metrica-label">Latencia Promedio</div>
+                <div class="metrica-value">{{ metricas_sistema.latencia_promedio }}</div>
+                <div class="metrica-detail">Todas las APIs</div>
+            </div>
+        </div>
+
+        <div class="metrica-sistema-card">
+            <div class="metrica-icon" style="background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);">
+                ⚠️
+            </div>
+            <div class="metrica-info">
+                <div class="metrica-label">Errores Hoy</div>
+                <div class="metrica-value">{{ metricas_sistema.errores_hoy }}</div>
+                <div class="metrica-detail">0.001% error rate</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="monitorizacion-content">
+        <!-- Columna Izquierda -->
+        <div class="monitorizacion-left">
+            <!-- Actividad Reciente -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>🕐 Actividad Reciente</h2>
+                        <p class="card-subtitle">Últimas 50 acciones en la plataforma</p>
+                    </div>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" onclick="filtrarActividad('all')">Todas</button>
+                        <button class="filter-tab" onclick="filtrarActividad('api_call')">API Calls</button>
+                        <button class="filter-tab" onclick="filtrarActividad('login')">Logins</button>
+                        <button class="filter-tab" onclick="filtrarActividad('config')">Config</button>
+                    </div>
+                </div>
+                <div class="actividad-list">
+                    {% for actividad in actividad_reciente %}
+                    <div class="actividad-item" data-tipo="{{ actividad.tipo }}">
+                        <div class="actividad-avatar">{{ actividad.avatar }}</div>
+                        <div class="actividad-info">
+                            <div class="actividad-descripcion">
+                                <strong>{{ actividad.usuario }}</strong>
+                                {{ actividad.descripcion }}
+                                <span class="actividad-objeto">{{ actividad.objeto }}</span>
+                            </div>
+                            <div class="actividad-meta">
+                                <span class="actividad-tiempo">{{ actividad.timestamp.strftime('%H:%M:%S') }}</span>
+                                <span class="actividad-ip">{{ actividad.ip }}</span>
+                                <span class="actividad-rol">{{ actividad.rol }}</span>
+                            </div>
+                        </div>
+                        <div class="actividad-icono">{{ actividad.icono }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Uso de APIs -->
+            <div class="card" style="margin-top: 24px;">
+                <div class="card-header">
+                    <h2>📊 Uso de APIs por Endpoint</h2>
+                    <p class="card-subtitle">Métricas de rendimiento de las últimas 24 horas</p>
+                </div>
+                <div class="apis-table-container">
+                    <table class="apis-table">
+                        <thead>
+                            <tr>
+                                <th>Endpoint</th>
+                                <th>Requests</th>
+                                <th>Errores</th>
+                                <th>Error Rate</th>
+                                <th>Latencia</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for api in uso_apis %}
+                            <tr>
+                                <td>
+                                    <strong>{{ api.endpoint }}</strong>
+                                </td>
+                                <td>
+                                    <span class="api-calls-value">{{ '{:,.0f}'.format(api.calls) }}</span>
+                                </td>
+                                <td>
+                                    <span class="api-errores">{{ api.errores }}</span>
+                                </td>
+                                <td>
+                                    {% set error_rate = (api.errores / api.calls * 100) %}
+                                    <span class="error-rate {% if error_rate < 0.01 %}rate-good{% elif error_rate < 0.1 %}rate-warning{% else %}rate-bad{% endif %}">
+                                        {{ '{:.3f}'.format(error_rate) }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="latencia-value {% if api.latencia < 200 %}latencia-good{% elif api.latencia < 1000 %}latencia-warning{% else %}latencia-bad{% endif %}">
+                                        {{ api.latencia }}ms
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status-badge-api status-operational">
+                                        <span class="status-dot-api"></span>
+                                        Operativo
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Derecha -->
+        <div class="monitorizacion-right">
+            <!-- Eventos del Sistema -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>🔔 Eventos del Sistema</h2>
+                    <p class="card-subtitle">Alertas y notificaciones</p>
+                </div>
+                <div class="eventos-list">
+                    {% for evento in eventos_sistema %}
+                    <div class="evento-item evento-{{ evento.severidad }}">
+                        <div class="evento-icon">
+                            {% if evento.severidad == 'success' %}
+                                ✅
+                            {% elif evento.severidad == 'warning' %}
+                                ⚠️
+                            {% elif evento.severidad == 'error' %}
+                                ❌
+                            {% else %}
+                                ℹ️
+                            {% endif %}
+                        </div>
+                        <div class="evento-content">
+                            <div class="evento-mensaje">{{ evento.mensaje }}</div>
+                            <div class="evento-tiempo">{{ evento.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Usuarios Más Activos -->
+            <div class="card" style="margin-top: 24px;">
+                <div class="card-header">
+                    <h2>👥 Usuarios Más Activos</h2>
+                    <p class="card-subtitle">Top 5 de las últimas 24 horas</p>
+                </div>
+                <div class="usuarios-activos-list">
+                    {% for usuario in usuarios_activos %}
+                    <div class="usuario-activo-item">
+                        <div class="usuario-avatar-large">{{ usuario.avatar }}</div>
+                        <div class="usuario-info-activo">
+                            <div class="usuario-nombre-activo">{{ usuario.nombre }}</div>
+                            <div class="usuario-stats-activo">
+                                <span class="stat-badge">{{ usuario.acciones }} acciones</span>
+                                <span class="stat-badge">{{ usuario.api_calls }} API calls</span>
+                            </div>
+                            <div class="usuario-ultimo-acceso">{{ usuario.ultimo_acceso }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Acciones Rápidas -->
+            <div class="card" style="margin-top: 24px;">
+                <div class="card-header">
+                    <h2>⚡ Acciones Rápidas</h2>
+                </div>
+                <div class="acciones-rapidas">
+                    <button class="accion-rapida-btn" onclick="verReporteCompleto()">
+                        <span class="accion-icon">📄</span>
+                        <span class="accion-text">Reporte Completo</span>
+                    </button>
+                    <button class="accion-rapida-btn" onclick="configurarRetention()">
+                        <span class="accion-icon">🗄️</span>
+                        <span class="accion-text">Retención de Logs</span>
+                    </button>
+                    <button class="accion-rapida-btn" onclick="verAnomalias()">
+                        <span class="accion-icon">🔍</span>
+                        <span class="accion-text">Detectar Anomalías</span>
+                    </button>
+                    <button class="accion-rapida-btn" onclick="exportarAuditoria()">
+                        <span class="accion-icon">📊</span>
+                        <span class="accion-text">Auditoría Completa</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.monitorizacion-container {
+    padding: 30px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.monitorizacion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header-content h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Métricas del Sistema */
+.metricas-sistema-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metrica-sistema-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+}
+
+.metrica-sistema-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+    transform: translateY(-4px);
+}
+
+.metrica-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.metrica-info {
+    flex: 1;
+}
+
+.metrica-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.metrica-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.metrica-detail {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Layout Principal */
+.monitorizacion-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 24px;
+}
+
+/* Filtros */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-tab {
+    padding: 6px 12px;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+    background: #e0e0e0;
+}
+
+.filter-tab.active {
+    background: #667eea;
+    color: white;
+}
+
+/* Actividad List */
+.actividad-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.actividad-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.actividad-item:hover {
+    background: #f8f9fa;
+}
+
+.actividad-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.actividad-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.actividad-descripcion {
+    font-size: 14px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.actividad-objeto {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.actividad-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: #999;
+}
+
+.actividad-icono {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+/* APIs Table */
+.apis-table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.apis-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.apis-table thead {
+    background: #f8f9fa;
+}
+
+.apis-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.apis-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.api-calls-value {
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.api-errores {
+    color: #f57c00;
+    font-weight: 600;
+}
+
+.error-rate {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.rate-good {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.rate-warning {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.rate-bad {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+.latencia-value {
+    font-weight: 600;
+}
+
+.latencia-good {
+    color: #2e7d32;
+}
+
+.latencia-warning {
+    color: #f57c00;
+}
+
+.latencia-bad {
+    color: #c2185b;
+}
+
+.status-badge-api {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-dot-api {
+    width: 6px;
+    height: 6px;
+    background: #2e7d32;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+/* Eventos */
+.eventos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.evento-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.evento-success {
+    background: #e8f5e9;
+    border-left-color: #2e7d32;
+}
+
+.evento-warning {
+    background: #fff3e0;
+    border-left-color: #f57c00;
+}
+
+.evento-error {
+    background: #fce4ec;
+    border-left-color: #c2185b;
+}
+
+.evento-info {
+    background: #e3f2fd;
+    border-left-color: #1976d2;
+}
+
+.evento-icon {
+    font-size: 20px;
+}
+
+.evento-content {
+    flex: 1;
+}
+
+.evento-mensaje {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.evento-tiempo {
+    font-size: 11px;
+    color: #666;
+}
+
+/* Usuarios Activos */
+.usuarios-activos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.usuario-activo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.usuario-activo-item:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.usuario-avatar-large {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.usuario-info-activo {
+    flex: 1;
+}
+
+.usuario-nombre-activo {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.usuario-stats-activo {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.stat-badge {
+    padding: 2px 8px;
+    background: white;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.usuario-ultimo-acceso {
+    font-size: 11px;
+    color: #999;
+}
+
+/* Acciones Rápidas */
+.acciones-rapidas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.accion-rapida-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    background: #f8f9fa;
+    border: 2px solid #f0f0f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.accion-rapida-btn:hover {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.accion-icon {
+    font-size: 24px;
+}
+
+.accion-text {
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .monitorizacion-content {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+function filtrarActividad(tipo) {
+    const items = document.querySelectorAll('.actividad-item');
+    const tabs = document.querySelectorAll('.filter-tab');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    items.forEach(item => {
+        if (tipo === 'all' || item.dataset.tipo === tipo) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function actualizarDatos() {
+    alert('🔄 Actualizando datos en tiempo real...\n\nLos datos se han actualizado correctamente.');
+    location.reload();
+}
+
+function exportarLogs() {
+    alert('📥 Exportando logs...\n\nFormato: CSV\nRango: Últimas 24 horas\nTamaño estimado: 2.4 MB\n\nDescarga iniciada.');
+}
+
+function configurarAlertas() {
+    alert('🔔 Configuración de Alertas\n\nOpciones disponibles:\n- Alertas por email\n- Webhooks\n- Slack/Teams integration\n- Umbrales personalizados');
+}
+
+function verReporteCompleto() {
+    alert('📄 Generando reporte completo...\n\nIncluye:\n- Actividad de usuarios\n- Métricas de APIs\n- Eventos del sistema\n- Análisis de tendencias');
+}
+
+function configurarRetention() {
+    alert('🗄️ Retención de Logs\n\nPolítica actual:\n- Logs de actividad: 90 días\n- Logs de API: 30 días\n- Logs de sistema: 180 días');
+}
+
+function verAnomalias() {
+    alert('🔍 Detección de Anomalías\n\nAnálisis con ML:\n- Patrones de uso inusuales\n- Picos de tráfico\n- Intentos de acceso sospechosos\n\nNo se detectaron anomalías en las últimas 24h.');
+}
+
+function exportarAuditoria() {
+    alert('📊 Exportando auditoría completa...\n\nIncluye:\n- Todos los eventos\n- Cambios de configuración\n- Accesos de usuarios\n- Modificaciones de datos\n\nFormato: PDF + Excel');
+}
+</script>
+{% endblock %}

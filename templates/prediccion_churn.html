@@ -1,71 +1,311 @@
 {% extends "base.html" %}
 
-{% block title %}Predicción de Churn - Iberdrola AI{% endblock %}
-
-{% block page_title %}Predicción y Prevención de Churn{% endblock %}
-
 {% block content %}
-<div class="use-case-container">
-    <div class="use-case-header">
-        <div class="use-case-icon">📈</div>
-        <div class="use-case-info">
-            <h1>Predicción y Prevención de Churn</h1>
-            <p>Identifique clientes en riesgo de abandonar antes de que lo hagan. Reduzca churn un 25% y aumente CLV un 40% con retención proactiva.</p>
-        </div>
-    </div>
+<!-- Panel de Documentación -->
+<button class="doc-panel-toggle" id="docPanelToggle">
+    <span class="toggle-icon">📚</span>
+    <span class="toggle-text">Documentación</span>
+</button>
 
-    <!-- Métricas del Caso de Uso -->
-    <div class="metrics-row">
-        <div class="metric-box">
-            <div class="metric-box-value">85%</div>
-            <div class="metric-box-label">Precisión Predicción</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-box-value">-25%</div>
-            <div class="metric-box-label">Reducción Churn</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-box-value">10x</div>
-            <div class="metric-box-label">ROI Retención</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-box-value">€200K-500K</div>
-            <div class="metric-box-label">Inversión Inicial</div>
-        </div>
+<div class="doc-panel" id="docPanel">
+    <div class="doc-panel-header">
+        <h2 class="doc-panel-title">📚 Predicción de Churn con IA</h2>
+        <button class="doc-edit-btn" id="docEditBtn">✏️ Editar</button>
+        <button class="doc-panel-close" id="docPanelClose">×</button>
     </div>
-
-    <!-- Lista de Clientes en Riesgo -->
-    <div class="card">
-        <div class="card-header">
-            <h2>⚠️ Clientes en Riesgo</h2>
-            <div class="card-header-actions">
-                <select class="form-control form-control-sm">
-                    <option>Todos los niveles</option>
-                    <option>Alto riesgo</option>
-                    <option>Riesgo medio</option>
-                    <option>Bajo riesgo</option>
-                </select>
+    
+    <div class="doc-panel-content" id="docPanelContent">
+        <!-- Resumen Ejecutivo -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    <strong>Predicción de Churn con IA</strong> utiliza XGBoost y modelos de Survival Analysis para 
+                    predecir la probabilidad de que un cliente abandone el servicio en los próximos 30-90 días. 
+                    El sistema procesa 80+ features de comportamiento, transaccionales y contextuales para generar 
+                    scores de riesgo individualizados.
+                </p>
+                
+                <p>
+                    <strong>Datos de Entrada Procesados:</strong>
+                </p>
+                <ul>
+                    <li><strong>Datos de Uso:</strong> Frecuencia de login, uso de app/web, consultas de factura, cambios de configuración</li>
+                    <li><strong>Datos Transaccionales:</strong> Historial de pagos, retrasos, reclamaciones, cambios de tarifa</li>
+                    <li><strong>Datos de Consumo:</strong> Tendencia de consumo (↑↓), variabilidad, comparación con histórico</li>
+                    <li><strong>Datos de Interacción:</strong> Llamadas a call center, emails, chats, quejas, NPS</li>
+                    <li><strong>Datos Competitivos:</strong> Ofertas de competencia, visitas a webs competidoras (si disponible)</li>
+                    <li><strong>Datos Contractuales:</strong> Antigüedad, tipo de contrato, fin de permanencia, penalizaciones</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🔄 Pipeline de Predicción</strong><br>
+                    Ingesta diaria de datos → Feature engineering (80+ variables) → Scoring con XGBoost → 
+                    Explicabilidad con SHAP → Survival analysis para timing → Generación de acciones con RL → 
+                    Priorización por LTV → Output a CRM para intervención
+                </div>
+                
+                <p>
+                    <strong>Output del Sistema:</strong>
+                </p>
+                <ul>
+                    <li><strong>Churn Score:</strong> Probabilidad 0-100 de abandono en próximos 90 días</li>
+                    <li><strong>Factores de Riesgo:</strong> Top 3-5 factores que contribuyen al riesgo (con % de impacto)</li>
+                    <li><strong>Tiempo Estimado:</strong> Predicción de cuándo ocurrirá el churn (30/60/90 días)</li>
+                    <li><strong>Acciones Recomendadas:</strong> Lista priorizada de intervenciones con probabilidad de éxito</li>
+                    <li><strong>Segmento de Riesgo:</strong> Alto/Medio/Bajo para priorización de recursos</li>
+                </ul>
             </div>
         </div>
+        
+        <!-- Modelos de IA -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-model-card">
+                    <h4>1. XGBoost Classifier</h4>
+                    <p>
+                        Gradient boosting que combina múltiples árboles de decisión débiles para crear un 
+                        predictor robusto. Maneja bien datos desbalanceados (churn típicamente 3-5%).
+                    </p>
+                    <p><strong>Uso:</strong> Modelo principal de predicción de churn</p>
+                    <p><strong>Métricas:</strong> Precision 89%, Recall 84%, AUC-ROC 0.92</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>2. SHAP (SHapley Additive exPlanations)</h4>
+                    <p>
+                        Framework de explicabilidad que identifica qué factores contribuyen más al riesgo de 
+                        churn de cada cliente individual, permitiendo acciones personalizadas.
+                    </p>
+                    <p><strong>Uso:</strong> Identificación de factores de riesgo específicos por cliente</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>3. Survival Analysis (Cox Proportional Hazards)</h4>
+                    <p>
+                        Modelo que predice no solo SI un cliente abandonará, sino CUÁNDO, permitiendo 
+                        priorización de intervenciones.
+                    </p>
+                    <p><strong>Uso:</strong> Estimación de tiempo hasta churn y priorización</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>4. Reinforcement Learning (Contextual Bandits)</h4>
+                    <p>
+                        Aprende qué acciones de retención funcionan mejor para cada tipo de cliente, 
+                        optimizando continuamente las recomendaciones.
+                    </p>
+                    <p><strong>Uso:</strong> Optimización de acciones de retención</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-tech-stack">
+                    <div class="doc-tech-item">
+                        <strong>Data Sources</strong>
+                        <span>CRM, Facturación, Call Center, Web/App Analytics, Quejas</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>ML Platform</strong>
+                        <span>Python (XGBoost, SHAP, lifelines), Azure ML</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Real-time Scoring</strong>
+                        <span>Azure Functions, API REST</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Orchestration</strong>
+                        <span>Apache Airflow (scoring diario)</span>
+                    </div>
+                </div>
+                
+                <p><strong>Features Utilizadas (80+):</strong></p>
+                <ul>
+                    <li><strong>Comportamiento:</strong> Reducción consumo, cambios en patrones, engagement</li>
+                    <li><strong>Transaccionales:</strong> Historial pagos, quejas, llamadas call center</li>
+                    <li><strong>Competitivas:</strong> Ofertas competencia, visitas web competidores</li>
+                    <li><strong>Satisfacción:</strong> NPS, valoraciones, tiempo respuesta</li>
+                    <li><strong>Contractuales:</strong> Antigüedad, fin contrato, tipo plan</li>
+                </ul>
+                
+                <p><strong>Pipeline de Predicción:</strong></p>
+                <ol>
+                    <li><strong>Data Collection (diaria):</strong> Extracción de todas las fuentes</li>
+                    <li><strong>Feature Engineering:</strong> Cálculo de 80+ features</li>
+                    <li><strong>Scoring:</strong> XGBoost genera score 0-100 para cada cliente</li>
+                    <li><strong>Explicabilidad:</strong> SHAP identifica factores de riesgo</li>
+                    <li><strong>Recomendaciones:</strong> RL sugiere acciones óptimas</li>
+                    <li><strong>Priorización:</strong> Survival analysis estima urgencia</li>
+                    <li><strong>Alertas:</strong> Notificaciones a equipos de retención</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- KPIs -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📈</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Métricas del Modelo:</strong></p>
+                <ul>
+                    <li><strong>Precision:</strong> 89% (de los que predecimos que abandonarán, 89% lo hacen)</li>
+                    <li><strong>Recall:</strong> 84% (detectamos 84% de todos los churns)</li>
+                    <li><strong>AUC-ROC:</strong> 0.92 (excelente capacidad discriminativa)</li>
+                    <li><strong>Anticipación:</strong> 30-90 días antes del churn</li>
+                </ul>
+                
+                <p><strong>Métricas de Negocio:</strong></p>
+                <ul>
+                    <li><strong>Tasa de Retención:</strong> 68-82% según acción aplicada</li>
+                    <li><strong>Revenue Salvado:</strong> €4.2M/mes mediante intervenciones</li>
+                    <li><strong>ROI Programa:</strong> 450% (coste intervenciones vs revenue salvado)</li>
+                    <li><strong>Reducción Churn:</strong> -1.2 puntos porcentuales (3.8% actual vs 5.0% sin IA)</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🎯 Objetivo de Negocio</strong><br>
+                    Reducir tasa de churn de 3.8% a 2.5% en 12 meses, equivalente a €18M anuales 
+                    en revenue retenido adicional.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">⚠️</div>
+        <div class="use-case-info">
+            <h1>Predicción de Churn con IA</h1>
+            <p>Identifica clientes en riesgo 30-90 días antes con 89% precisión. Acciones personalizadas aumentan retención 68-82%.</p>
+        </div>
+    </div>
+
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-churn">
+        <div class="metric-card-churn riesgo-alto">
+            <div class="metric-header-churn">
+                <div class="metric-icon-churn">🔴</div>
+                <div class="metric-label-churn">Riesgo Alto</div>
+            </div>
+            <div class="metric-value-churn">{{ metricas.clientes_riesgo_alto|format_number }}</div>
+            <div class="metric-detail-churn">Intervención urgente</div>
+        </div>
+        <div class="metric-card-churn riesgo-medio">
+            <div class="metric-header-churn">
+                <div class="metric-icon-churn">🟡</div>
+                <div class="metric-label-churn">Riesgo Medio</div>
+            </div>
+            <div class="metric-value-churn">{{ metricas.clientes_riesgo_medio|format_number }}</div>
+            <div class="metric-detail-churn">Monitoreo activo</div>
+        </div>
+        <div class="metric-card-churn riesgo-bajo">
+            <div class="metric-header-churn">
+                <div class="metric-icon-churn">🟢</div>
+                <div class="metric-label-churn">Riesgo Bajo</div>
+            </div>
+            <div class="metric-value-churn">{{ metricas.clientes_riesgo_bajo|format_number }}</div>
+            <div class="metric-detail-churn">Seguimiento preventivo</div>
+        </div>
+        <div class="metric-card-churn revenue-riesgo">
+            <div class="metric-header-churn">
+                <div class="metric-icon-churn">💰</div>
+                <div class="metric-label-churn">Revenue en Riesgo</div>
+            </div>
+            <div class="metric-value-churn">€{{ (metricas.revenue_en_riesgo / 1000000)|round(2) }}M</div>
+            <div class="metric-detail-churn">Mensual</div>
+        </div>
+    </div>
+
+    <!-- Métricas del Modelo -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📊 Rendimiento del Modelo</h2>
+            <span class="badge badge-success">Actualizado hoy</span>
+        </div>
         <div class="card-body">
-            <div class="churn-list">
-                {% for cliente in clientes %}
-                <div class="churn-item churn-{{ cliente.nivel }}" onclick="analizarCliente('{{ cliente.id }}')">
-                    <div class="churn-avatar">{{ cliente.nombre[:2].upper() }}</div>
-                    <div class="churn-info">
-                        <div class="churn-name">{{ cliente.nombre }}</div>
-                        <div class="churn-id">{{ cliente.id }}</div>
+            <div class="modelo-metrics-grid">
+                <div class="modelo-metric-item">
+                    <div class="metric-circle">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" stroke-dasharray="{{ metricas.precision_modelo }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <text x="18" y="20.35" class="percentage">{{ metricas.precision_modelo }}%</text>
+                        </svg>
                     </div>
-                    <div class="churn-risk">
-                        <div class="risk-score risk-{{ cliente.nivel }}">{{ cliente.riesgo }}%</div>
-                        <div class="risk-label">Riesgo {{ cliente.nivel }}</div>
+                    <div class="metric-info">
+                        <div class="metric-name">Precision</div>
+                        <div class="metric-desc">Predicciones correctas</div>
                     </div>
-                    <div class="churn-value">
-                        <div class="value-amount">{{ cliente.valor|format_currency }}</div>
-                        <div class="value-label">Valor Lifetime</div>
+                </div>
+                <div class="modelo-metric-item">
+                    <div class="metric-circle">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" stroke-dasharray="{{ metricas.recall_modelo }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <text x="18" y="20.35" class="percentage">{{ metricas.recall_modelo }}%</text>
+                        </svg>
                     </div>
-                    <div class="churn-action">
-                        <button class="btn btn-sm btn-primary">Analizar</button>
+                    <div class="metric-info">
+                        <div class="metric-name">Recall</div>
+                        <div class="metric-desc">Churns detectados</div>
+                    </div>
+                </div>
+                <div class="modelo-metric-item">
+                    <div class="metric-stat-box">
+                        <div class="stat-value-big">{{ metricas.tasa_churn_actual }}%</div>
+                        <div class="stat-label">Tasa Churn Actual</div>
+                        <div class="stat-comparison">
+                            <span class="comparison-arrow">↓</span>
+                            <span class="comparison-text">vs {{ metricas.tasa_churn_predicha }}% predicho</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modelo-metric-item">
+                    <div class="metric-stat-box success-box">
+                        <div class="stat-value-big">{{ metricas.clientes_salvados_mes|format_number }}</div>
+                        <div class="stat-label">Clientes Salvados</div>
+                        <div class="stat-comparison">
+                            <span class="comparison-text">Este mes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Factores de Churn Principales -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔍 Factores de Churn Principales</h2>
+        </div>
+        <div class="card-body">
+            <div class="factores-grid">
+                {% for factor in factores_principales %}
+                <div class="factor-item">
+                    <div class="factor-header">
+                        <span class="factor-nombre">{{ factor.factor }}</span>
+                        <span class="factor-frecuencia">{{ factor.frecuencia }}% clientes</span>
+                    </div>
+                    <div class="factor-impacto-bar">
+                        <div class="impacto-fill" style="width: {{ factor.impacto_promedio }}%;"></div>
+                        <span class="impacto-text">{{ factor.impacto_promedio }}% impacto</span>
                     </div>
                 </div>
                 {% endfor %}
@@ -73,118 +313,707 @@
         </div>
     </div>
 
-    <!-- Análisis Detallado -->
-    <div id="analisis-output" class="card" style="display: none;">
-        <!-- El contenido se carga dinámicamente -->
-    </div>
+    <!-- Clientes en Riesgo -->
+    <div class="card">
+        <div class="card-header">
+            <h2>⚠️ Clientes en Riesgo - Acción Requerida</h2>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="filtrarRiesgo('todos')">Todos</button>
+                <button class="btn btn-outline" onclick="filtrarRiesgo('alto')">Alto</button>
+                <button class="btn btn-outline" onclick="filtrarRiesgo('medio')">Medio</button>
+                <button class="btn btn-outline" onclick="filtrarRiesgo('bajo')">Bajo</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="clientes-riesgo-list">
+                {% for cliente in clientes %}
+                <div class="cliente-riesgo-card nivel-{{ cliente.nivel_riesgo }}" data-nivel="{{ cliente.nivel_riesgo }}">
+                    <!-- Header del Cliente -->
+                    <div class="cliente-header">
+                        <div class="cliente-info-principal">
+                            <div class="cliente-avatar">
+                                {{ cliente.nombre[0] }}
+                            </div>
+                            <div class="cliente-datos">
+                                <h3 class="cliente-nombre">{{ cliente.nombre }}</h3>
+                                <div class="cliente-meta">
+                                    <span class="cliente-id">{{ cliente.id }}</span>
+                                    <span class="cliente-segmento">{{ cliente.segmento }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cliente-score-section">
+                            <div class="score-circle score-{{ cliente.nivel_riesgo }}">
+                                <div class="score-value">{{ cliente.score_churn }}</div>
+                                <div class="score-label">Score</div>
+                            </div>
+                            <span class="nivel-badge nivel-{{ cliente.nivel_riesgo }}">
+                                {% if cliente.nivel_riesgo == 'alto' %}🔴 ALTO
+                                {% elif cliente.nivel_riesgo == 'medio' %}🟡 MEDIO
+                                {% else %}🟢 BAJO{% endif %}
+                            </span>
+                        </div>
+                    </div>
 
-    <!-- Resumen de Acciones -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-value">127</div>
-            <div class="stat-label">Clientes Alto Riesgo</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">✅</div>
-            <div class="stat-value">89</div>
-            <div class="stat-label">Campañas Activas</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
-            <div class="stat-value">€847K</div>
-            <div class="stat-label">Valor en Riesgo</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">📊</div>
-            <div class="stat-value">73%</div>
-            <div class="stat-label">Tasa Retención</div>
+                    <!-- Métricas del Cliente -->
+                    <div class="cliente-metricas">
+                        <div class="metrica-item">
+                            <span class="metrica-label">LTV</span>
+                            <span class="metrica-value">€{{ (cliente.ltv / 1000)|round(1) }}K</span>
+                        </div>
+                        <div class="metrica-item">
+                            <span class="metrica-label">Antigüedad</span>
+                            <span class="metrica-value">{{ cliente.antiguedad }} años</span>
+                        </div>
+                        <div class="metrica-item">
+                            <span class="metrica-label">Consumo</span>
+                            <span class="metrica-value">{{ cliente.consumo_mensual }} kWh</span>
+                        </div>
+                        <div class="metrica-item">
+                            <span class="metrica-label">Satisfacción</span>
+                            <span class="metrica-value">{{ cliente.satisfaccion }}/10</span>
+                        </div>
+                        <div class="metrica-item">
+                            <span class="metrica-label">Última Interacción</span>
+                            <span class="metrica-value">{{ cliente.ultima_interaccion }}</span>
+                        </div>
+                        <div class="metrica-item">
+                            <span class="metrica-label">Canal Preferido</span>
+                            <span class="metrica-value">{{ cliente.canal_preferido }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Factores de Riesgo -->
+                    <div class="cliente-section">
+                        <h4 class="section-subtitle">🔍 Factores de Riesgo</h4>
+                        <div class="factores-riesgo-list">
+                            {% for factor in cliente.factores_riesgo %}
+                            <div class="factor-riesgo-item">
+                                <div class="factor-riesgo-header">
+                                    <span class="factor-riesgo-nombre">{{ factor.factor }}</span>
+                                    <span class="factor-riesgo-impacto">{{ factor.impacto }}% impacto</span>
+                                </div>
+                                <p class="factor-riesgo-desc">{{ factor.descripcion }}</p>
+                                <div class="factor-riesgo-bar">
+                                    <div class="factor-riesgo-fill" style="width: {{ factor.impacto }}%;"></div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Acciones Recomendadas -->
+                    <div class="cliente-section">
+                        <h4 class="section-subtitle">💡 Acciones Recomendadas</h4>
+                        <div class="acciones-list">
+                            {% for accion in cliente.acciones_recomendadas %}
+                            <div class="accion-item prioridad-{{ accion.prioridad }}">
+                                <div class="accion-header">
+                                    <span class="accion-prioridad prioridad-{{ accion.prioridad }}">
+                                        {% if accion.prioridad == 'alta' %}🔴 URGENTE
+                                        {% elif accion.prioridad == 'media' %}🟡 MEDIA
+                                        {% else %}🟢 BAJA{% endif %}
+                                    </span>
+                                    <span class="accion-probabilidad">{{ accion.probabilidad_exito }}% éxito</span>
+                                </div>
+                                <p class="accion-texto">{{ accion.accion }}</p>
+                                <button class="btn btn-primary btn-sm" onclick="aplicarAccion('{{ cliente.id }}', '{{ accion.accion }}')">
+                                    ✓ Aplicar Acción
+                                </button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Footer con Acciones -->
+                    <div class="cliente-footer">
+                        <button class="btn btn-outline" onclick="verHistorial('{{ cliente.id }}')">
+                            📊 Ver Historial
+                        </button>
+                        <button class="btn btn-outline" onclick="contactarCliente('{{ cliente.id }}')">
+                            📞 Contactar
+                        </button>
+                        <button class="btn btn-primary" onclick="crearCampanaRetencion('{{ cliente.id }}')">
+                            🎯 Crear Campaña
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Estilos específicos para Predicción de Churn */
+.metrics-grid-churn {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card-churn {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.metric-card-churn:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+}
+
+.metric-card-churn.riesgo-alto {
+    border-left: 4px solid var(--danger);
+}
+
+.metric-card-churn.riesgo-medio {
+    border-left: 4px solid var(--warning);
+}
+
+.metric-card-churn.riesgo-bajo {
+    border-left: 4px solid var(--success);
+}
+
+.metric-card-churn.revenue-riesgo {
+    border-left: 4px solid var(--primary);
+}
+
+.metric-header-churn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+    margin-bottom: var(--spacing-s);
+}
+
+.metric-icon-churn {
+    font-size: 24px;
+}
+
+.metric-label-churn {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    font-weight: var(--font-weight-semibold);
+}
+
+.metric-value-churn {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: 4px;
+}
+
+.metric-detail-churn {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+/* Métricas del Modelo */
+.modelo-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.modelo-metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.metric-circle {
+    width: 120px;
+    height: 120px;
+}
+
+.circular-chart {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: var(--neutral-stroke-1);
+    stroke-width: 2.8;
+}
+
+.circle {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2.8;
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}
+
+.percentage {
+    fill: var(--neutral-foreground-1);
+    font-family: var(--font-family-base);
+    font-size: 0.5em;
+    font-weight: var(--font-weight-bold);
+    text-anchor: middle;
+}
+
+.metric-info {
+    text-align: center;
+}
+
+.metric-name {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: 4px;
+}
+
+.metric-desc {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.metric-stat-box {
+    width: 100%;
+    padding: var(--spacing-l);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-large);
+    text-align: center;
+}
+
+.metric-stat-box.success-box {
+    background: var(--success-light);
+}
+
+.stat-value-big {
+    font-size: var(--font-size-800);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-comparison {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.comparison-arrow {
+    color: var(--success);
+    font-weight: bold;
+}
+
+/* Factores Principales */
+.factores-grid {
+    display: grid;
+    gap: var(--spacing-l);
+}
+
+.factor-item {
+    padding: var(--spacing-l);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-large);
+}
+
+.factor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-m);
+}
+
+.factor-nombre {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+}
+
+.factor-frecuencia {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.factor-impacto-bar {
+    position: relative;
+    height: 32px;
+    background: var(--neutral-background-3);
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-m);
+}
+
+.impacto-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--danger), var(--warning));
+    transition: width var(--duration-normal) var(--curve-easy-ease);
+}
+
+.impacto-text {
+    position: relative;
+    z-index: 1;
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+/* Clientes en Riesgo */
+.clientes-riesgo-list {
+    display: grid;
+    gap: var(--spacing-xl);
+}
+
+.cliente-riesgo-card {
+    background: var(--neutral-background-1);
+    border: 2px solid var(--neutral-stroke-1);
+    border-left-width: 6px;
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.cliente-riesgo-card.nivel-alto {
+    border-left-color: var(--danger);
+}
+
+.cliente-riesgo-card.nivel-medio {
+    border-left-color: var(--warning);
+}
+
+.cliente-riesgo-card.nivel-bajo {
+    border-left-color: var(--success);
+}
+
+.cliente-riesgo-card:hover {
+    box-shadow: var(--shadow-16);
+    transform: translateY(-2px);
+}
+
+.cliente-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-l);
+    padding-bottom: var(--spacing-l);
+    border-bottom: 2px solid var(--neutral-stroke-1);
+}
+
+.cliente-info-principal {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.cliente-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-600);
+    font-weight: var(--font-weight-bold);
+}
+
+.cliente-nombre {
+    font-size: var(--font-size-500);
+    font-weight: var(--font-weight-bold);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.cliente-meta {
+    display: flex;
+    gap: var(--spacing-m);
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.cliente-id {
+    font-family: 'Consolas', monospace;
+}
+
+.cliente-score-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-s);
+}
+
+.score-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-circle.score-alto {
+    border-color: var(--danger);
+    background: var(--danger-light);
+}
+
+.score-circle.score-medio {
+    border-color: var(--warning);
+    background: var(--warning-light);
+}
+
+.score-circle.score-bajo {
+    border-color: var(--success);
+    background: var(--success-light);
+}
+
+.score-value {
+    font-size: var(--font-size-600);
+    font-weight: var(--font-weight-bold);
+}
+
+.score-label {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.nivel-badge {
+    padding: 6px 16px;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-bold);
+}
+
+.nivel-badge.nivel-alto {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.nivel-badge.nivel-medio {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.nivel-badge.nivel-bajo {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+/* Métricas del Cliente */
+.cliente-metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-l);
+    padding: var(--spacing-l);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-large);
+}
+
+.metrica-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metrica-label {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.metrica-value {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+/* Secciones del Cliente */
+.cliente-section {
+    margin-bottom: var(--spacing-l);
+}
+
+.section-subtitle {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--spacing-m) 0;
+}
+
+/* Factores de Riesgo */
+.factores-riesgo-list {
+    display: grid;
+    gap: var(--spacing-m);
+}
+
+.factor-riesgo-item {
+    padding: var(--spacing-m);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-medium);
+}
+
+.factor-riesgo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.factor-riesgo-nombre {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+}
+
+.factor-riesgo-impacto {
+    font-size: var(--font-size-200);
+    color: var(--danger);
+    font-weight: var(--font-weight-bold);
+}
+
+.factor-riesgo-desc {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+    margin: 0 0 var(--spacing-s) 0;
+}
+
+.factor-riesgo-bar {
+    height: 6px;
+    background: var(--neutral-background-3);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.factor-riesgo-fill {
+    height: 100%;
+    background: var(--danger);
+    transition: width var(--duration-normal) var(--curve-easy-ease);
+}
+
+/* Acciones Recomendadas */
+.acciones-list {
+    display: grid;
+    gap: var(--spacing-m);
+}
+
+.accion-item {
+    padding: var(--spacing-m);
+    background: var(--neutral-background-2);
+    border-left: 4px solid;
+    border-radius: var(--border-radius-medium);
+}
+
+.accion-item.prioridad-alta {
+    border-left-color: var(--danger);
+}
+
+.accion-item.prioridad-media {
+    border-left-color: var(--warning);
+}
+
+.accion-item.prioridad-baja {
+    border-left-color: var(--success);
+}
+
+.accion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-s);
+}
+
+.accion-prioridad {
+    padding: 4px 12px;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-bold);
+}
+
+.accion-prioridad.prioridad-alta {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.accion-prioridad.prioridad-media {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.accion-prioridad.prioridad-baja {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.accion-probabilidad {
+    font-size: var(--font-size-200);
+    color: var(--success);
+    font-weight: var(--font-weight-semibold);
+}
+
+.accion-texto {
+    font-size: var(--font-size-200);
+    margin: 0 0 var(--spacing-m) 0;
+    line-height: 1.6;
+}
+
+/* Footer del Cliente */
+.cliente-footer {
+    display: flex;
+    gap: var(--spacing-m);
+    padding-top: var(--spacing-l);
+    border-top: 1px solid var(--neutral-stroke-1);
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-s);
+}
+</style>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-function analizarCliente(clienteId) {
-    const output = document.getElementById('analisis-output');
-    output.style.display = 'block';
-    output.innerHTML = '<div class="card-body"><div class="loading-spinner"></div><p class="loading-text">Analizando datos del cliente con IA...</p></div>';
-    
-    // Scroll al análisis
-    output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    fetch(`/api/analizar-churn/${clienteId}`)
-    .then(response => response.json())
-    .then(data => {
-        setTimeout(() => {
-            const riskClass = data.cliente.nivel;
-            const riskColor = riskClass === 'alto' ? 'danger' : riskClass === 'medio' ? 'warning' : 'success';
-            
-            let factoresHTML = '';
-            data.factores.forEach(factor => {
-                factoresHTML += `<li>${factor}</li>`;
-            });
-
-            let accionesHTML = '';
-            data.acciones.forEach((accion, index) => {
-                accionesHTML += `<p><strong>✅ Acción ${index + 1}:</strong> ${accion}</p>`;
-            });
-
-            output.innerHTML = `
-                <div class="card-header">
-                    <h2>📊 Análisis Detallado de Riesgo</h2>
-                    <button class="btn btn-sm btn-secondary" onclick="document.getElementById('analisis-output').style.display='none'">Cerrar</button>
-                </div>
-                <div class="card-body">
-                    <div class="customer-profile-card">
-                        <div class="customer-avatar-large">${data.cliente.avatar}</div>
-                        <div class="customer-info-section">
-                            <h3>${data.cliente.nombre}</h3>
-                            <p>Cliente desde: ${data.cliente.antiguedad} | ID: ${data.cliente.id}</p>
-                            <div style="margin-top: 1rem;">
-                                <span class="risk-badge risk-badge-${riskClass}">
-                                    ⚠️ RIESGO ${data.cliente.nivel.toUpperCase()}: ${data.cliente.riesgo}%
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analysis-section">
-                        <h3 class="section-title section-${riskColor}">
-                            ${riskClass === 'alto' ? '🚨' : riskClass === 'medio' ? '⚡' : '✨'} 
-                            ${riskClass === 'alto' ? 'Factores de Riesgo Detectados' : riskClass === 'medio' ? 'Señales de Alerta' : 'Cliente Fidelizado - Perfil Promotor'}
-                        </h3>
-                        <div class="factors-box factors-${riskColor}">
-                            <ul>${factoresHTML}</ul>
-                        </div>
-                    </div>
-
-                    <div class="analysis-section">
-                        <h3 class="section-title section-primary">
-                            💡 ${riskClass === 'bajo' ? 'Oportunidades de Cross-Sell' : 'Acciones Recomendadas (Automatizadas)'}
-                        </h3>
-                        <div class="actions-box">
-                            ${accionesHTML}
-                        </div>
-                    </div>
-
-                    <div class="roi-summary roi-${riskColor}">
-                        <strong>
-                            ${riskClass === 'bajo' ? 'Valor Lifetime Proyectado' : 'Probabilidad retención con intervención IA'}: 
-                            ${data.probabilidad_retencion}%
-                        </strong><br>
-                        Valor lifetime cliente: ${data.valor_lifetime|format_currency} | 
-                        Coste ${riskClass === 'bajo' ? 'potencial cross-sell' : 'retención'}: ${data.coste_retencion|format_currency} | 
-                        ROI: ${data.roi}
-                    </div>
-                </div>
-            `;
-        }, 2000);
-    })
-    .catch(error => {
-        output.innerHTML = '<div class="card-body"><div class="alert alert-error">Error al analizar cliente. Por favor, intenta de nuevo.</div></div>';
+function filtrarRiesgo(nivel) {
+    const cards = document.querySelectorAll('.cliente-riesgo-card');
+    cards.forEach(card => {
+        if (nivel === 'todos' || card.dataset.nivel === nivel) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
     });
+}
+
+function aplicarAccion(clienteId, accion) {
+    if (confirm(`¿Aplicar acción para cliente ${clienteId}?\n\n"${accion}"\n\nEn un entorno real, esto:\n\n✓ Crearía ticket en CRM\n✓ Notificaría al equipo de retención\n✓ Programaría la acción\n✓ Monitorizaría el resultado`)) {
+        alert('Acción programada exitosamente. El equipo de retención ha sido notificado.');
+    }
+}
+
+function verHistorial(clienteId) {
+    alert(`Ver Historial del Cliente: ${clienteId}\n\nEn un entorno real, esto mostraría:\n\n✓ Histórico de score de churn\n✓ Evolución de factores de riesgo\n✓ Acciones aplicadas anteriormente\n✓ Resultados de intervenciones\n✓ Timeline completo de interacciones`);
+}
+
+function contactarCliente(clienteId) {
+    alert(`Contactar Cliente: ${clienteId}\n\nEn un entorno real, esto abriría:\n\n✓ Panel de comunicación multicanal\n✓ Historial de conversaciones\n✓ Scripts de retención recomendados\n✓ Ofertas personalizadas disponibles`);
+}
+
+function crearCampanaRetencion(clienteId) {
+    alert(`Crear Campaña de Retención: ${clienteId}\n\nEn un entorno real, esto:\n\n✓ Generaría campaña personalizada\n✓ Seleccionaría canal óptimo\n✓ Aplicaría mejor oferta según RL\n✓ Programaría seguimiento automático\n✓ Establecería KPIs de éxito`);
 }
 </script>
 {% endblock %}

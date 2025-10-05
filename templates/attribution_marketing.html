@@ -1,49 +1,755 @@
 {% extends "base.html" %}
 
-{% block title %}Attribution Marketing - Iberdrola AI{% endblock %}
-
-{% block page_title %}Attribution Marketing Multi-Touch{% endblock %}
-
 {% block content %}
+<!-- Panel de Documentación -->
+<button class="doc-panel-toggle" id="docPanelToggle">
+    <span class="toggle-icon">📚</span>
+    <span class="toggle-text">Documentación</span>
+</button>
+
+<div class="doc-panel" id="docPanel">
+    <div class="doc-panel-header">
+        <h2 class="doc-panel-title">📚 Attribution Marketing Multi-Touch</h2>
+        <button class="doc-edit-btn" id="docEditBtn">✏️ Editar</button>
+        <button class="doc-panel-close" id="docPanelClose">×</button>
+    </div>
+    
+    <div class="doc-panel-content" id="docPanelContent">
+        <!-- Resumen Ejecutivo -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    <strong>Attribution Marketing Multi-Touch</strong> utiliza modelos de Markov Chains y Shapley Values 
+                    para calcular la contribución de cada touchpoint (canal de marketing) en el camino hacia la conversión. 
+                    El sistema analiza secuencias completas de interacciones para asignar crédito proporcional a cada canal, 
+                    superando limitaciones de modelos simples como Last-Click o First-Click.
+                </p>
+                
+                <p>
+                    <strong>Datos de Entrada Procesados:</strong>
+                </p>
+                <ul>
+                    <li><strong>Customer Journey Data:</strong> Secuencia completa de touchpoints por usuario (canal, timestamp, tipo)</li>
+                    <li><strong>Datos de Conversión:</strong> Eventos de conversión (compra, lead, signup) con valor asociado</li>
+                    <li><strong>Datos de Canales:</strong> Paid Search, Organic, Social, Email, Display, Direct, Referral</li>
+                    <li><strong>Datos de Coste:</strong> Inversión por canal, CPC, CPM, coste total de campaña</li>
+                    <li><strong>Datos Temporales:</strong> Tiempo entre touchpoints, duración del journey, recency</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🔄 Pipeline de Attribution</strong><br>
+                    Recolección de touchpoints → Construcción de paths de conversión → Aplicación de modelo de atribución 
+                    (Markov/Shapley/Time Decay) → Cálculo de crédito por canal → Análisis de ROI por canal → 
+                    Recomendaciones de redistribución de presupuesto → Simulación de escenarios
+                </div>
+                
+                <p>
+                    <strong>Output del Sistema:</strong>
+                </p>
+                <ul>
+                    <li><strong>Crédito por Canal:</strong> % de conversiones atribuidas a cada canal (suma 100%)</li>
+                    <li><strong>ROI por Canal:</strong> Revenue generado / Coste invertido para cada canal</li>
+                    <li><strong>Paths de Conversión:</strong> Secuencias más comunes y efectivas de touchpoints</li>
+                    <li><strong>Recomendaciones de Presupuesto:</strong> Aumentar/mantener/reducir inversión por canal</li>
+                    <li><strong>Análisis Incremental:</strong> Impacto de eliminar/añadir un canal (removal effect)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Modelos de IA Aplicados -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-model-card">
+                    <h4>1. Shapley Value Attribution (Game Theory)</h4>
+                    <p>
+                        Basado en teoría de juegos cooperativos, calcula la contribución marginal de cada canal 
+                        considerando todas las posibles combinaciones de touchpoints. Proporciona una distribución 
+                        justa del valor de conversión.
+                    </p>
+                    <p><strong>Uso:</strong> Modelo principal para atribución Data-Driven</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>2. Markov Chain Attribution</h4>
+                    <p>
+                        Modela el customer journey como una cadena de Markov, calculando la probabilidad de 
+                        conversión cuando se elimina un canal específico. Identifica canales críticos en el path.
+                    </p>
+                    <p><strong>Uso:</strong> Análisis de dependencias entre canales</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>3. Survival Analysis (Time-to-Conversion)</h4>
+                    <p>
+                        Analiza el tiempo hasta la conversión y la influencia temporal de cada touchpoint. 
+                        Optimiza el timing de las campañas.
+                    </p>
+                    <p><strong>Uso:</strong> Optimización de frecuencia y timing</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-tech-stack">
+                    <div class="doc-tech-item">
+                        <strong>Data Collection</strong>
+                        <span>Google Analytics 4, Adobe Analytics, Segment</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Data Warehouse</strong>
+                        <span>Azure Synapse Analytics</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>ML Platform</strong>
+                        <span>Azure ML, Python (scikit-learn, TensorFlow)</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Visualization</strong>
+                        <span>Power BI, D3.js, Sankey Diagrams</span>
+                    </div>
+                </div>
+                
+                <p><strong>Pipeline de Datos:</strong></p>
+                <ol>
+                    <li>
+                        <strong>Ingesta de Datos</strong><br>
+                        Recolección de eventos de todos los canales (web, app, email, ads) con user ID unificado.
+                    </li>
+                    <li>
+                        <strong>Identity Resolution</strong><br>
+                        Unificación de usuarios cross-device y cross-channel mediante probabilistic matching.
+                    </li>
+                    <li>
+                        <strong>Path Construction</strong><br>
+                        Construcción de customer journeys completos con timestamps y metadata de cada touchpoint.
+                    </li>
+                    <li>
+                        <strong>Model Training</strong><br>
+                        Entrenamiento diario de modelos de atribución con datos históricos de 90 días.
+                    </li>
+                    <li>
+                        <strong>Attribution Calculation</strong><br>
+                        Cálculo de crédito de conversión para cada touchpoint según modelo seleccionado.
+                    </li>
+                    <li>
+                        <strong>Budget Optimization</strong><br>
+                        Recomendaciones de redistribución de presupuesto basadas en ROI por canal.
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- KPIs y Métricas -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Métricas de Atribución:</strong></p>
+                <ul>
+                    <li><strong>Attributed Conversions:</strong> Conversiones asignadas a cada canal</li>
+                    <li><strong>Attributed Revenue:</strong> Revenue atribuido por canal</li>
+                    <li><strong>Attribution Weight:</strong> Peso/crédito asignado (0-1)</li>
+                    <li><strong>CPA Atribuido:</strong> Coste por adquisición real por canal</li>
+                    <li><strong>ROAS Atribuido:</strong> Return on ad spend ajustado</li>
+                </ul>
+                
+                <p><strong>Métricas de Journey:</strong></p>
+                <ul>
+                    <li><strong>Touchpoints por Conversión:</strong> Promedio de interacciones antes de convertir</li>
+                    <li><strong>Time to Conversion:</strong> Días promedio desde primer touchpoint</li>
+                    <li><strong>Path Length:</strong> Número de pasos en el journey</li>
+                    <li><strong>Channel Mix:</strong> Combinación de canales más efectiva</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🎯 Objetivo de Negocio</strong><br>
+                    Incrementar el ROI de marketing en un 30-40% mediante redistribución óptima del presupuesto 
+                    basada en el valor real de cada canal en el customer journey completo.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="use-case-container">
     <div class="use-case-header">
         <div class="use-case-icon">🔗</div>
         <div class="use-case-info">
             <h1>Attribution Marketing Multi-Touch</h1>
-            <p>Optimice inversión con atribución precisa. 38% aumento ROI vs last-click attribution.</p>
+            <p>Análisis avanzado del customer journey con IA. Optimiza inversión con atribución precisa y aumenta ROI hasta 38%.</p>
         </div>
     </div>
 
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-attribution">
+        <div class="metric-card-attribution">
+            <div class="metric-icon-attribution">🎯</div>
+            <div class="metric-data">
+                <div class="metric-value-attribution">{{ metricas.conversiones_totales|format_number }}</div>
+                <div class="metric-label-attribution">Conversiones Analizadas</div>
+            </div>
+        </div>
+        <div class="metric-card-attribution">
+            <div class="metric-icon-attribution">💰</div>
+            <div class="metric-data">
+                <div class="metric-value-attribution">€{{ (metricas.revenue_total / 1000)|round(0)|int }}K</div>
+                <div class="metric-label-attribution">Revenue Total</div>
+            </div>
+        </div>
+        <div class="metric-card-attribution">
+            <div class="metric-icon-attribution">🔄</div>
+            <div class="metric-data">
+                <div class="metric-value-attribution">{{ metricas.touchpoints_totales|format_number }}</div>
+                <div class="metric-label-attribution">Touchpoints Totales</div>
+            </div>
+        </div>
+        <div class="metric-card-attribution">
+            <div class="metric-icon-attribution">⏱️</div>
+            <div class="metric-data">
+                <div class="metric-value-attribution">{{ metricas.tiempo_promedio_conversion }} días</div>
+                <div class="metric-label-attribution">Tiempo a Conversión</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparación de Modelos de Atribución -->
     <div class="card">
         <div class="card-header">
-            <h2>📊 Modelo de Atribución IA</h2>
+            <h2>🤖 Comparación de Modelos de Atribución</h2>
+            <span class="badge badge-info">6 Modelos Analizados</span>
         </div>
         <div class="card-body">
-            <p>El sistema analiza todos los puntos de contacto del customer journey para asignar valor preciso a cada canal y táctica.</p>
+            <div class="modelos-grid">
+                {% for modelo in modelos %}
+                <div class="modelo-card {% if modelo.recomendado %}modelo-recomendado{% endif %}">
+                    {% if modelo.recomendado %}
+                    <div class="recomendado-badge">⭐ Recomendado</div>
+                    {% endif %}
+                    <h3 class="modelo-nombre">{{ modelo.nombre }}</h3>
+                    <p class="modelo-descripcion">{{ modelo.descripcion }}</p>
+                    <div class="modelo-stats">
+                        <div class="modelo-stat">
+                            <span class="stat-label">Conversiones</span>
+                            <span class="stat-value">{{ modelo.conversiones|format_number }}</span>
+                        </div>
+                        <div class="modelo-stat">
+                            <span class="stat-label">Revenue</span>
+                            <span class="stat-value">€{{ (modelo.revenue / 1000)|round(0)|int }}K</span>
+                        </div>
+                        <div class="modelo-stat">
+                            <span class="stat-label">ROI</span>
+                            <span class="stat-value">{{ modelo.roi }}x</span>
+                        </div>
+                    </div>
+                    {% if modelo.recomendado %}
+                    <div class="modelo-mejora">
+                        +{{ metricas.mejora_vs_lastclick }}% vs Last Click
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">📈</div>
-            <div class="stat-value">+38%</div>
-            <div class="stat-label">Aumento ROI</div>
+    <!-- Análisis por Canal -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📊 Valor Atribuido por Canal</h2>
+            <span class="card-subtitle">Modelo Data-Driven (IA)</span>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
-            <div class="stat-value">-27%</div>
-            <div class="stat-label">Reducción Costes</div>
+        <div class="card-body">
+            <div class="canales-list">
+                {% for canal in canales %}
+                <div class="canal-item">
+                    <div class="canal-header">
+                        <div class="canal-icon">{{ canal.icono }}</div>
+                        <div class="canal-info">
+                            <h3 class="canal-nombre">{{ canal.nombre }}</h3>
+                            <div class="canal-meta">
+                                {{ canal.touchpoints|format_number }} touchpoints | 
+                                {{ canal.conversiones }} conversiones
+                            </div>
+                        </div>
+                        <div class="canal-porcentaje">{{ canal.porcentaje }}%</div>
+                    </div>
+                    
+                    <div class="canal-bar">
+                        <div class="canal-fill" style="width: {{ canal.porcentaje }}%;"></div>
+                    </div>
+                    
+                    <div class="canal-stats">
+                        <div class="canal-stat">
+                            <span class="stat-label">Valor Atribuido</span>
+                            <span class="stat-value">€{{ (canal.valor_atribuido / 1000)|round(0)|int }}K</span>
+                        </div>
+                        <div class="canal-stat">
+                            <span class="stat-label">CPA</span>
+                            <span class="stat-value">€{{ canal.cpa }}</span>
+                        </div>
+                        <div class="canal-stat">
+                            <span class="stat-label">Tiempo Conversión</span>
+                            <span class="stat-value">{{ canal.tiempo_conversion }} días</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-value">+43%</div>
-            <div class="stat-label">Más Respuesta</div>
+    </div>
+
+    <!-- Paths de Conversión Más Comunes -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🛤️ Paths de Conversión Más Efectivos</h2>
+            <span class="card-subtitle">Top 5 customer journeys</span>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">🔄</div>
-            <div class="stat-value">Auto</div>
-            <div class="stat-label">Optimización Budget</div>
+        <div class="card-body">
+            <div class="paths-list">
+                {% for path in conversion_paths %}
+                <div class="path-item">
+                    <div class="path-rank">{{ loop.index }}</div>
+                    <div class="path-journey">
+                        {% for step in path.path %}
+                        <div class="path-step">{{ step }}</div>
+                        {% if not loop.last %}
+                        <div class="path-arrow">→</div>
+                        {% endif %}
+                        {% endfor %}
+                        <div class="path-conversion">✓ Conversión</div>
+                    </div>
+                    <div class="path-stats">
+                        <div class="path-stat">
+                            <span class="stat-icon">🎯</span>
+                            <span>{{ path.conversiones }} conversiones</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="stat-icon">💰</span>
+                            <span>€{{ (path.valor / 1000)|round(0)|int }}K</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="stat-icon">⏱️</span>
+                            <span>{{ path.tiempo_promedio }} días</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Recomendaciones de Optimización -->
+    <div class="card">
+        <div class="card-header">
+            <h2>💡 Recomendaciones de Redistribución de Presupuesto</h2>
+        </div>
+        <div class="card-body">
+            <div class="recomendaciones-grid">
+                <div class="recomendacion-card aumentar">
+                    <div class="recomendacion-icon">📈</div>
+                    <h3>Aumentar Inversión</h3>
+                    <ul>
+                        <li><strong>Paid Search:</strong> +15% (+€12K/mes) - Mejor ROI y CPA más bajo</li>
+                        <li><strong>Email Marketing:</strong> +20% (+€8K/mes) - Alto engagement, bajo coste</li>
+                    </ul>
+                    <div class="recomendacion-impacto">
+                        Impacto estimado: <strong>+€45K revenue/mes</strong>
+                    </div>
+                </div>
+                
+                <div class="recomendacion-card mantener">
+                    <div class="recomendacion-icon">➡️</div>
+                    <h3>Mantener</h3>
+                    <ul>
+                        <li><strong>Organic Search:</strong> Continuar estrategia SEO actual</li>
+                        <li><strong>Direct:</strong> Buen rendimiento en conversión final</li>
+                    </ul>
+                </div>
+                
+                <div class="recomendacion-card reducir">
+                    <div class="recomendacion-icon">📉</div>
+                    <h3>Reducir Inversión</h3>
+                    <ul>
+                        <li><strong>Display Ads:</strong> -25% (-€8K/mes) - Bajo impacto en conversión</li>
+                        <li><strong>Social Media:</strong> -10% (-€5K/mes) - Optimizar targeting</li>
+                    </ul>
+                    <div class="recomendacion-ahorro">
+                        Ahorro estimado: <strong>€13K/mes</strong>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Estilos específicos para Attribution Marketing */
+.metrics-grid-attribution {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card-attribution {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.metric-card-attribution:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+}
+
+.metric-icon-attribution {
+    font-size: 40px;
+}
+
+.metric-value-attribution {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.metric-label-attribution {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+/* Modelos de Atribución */
+.modelos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.modelo-card {
+    background: var(--neutral-background-2);
+    border: 2px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+    position: relative;
+}
+
+.modelo-card:hover {
+    box-shadow: var(--shadow-4);
+    transform: translateY(-2px);
+}
+
+.modelo-recomendado {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--neutral-background-2) 100%);
+}
+
+.recomendado-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+}
+
+.modelo-nombre {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.modelo-descripcion {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    margin-bottom: var(--spacing-m);
+}
+
+.modelo-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-m);
+    padding-top: var(--spacing-m);
+    border-top: 1px solid var(--neutral-stroke-1);
+}
+
+.modelo-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.stat-value {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+.modelo-mejora {
+    margin-top: var(--spacing-m);
+    padding: var(--spacing-s);
+    background: var(--success-light);
+    color: var(--success);
+    border-radius: var(--border-radius-small);
+    text-align: center;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Canales */
+.canales-list {
+    display: grid;
+    gap: var(--spacing-l);
+}
+
+.canal-item {
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+}
+
+.canal-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+}
+
+.canal-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.canal-info {
+    flex: 1;
+}
+
+.canal-nombre {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin: 0 0 4px 0;
+}
+
+.canal-meta {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.canal-porcentaje {
+    font-size: var(--font-size-800);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary);
+}
+
+.canal-bar {
+    height: 12px;
+    background: var(--neutral-background-4);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-m);
+}
+
+.canal-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0078D4, #106EBE);
+    border-radius: 6px;
+    transition: width var(--duration-slow) var(--curve-decelerate-max);
+}
+
+.canal-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-m);
+}
+
+.canal-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Paths de Conversión */
+.paths-list {
+    display: grid;
+    gap: var(--spacing-l);
+}
+
+.path-item {
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.path-rank {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-500);
+    flex-shrink: 0;
+}
+
+.path-journey {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+    flex-wrap: wrap;
+}
+
+.path-step {
+    padding: var(--spacing-s) var(--spacing-m);
+    background: var(--neutral-background-3);
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+.path-arrow {
+    font-size: 20px;
+    color: var(--neutral-foreground-3);
+}
+
+.path-conversion {
+    padding: var(--spacing-s) var(--spacing-m);
+    background: var(--success-light);
+    color: var(--success);
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+}
+
+.path-stats {
+    display: flex;
+    gap: var(--spacing-m);
+    flex-shrink: 0;
+}
+
+.path-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-2);
+}
+
+.stat-icon {
+    font-size: 16px;
+}
+
+/* Recomendaciones */
+.recomendaciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.recomendacion-card {
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 2px solid;
+}
+
+.recomendacion-card.aumentar {
+    background: linear-gradient(135deg, #DFF6DD 0%, var(--neutral-background-2) 100%);
+    border-color: var(--success);
+}
+
+.recomendacion-card.mantener {
+    background: linear-gradient(135deg, #FFF4EC 0%, var(--neutral-background-2) 100%);
+    border-color: var(--warning);
+}
+
+.recomendacion-card.reducir {
+    background: linear-gradient(135deg, #FDE7E9 0%, var(--neutral-background-2) 100%);
+    border-color: var(--danger);
+}
+
+.recomendacion-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-m);
+}
+
+.recomendacion-card h3 {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--spacing-m) 0;
+}
+
+.recomendacion-card ul {
+    margin: 0 0 var(--spacing-m) 0;
+    padding-left: var(--spacing-l);
+}
+
+.recomendacion-card li {
+    margin-bottom: var(--spacing-s);
+    font-size: var(--font-size-200);
+    line-height: 1.6;
+}
+
+.recomendacion-impacto,
+.recomendacion-ahorro {
+    padding: var(--spacing-m);
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-300);
+    text-align: center;
+}
+
+.recomendacion-impacto strong {
+    color: var(--success);
+}
+
+.recomendacion-ahorro strong {
+    color: var(--primary);
+}
+</style>
+
 {% endblock %}

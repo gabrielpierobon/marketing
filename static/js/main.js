@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add ripple effect to buttons
     addRippleEffect();
+    
+    // Initialize documentation panel
+    initDocPanel();
 });
 
 // ==================== FLUENT ANIMATIONS ====================
@@ -241,3 +244,156 @@ window.formatCurrency = formatCurrency;
 window.formatDate = formatDate;
 window.formatTime = formatTime;
 window.debounce = debounce;
+
+// ==================== DOCUMENTATION PANEL ====================
+function initDocPanel() {
+    const toggleBtn = document.querySelector('.doc-panel-toggle');
+    const panel = document.querySelector('.doc-panel');
+    const closeBtn = document.querySelector('.doc-panel-close');
+    const mainContent = document.querySelector('.main-content');
+    const editBtn = document.querySelector('.doc-edit-btn');
+    
+    if (!panel) return;
+    
+    // Panel is open by default, toggle button shows/hides it
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const isClosed = panel.classList.contains('closed');
+            
+            if (isClosed) {
+                panel.classList.remove('closed');
+                toggleBtn.classList.remove('panel-closed');
+                if (mainContent) mainContent.classList.remove('doc-panel-closed');
+            } else {
+                panel.classList.add('closed');
+                toggleBtn.classList.add('panel-closed');
+                if (mainContent) mainContent.classList.add('doc-panel-closed');
+            }
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            panel.classList.add('closed');
+            if (toggleBtn) toggleBtn.classList.add('panel-closed');
+            if (mainContent) mainContent.classList.add('doc-panel-closed');
+        });
+    }
+    
+    // Edit mode functionality
+    if (editBtn) {
+        let isEditMode = false;
+        
+        editBtn.addEventListener('click', () => {
+            isEditMode = !isEditMode;
+            toggleEditMode(isEditMode);
+            
+            if (isEditMode) {
+                editBtn.classList.add('active');
+                editBtn.innerHTML = '<span>💾</span> Guardar Cambios';
+            } else {
+                editBtn.classList.remove('active');
+                editBtn.innerHTML = '<span>✏️</span> Editar';
+                saveDocumentation();
+            }
+        });
+    }
+    
+    // Close on ESC key (only if in edit mode, cancel edit)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const editBtn = document.querySelector('.doc-edit-btn');
+            if (editBtn && editBtn.classList.contains('active')) {
+                editBtn.click(); // Toggle off edit mode
+            }
+        }
+    });
+}
+
+function toggleEditMode(enable) {
+    const contentSections = document.querySelectorAll('.doc-section-content');
+    
+    contentSections.forEach(section => {
+        if (enable) {
+            section.setAttribute('contenteditable', 'true');
+            section.style.cursor = 'text';
+        } else {
+            section.setAttribute('contenteditable', 'false');
+            section.style.cursor = 'default';
+        }
+    });
+}
+
+function saveDocumentation() {
+    // Show save indicator
+    showSaveIndicator();
+    
+    // Get all content sections
+    const sections = document.querySelectorAll('.doc-section');
+    const docData = [];
+    
+    sections.forEach((section, index) => {
+        const title = section.querySelector('.doc-section-title')?.textContent.trim();
+        const content = section.querySelector('.doc-section-content')?.innerHTML;
+        
+        docData.push({
+            index: index,
+            title: title,
+            content: content
+        });
+    });
+    
+    // Save to localStorage (you can change this to save to backend)
+    const pageId = window.location.pathname;
+    localStorage.setItem(`doc_content_${pageId}`, JSON.stringify(docData));
+    
+    console.log('Documentation saved:', docData);
+}
+
+function loadDocumentation() {
+    const pageId = window.location.pathname;
+    const savedData = localStorage.getItem(`doc_content_${pageId}`);
+    
+    if (savedData) {
+        try {
+            const docData = JSON.parse(savedData);
+            const sections = document.querySelectorAll('.doc-section');
+            
+            docData.forEach((data, index) => {
+                if (sections[index]) {
+                    const contentDiv = sections[index].querySelector('.doc-section-content');
+                    if (contentDiv && data.content) {
+                        contentDiv.innerHTML = data.content;
+                    }
+                }
+            });
+            
+            console.log('Documentation loaded from localStorage');
+        } catch (e) {
+            console.error('Error loading documentation:', e);
+        }
+    }
+}
+
+function showSaveIndicator() {
+    // Create or get save indicator
+    let indicator = document.querySelector('.doc-save-indicator');
+    
+    if (!indicator) {
+        indicator = document.createElement('div');
+        indicator.className = 'doc-save-indicator';
+        indicator.innerHTML = '<span>✓</span> Cambios guardados';
+        document.body.appendChild(indicator);
+    }
+    
+    indicator.classList.add('show');
+    
+    setTimeout(() => {
+        indicator.classList.remove('show');
+    }, 3000);
+}
+
+// Load saved documentation on page load
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(loadDocumentation, 100);
+});

@@ -5,103 +5,991 @@
 {% block page_title %}Chatbot IA Conversacional 24/7{% endblock %}
 
 {% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>💬 Chatbot Inteligente con IA</h2>
+            <p>Guía técnica completa del caso de uso</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <!-- Resumen -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📋</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    El <strong>Chatbot Conversacional con IA</strong> utiliza Large Language Models (LLMs) como GPT-4 
+                    o Claude combinados con Retrieval Augmented Generation (RAG) para generar respuestas contextuales 
+                    y precisas. El sistema procesa lenguaje natural, identifica intenciones, extrae entidades, y genera 
+                    respuestas coherentes manteniendo el contexto de la conversación.
+                </p>
+                
+                <p>
+                    <strong>Datos de Entrada Procesados:</strong>
+                </p>
+                <ul>
+                    <li><strong>Texto del Usuario:</strong> Mensaje en lenguaje natural, tokenizado y vectorizado</li>
+                    <li><strong>Historial de Conversación:</strong> Últimos N turnos (típicamente 10-20) para mantener contexto</li>
+                    <li><strong>Perfil del Cliente:</strong> ID, segmento, productos contratados, historial de interacciones</li>
+                    <li><strong>Base de Conocimiento:</strong> Documentación, FAQs, políticas, procedimientos (embeddings en vector DB)</li>
+                    <li><strong>Datos en Tiempo Real:</strong> Estado de cuenta, facturas, consumo actual, tickets abiertos</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🔄 Flujo de Procesamiento</strong><br>
+                    Input del usuario → Clasificación de intención (NLU) → Extracción de entidades (NER) → 
+                    Búsqueda semántica en knowledge base (RAG) → Generación de respuesta (LLM) → 
+                    Post-procesamiento y validación → Output al usuario
+                </div>
+                
+                <p>
+                    <strong>Capacidades Avanzadas del Chatbot:</strong>
+                </p>
+                <ul>
+                    <li><strong>Comprensión Contextual:</strong> El chatbot mantiene el contexto de la conversación 
+                    a lo largo de múltiples turnos, entendiendo referencias anafóricas ("eso", "lo anterior", "mi factura") 
+                    y manteniendo coherencia en la conversación. Memoria de sesión de hasta 50 turnos.</li>
+                    
+                    <li><strong>Gestión de Consultas Complejas:</strong> Puede resolver consultas que requieren 
+                    múltiples pasos, como cambios de tarifa (verificación de elegibilidad, cálculo de ahorro, 
+                    gestión de penalizaciones), gestión de averías (diagnóstico, creación de ticket, seguimiento), 
+                    o consultas de facturación detalladas (desglose de conceptos, comparación con periodos anteriores).</li>
+                    
+                    <li><strong>Personalización Dinámica:</strong> Accede al perfil completo del cliente en tiempo real 
+                    (CRM, facturación, consumo, interacciones previas) para proporcionar respuestas personalizadas. 
+                    Ejemplo: "Hola Juan, veo que tu última factura fue de €87.34 el 15 de marzo. ¿En qué puedo ayudarte?"</li>
+                    
+                    <li><strong>Detección de Emociones:</strong> Utiliza análisis de sentimiento en tiempo real para 
+                    detectar frustración, urgencia, o satisfacción, ajustando su tono y priorizando escalaciones cuando 
+                    es necesario. Score de sentimiento < -0.5 → escalado automático a agente humano.</li>
+                    
+                    <li><strong>Aprendizaje Continuo:</strong> El sistema se entrena continuamente con nuevas 
+                    conversaciones, mejorando su precisión y cobertura con el tiempo. Revisión semanal de conversaciones 
+                    no resueltas para identificar gaps de conocimiento. Fine-tuning mensual del modelo.</li>
+                    
+                    <li><strong>Multicanal:</strong> Mismo motor conversacional desplegado en web, app móvil, 
+                    WhatsApp, Facebook Messenger, Telegram, y otros canales. Experiencia consistente y sincronizada 
+                    entre canales (puedes empezar en web y continuar en WhatsApp).</li>
+                    
+                    <li><strong>Proactividad:</strong> No solo responde preguntas, sino que anticipa necesidades. 
+                    Ejemplo: "Veo que tu consumo este mes va un 25% por encima de lo normal. ¿Quieres que te ayude 
+                    a identificar posibles causas?"</li>
+                </ul>
+                
+                <div class="doc-metric-grid">
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">-60%</div>
+                        <div class="doc-metric-label">Costes Operativos</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">78%</div>
+                        <div class="doc-metric-label">Tasa de Resolución</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">24/7</div>
+                        <div class="doc-metric-label">Disponibilidad</div>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="doc-metric-value">€100K</div>
+                        <div class="doc-metric-label">Inversión Inicial</div>
+                    </div>
+                </div>
+                
+                <p>
+                    <strong>Impacto en el Negocio:</strong><br>
+                    Las empresas que han implementado chatbots conversacionales avanzados reportan reducciones de 
+                    costes de atención al cliente de €300K-800K anuales (reducción de FTEs necesarios, menor volumen 
+                    de llamadas, menor tiempo medio de resolución), con mejoras en CSAT (Customer Satisfaction Score) 
+                    de 15-25 puntos. El tiempo medio de resolución se reduce de 8-15 minutos (agente humano) a 
+                    30-90 segundos (chatbot), y la capacidad de atender consultas simultáneas es prácticamente ilimitada 
+                    (vs. 1-2 chats por agente humano).
+                </p>
+                
+                <p>
+                    <strong>Ventajas vs. Chatbots Tradicionales:</strong><br>
+                    A diferencia de chatbots basados en reglas o árboles de decisión, este sistema utiliza LLMs que 
+                    comprenden lenguaje natural de forma flexible. No requiere mapear todas las posibles variaciones 
+                    de una pregunta (intent matching perfecto), sino que entiende la intención subyacente. Capacidad 
+                    de manejar preguntas fuera de script, multi-intent, y conversaciones no lineales. Tasa de 
+                    comprensión: 94% vs. 65% en chatbots tradicionales.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Modelos de IA -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🦜 GPT-4 / Claude 3
+                    </div>
+                    <div class="doc-model-desc">
+                        LLM para comprensión y generación de respuestas naturales y contextuales.
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔷</div>
+                            <div class="doc-tech-name">OpenAI API</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔶</div>
+                            <div class="doc-tech-name">Anthropic</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🔍 Embeddings + Semantic Search
+                    </div>
+                    <div class="doc-model-desc">
+                        Búsqueda semántica en base de conocimiento para respuestas precisas.
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🔎</div>
+                            <div class="doc-tech-name">Azure AI Search</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">📚</div>
+                            <div class="doc-tech-name">Vector DB</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-model-card">
+                    <div class="doc-model-name">
+                        🎯 Intent Classification
+                    </div>
+                    <div class="doc-model-desc">
+                        Clasificación de intenciones del usuario para routing inteligente.
+                    </div>
+                    <div class="doc-tech-stack">
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">🤗</div>
+                            <div class="doc-tech-name">BERT</div>
+                        </div>
+                        <div class="doc-tech-item">
+                            <div class="doc-tech-icon">⚙️</div>
+                            <div class="doc-tech-name">Custom Models</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Stack Tecnológico:</strong></p>
+                <ul>
+                    <li>Azure Machine Learning para entrenamiento y deployment</li>
+                    <li>Azure Databricks para procesamiento de datos</li>
+                    <li>Azure Synapse Analytics para data warehousing</li>
+                    <li>Power BI para visualización y reporting</li>
+                    <li>Azure DevOps para CI/CD de modelos</li>
+                </ul>
+                
+                <p><strong>Flujo de Datos:</strong></p>
+                <ol class="doc-steps">
+                    <li>
+                        <strong>Ingesta de Datos</strong><br>
+                        Recopilación de datos desde múltiples fuentes (CRM, web, transaccional).
+                    </li>
+                    <li>
+                        <strong>Procesamiento y Feature Engineering</strong><br>
+                        Limpieza, transformación y creación de variables predictivas.
+                    </li>
+                    <li>
+                        <strong>Entrenamiento de Modelos</strong><br>
+                        Entrenamiento y validación de modelos con MLOps.
+                    </li>
+                    <li>
+                        <strong>Deployment y Scoring</strong><br>
+                        Despliegue de modelos como APIs REST para inferencia en tiempo real.
+                    </li>
+                    <li>
+                        <strong>Monitorización y Reentrenamiento</strong><br>
+                        Seguimiento de performance y reentrenamiento automático.
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- KPIs -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Métricas Técnicas:</strong></p>
+                <ul>
+                    <li>Precisión, Recall, F1-Score del modelo</li>
+                    <li>AUC-ROC y AUC-PR para clasificación</li>
+                    <li>Latencia de inferencia (p50, p95, p99)</li>
+                    <li>Cobertura de predicciones</li>
+                </ul>
+                
+                <p><strong>Métricas de Negocio:</strong></p>
+                <ul>
+                    <li>ROI del caso de uso</li>
+                    <li>Impacto en KPIs clave de negocio</li>
+                    <li>Adopción por usuarios finales</li>
+                    <li>Satisfacción del cliente</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="use-case-container">
     <div class="use-case-header">
         <div class="use-case-icon">💬</div>
         <div class="use-case-info">
-            <h1>Chatbot IA Conversacional 24/7</h1>
-            <p>Asistente virtual inteligente que resuelve consultas de clientes instantáneamente. Reduzca llamadas al call center un 60% y mejore satisfacción un 35%.</p>
+            <h1>Gestión de Agentes Conversacionales</h1>
+            <p>Plataforma centralizada para crear y gestionar chatbots, asistentes IA y sistemas multiagente.</p>
+        </div>
+        <button class="btn btn-primary" onclick="abrirModalCrearChatbot()">
+            <span style="font-size: 18px;">+</span> Crear Nuevo Agente
+        </button>
+    </div>
+
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-chatbot">
+        <div class="metric-card-chatbot">
+            <div class="metric-icon-chatbot">💬</div>
+            <div class="metric-content-chatbot">
+                <div class="metric-value-chatbot">{{ metricas.total_conversaciones|format_number }}</div>
+                <div class="metric-label-chatbot">Conversaciones/Mes</div>
+            </div>
+        </div>
+        <div class="metric-card-chatbot">
+            <div class="metric-icon-chatbot">⭐</div>
+            <div class="metric-content-chatbot">
+                <div class="metric-value-chatbot">{{ metricas.satisfaccion_promedio }}/5</div>
+                <div class="metric-label-chatbot">Satisfacción Promedio</div>
+            </div>
+        </div>
+        <div class="metric-card-chatbot">
+            <div class="metric-icon-chatbot">✅</div>
+            <div class="metric-content-chatbot">
+                <div class="metric-value-chatbot">{{ metricas.resolucion_automatica }}%</div>
+                <div class="metric-label-chatbot">Resolución Automática</div>
+            </div>
+        </div>
+        <div class="metric-card-chatbot">
+            <div class="metric-icon-chatbot">💰</div>
+            <div class="metric-content-chatbot">
+                <div class="metric-value-chatbot">€{{ (metricas.ahorro_mensual / 1000)|round(0)|int }}K</div>
+                <div class="metric-label-chatbot">Ahorro Mensual</div>
+            </div>
         </div>
     </div>
 
-    <!-- Métricas del Caso de Uso -->
-    <div class="metrics-row">
-        <div class="metric-box">
-            <div class="metric-box-value">24/7</div>
-            <div class="metric-box-label">Disponibilidad</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-box-value">-95%</div>
-            <div class="metric-box-label">Tiempo Respuesta</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-box-value">+50%</div>
-            <div class="metric-box-label">Resolución 1er Contacto</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-box-value">€30K-80K</div>
-            <div class="metric-box-label">Inversión Inicial</div>
-        </div>
-    </div>
-
-    <!-- Chat Interface -->
+    <!-- Tabla de Chatbots Activos -->
     <div class="card">
         <div class="card-header">
-            <h2>💬 Asistente Virtual Iberdrola</h2>
-            <span class="badge badge-success">● En Línea</span>
+            <h2>🤖 Agentes Conversacionales Activos</h2>
+            <div class="header-badges">
+                <span class="badge badge-success">{{ metricas.chatbots_activos }} Activos</span>
+                <span class="badge badge-warning">{{ metricas.chatbots_desarrollo }} En Desarrollo</span>
+            </div>
         </div>
         <div class="card-body" style="padding: 0;">
-            <div class="chat-container">
-                <div class="chat-messages" id="chat-messages">
-                    <div class="chat-message bot-message">
-                        <div class="message-avatar">🤖</div>
-                        <div class="message-bubble">
-                            <p>👋 ¡Hola! Soy el Asistente Virtual de Iberdrola. ¿En qué puedo ayudarte hoy?</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-input-container">
-                    <input type="text" id="chat-input" class="chat-input" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') enviarMensaje()">
-                    <button class="btn btn-primary" onclick="enviarMensaje()">Enviar</button>
-                </div>
+            <div class="chatbots-table-container">
+                <table class="chatbots-table">
+                    <thead>
+                        <tr>
+                            <th>Agente</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Conversaciones/Mes</th>
+                            <th>Satisfacción</th>
+                            <th>Resolución Auto</th>
+                            <th>Tiempo Respuesta</th>
+                            <th>Canales</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for chatbot in chatbots %}
+                        <tr class="chatbot-row">
+                            <td>
+                                <div class="chatbot-info">
+                                    <div class="chatbot-avatar">{{ chatbot.nombre[0] }}</div>
+                                    <div>
+                                        <div class="chatbot-nombre">{{ chatbot.nombre }}</div>
+                                        <div class="chatbot-id">{{ chatbot.id }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="tipo-badge tipo-{{ chatbot.tipo_corto|lower }}">
+                                    {{ chatbot.tipo_corto }}
+                                </span>
+                                <div class="tipo-descripcion">{{ chatbot.tipo }}</div>
+                            </td>
+                            <td>
+                                <span class="estado-badge estado-{{ chatbot.estado }}">
+                                    {% if chatbot.estado == 'activo' %}
+                                        ● Activo
+                                    {% else %}
+                                        ◐ En Desarrollo
+                                    {% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="metric-cell">
+                                    <div class="metric-cell-value">{{ chatbot.conversaciones_mes|format_number }}</div>
+                                    <div class="metric-cell-label">conversaciones</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="satisfaction-cell">
+                                    <div class="stars">
+                                        {% for i in range(5) %}
+                                            {% if i < chatbot.satisfaccion|int %}
+                                                ⭐
+                                            {% else %}
+                                                ☆
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="satisfaction-value">{{ chatbot.satisfaccion }}/5</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress-cell">
+                                    <div class="progress-bar-small">
+                                        <div class="progress-fill-small" style="width: {{ chatbot.resolucion_automatica }}%"></div>
+                                    </div>
+                                    <span class="progress-value">{{ chatbot.resolucion_automatica }}%</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="tiempo-badge">⚡ {{ chatbot.tiempo_respuesta }}</span>
+                            </td>
+                            <td>
+                                <div class="canales-cell">
+                                    {% for canal in chatbot.canales %}
+                                        <span class="canal-badge">{{ canal }}</span>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="acciones-cell">
+                                    <button class="btn-icon" title="Ver Detalles" onclick="verDetalles('{{ chatbot.id }}')">
+                                        👁️
+                                    </button>
+                                    <button class="btn-icon" title="Editar" onclick="editarChatbot('{{ chatbot.id }}')">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-icon" title="Analíticas" onclick="verAnaliticas('{{ chatbot.id }}')">
+                                        📊
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="card-footer">
-            <div class="quick-questions">
-                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('¿Cuál es mi consumo este mes?')">
-                    📊 ¿Cuál es mi consumo?
-                </button>
-                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('Quiero instalar paneles solares')">
-                    🌞 Info Solar
-                </button>
-                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('¿Cómo puedo reducir mi factura?')">
-                    💡 Reducir Factura
-                </button>
-                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('Tengo una avería')">
-                    ⚠️ Reportar Avería
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Estadísticas del Chatbot -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">💬</div>
-            <div class="stat-value">1,247</div>
-            <div class="stat-label">Conversaciones Hoy</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">⚡</div>
-            <div class="stat-value">1.2s</div>
-            <div class="stat-label">Tiempo Respuesta</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">😊</div>
-            <div class="stat-value">4.8/5</div>
-            <div class="stat-label">Satisfacción</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">✅</div>
-            <div class="stat-value">87%</div>
-            <div class="stat-label">Resolución Automática</div>
         </div>
     </div>
 </div>
+
+<!-- Modal Crear Nuevo Chatbot -->
+<div id="modalCrearChatbot" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h2>🤖 Crear Nuevo Agente Conversacional</h2>
+            <button class="modal-close" onclick="cerrarModalCrearChatbot()">×</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-description">Selecciona el tipo de agente que mejor se adapte a tu caso de uso:</p>
+            
+            <div class="tipo-chatbot-grid">
+                <!-- Chatbot Basado en Flujos -->
+                <div class="tipo-chatbot-card" onclick="seleccionarTipo('flujos')">
+                    <div class="tipo-icon">🔄</div>
+                    <h3>Chatbot Basado en Flujos</h3>
+                    <p>Conversaciones estructuradas con flujos predefinidos. Ideal para FAQs y procesos simples.</p>
+                    <ul class="tipo-features">
+                        <li>✓ Configuración visual sin código</li>
+                        <li>✓ Respuestas rápidas y precisas</li>
+                        <li>✓ Fácil mantenimiento</li>
+                        <li>✓ Bajo coste</li>
+                    </ul>
+                    <div class="tipo-badge-modal tipo-flujos">Flujos</div>
+                </div>
+
+                <!-- Asistente con IA Generativa -->
+                <div class="tipo-chatbot-card featured" onclick="seleccionarTipo('genai')">
+                    <div class="featured-badge">Recomendado</div>
+                    <div class="tipo-icon">🧠</div>
+                    <h3>Asistente con IA Generativa</h3>
+                    <p>Conversaciones naturales con GPT-4. Entiende contexto y genera respuestas personalizadas.</p>
+                    <ul class="tipo-features">
+                        <li>✓ Lenguaje natural avanzado</li>
+                        <li>✓ Contexto conversacional</li>
+                        <li>✓ Respuestas personalizadas</li>
+                        <li>✓ Aprendizaje continuo</li>
+                    </ul>
+                    <div class="tipo-badge-modal tipo-genai">GenAI</div>
+                </div>
+
+                <!-- Agente -->
+                <div class="tipo-chatbot-card" onclick="seleccionarTipo('agente')">
+                    <div class="tipo-icon">🎯</div>
+                    <h3>Agente</h3>
+                    <p>Agente autónomo que puede ejecutar acciones y tomar decisiones basadas en objetivos.</p>
+                    <ul class="tipo-features">
+                        <li>✓ Toma de decisiones autónoma</li>
+                        <li>✓ Ejecución de acciones</li>
+                        <li>✓ Integración con sistemas</li>
+                        <li>✓ Razonamiento avanzado</li>
+                    </ul>
+                    <div class="tipo-badge-modal tipo-agente">Agente</div>
+                </div>
+
+                <!-- Sistema Multiagente -->
+                <div class="tipo-chatbot-card" onclick="seleccionarTipo('multiagente')">
+                    <div class="tipo-icon">👥</div>
+                    <h3>Sistema Multiagente</h3>
+                    <p>Múltiples agentes especializados trabajando en colaboración para resolver tareas complejas.</p>
+                    <ul class="tipo-features">
+                        <li>✓ Agentes especializados</li>
+                        <li>✓ Colaboración entre agentes</li>
+                        <li>✓ Tareas complejas</li>
+                        <li>✓ Alta escalabilidad</li>
+                    </ul>
+                    <div class="tipo-badge-modal tipo-multi-agent">Multi-Agent</div>
+                </div>
+
+                <!-- Sistema Multiagente con Orquestador -->
+                <div class="tipo-chatbot-card" onclick="seleccionarTipo('orquestador')">
+                    <div class="tipo-icon">🎼</div>
+                    <h3>Sistema Multiagente con Orquestador</h3>
+                    <p>Sistema avanzado con orquestador central que coordina múltiples agentes especializados.</p>
+                    <ul class="tipo-features">
+                        <li>✓ Orquestación inteligente</li>
+                        <li>✓ Coordinación centralizada</li>
+                        <li>✓ Workflows complejos</li>
+                        <li>✓ Máxima flexibilidad</li>
+                    </ul>
+                    <div class="tipo-badge-modal tipo-orquestador">Orquestador</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="cerrarModalCrearChatbot()">Cancelar</button>
+            <button class="btn btn-primary" onclick="confirmarCreacion()">Continuar</button>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Estilos específicos para gestión de chatbots */
+.use-case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.metrics-grid-chatbot {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card-chatbot {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.metric-card-chatbot:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+}
+
+.metric-icon-chatbot {
+    font-size: 40px;
+}
+
+.metric-value-chatbot {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.metric-label-chatbot {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.header-badges {
+    display: flex;
+    gap: var(--spacing-s);
+}
+
+.chatbots-table-container {
+    overflow-x: auto;
+}
+
+.chatbots-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.chatbots-table thead {
+    background: var(--neutral-background-2);
+}
+
+.chatbots-table th {
+    padding: var(--spacing-m);
+    text-align: left;
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-2);
+    border-bottom: 2px solid var(--neutral-stroke-1);
+}
+
+.chatbots-table td {
+    padding: var(--spacing-l) var(--spacing-m);
+    border-bottom: 1px solid var(--neutral-stroke-1);
+}
+
+.chatbot-row:hover {
+    background: var(--neutral-background-2);
+}
+
+.chatbot-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.chatbot-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0078D4, #106EBE);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: 18px;
+}
+
+.chatbot-nombre {
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+.chatbot-id {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+    font-family: 'Consolas', monospace;
+}
+
+.tipo-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+}
+
+.tipo-flujos { background: #E6F2FA; color: #0078D4; }
+.tipo-genai { background: #DFF6DD; color: #107C10; }
+.tipo-agente { background: #FFF4EC; color: #F7630C; }
+.tipo-multi-agent { background: #FDE7E9; color: #D13438; }
+.tipo-orquestador { background: #F3E5F5; color: #8E24AA; }
+
+.tipo-descripcion {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+    margin-top: 2px;
+}
+
+.estado-badge {
+    padding: 4px 12px;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+}
+
+.estado-activo {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.estado-desarrollo {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.metric-cell-value {
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+.metric-cell-label {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.satisfaction-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stars {
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.satisfaction-value {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-2);
+}
+
+.progress-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+}
+
+.progress-bar-small {
+    width: 60px;
+    height: 6px;
+    background: var(--neutral-background-4);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill-small {
+    height: 100%;
+    background: linear-gradient(90deg, #107C10, #0E700E);
+    transition: width var(--duration-slow) var(--curve-decelerate-max);
+}
+
+.progress-value {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-2);
+}
+
+.tiempo-badge {
+    padding: 4px 8px;
+    background: var(--neutral-background-3);
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+}
+
+.canales-cell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.canal-badge {
+    padding: 2px 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+}
+
+.acciones-cell {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--neutral-background-3);
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.btn-icon:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-container {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    max-width: 1200px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-64);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: var(--spacing-xl);
+    border-bottom: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: var(--font-size-600);
+}
+
+.modal-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--neutral-background-3);
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.modal-close:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: var(--spacing-xl);
+}
+
+.modal-description {
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-2);
+    margin-bottom: var(--spacing-xl);
+}
+
+.tipo-chatbot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.tipo-chatbot-card {
+    background: var(--neutral-background-2);
+    border: 2px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+    position: relative;
+}
+
+.tipo-chatbot-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-8);
+    transform: translateY(-4px);
+}
+
+.tipo-chatbot-card.featured {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--neutral-background-2) 100%);
+}
+
+.featured-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+}
+
+.tipo-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-m);
+}
+
+.tipo-chatbot-card h3 {
+    font-size: var(--font-size-400);
+    margin: 0 0 var(--spacing-s) 0;
+}
+
+.tipo-chatbot-card p {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    margin-bottom: var(--spacing-m);
+}
+
+.tipo-features {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-m) 0;
+}
+
+.tipo-features li {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-2);
+    margin-bottom: var(--spacing-xs);
+}
+
+.tipo-badge-modal {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-100);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    margin-top: var(--spacing-m);
+}
+
+.modal-footer {
+    padding: var(--spacing-l) var(--spacing-xl);
+    border-top: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-m);
+}
+</style>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
+let tipoSeleccionado = null;
+
+function abrirModalCrearChatbot() {
+    document.getElementById('modalCrearChatbot').style.display = 'flex';
+    tipoSeleccionado = null;
+}
+
+function cerrarModalCrearChatbot() {
+    document.getElementById('modalCrearChatbot').style.display = 'none';
+    // Remover selección
+    document.querySelectorAll('.tipo-chatbot-card').forEach(card => {
+        card.style.borderColor = '';
+        card.style.boxShadow = '';
+    });
+}
+
+function seleccionarTipo(tipo) {
+    tipoSeleccionado = tipo;
+    
+    // Remover selección anterior
+    document.querySelectorAll('.tipo-chatbot-card').forEach(card => {
+        card.style.borderColor = '';
+        card.style.boxShadow = '';
+    });
+    
+    // Marcar selección actual
+    event.currentTarget.style.borderColor = 'var(--primary)';
+    event.currentTarget.style.boxShadow = 'var(--shadow-16)';
+}
+
+function confirmarCreacion() {
+    if (!tipoSeleccionado) {
+        alert('Por favor, selecciona un tipo de agente');
+        return;
+    }
+    
+    // Simular creación
+    alert(`Creando agente de tipo: ${tipoSeleccionado}\n\nEn un entorno real, esto abriría un formulario de configuración detallado.`);
+    cerrarModalCrearChatbot();
+}
+
+function verDetalles(chatbotId) {
+    alert(`Ver detalles del chatbot: ${chatbotId}\n\nEn un entorno real, esto abriría una vista detallada con métricas, conversaciones y configuración.`);
+}
+
+function editarChatbot(chatbotId) {
+    alert(`Editar chatbot: ${chatbotId}\n\nEn un entorno real, esto abriría el editor de configuración del chatbot.`);
+}
+
+function verAnaliticas(chatbotId) {
+    alert(`Ver analíticas del chatbot: ${chatbotId}\n\nEn un entorno real, esto abriría un dashboard con métricas detalladas, gráficos de conversaciones, satisfacción, etc.`);
+}
+
 function enviarMensaje() {
     const input = document.getElementById('chat-input');
     const mensaje = input.value.trim();

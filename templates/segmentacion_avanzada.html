@@ -1,75 +1,653 @@
 {% extends "base.html" %}
 
-{% block title %}Segmentación Avanzada - Iberdrola AI{% endblock %}
-
-{% block page_title %}Segmentación Avanzada con IA{% endblock %}
-
 {% block content %}
+<!-- Panel de Documentación -->
+<button class="doc-panel-toggle" id="docPanelToggle">
+    <span class="toggle-icon">📚</span>
+    <span class="toggle-text">Documentación</span>
+</button>
+
+<div class="doc-panel" id="docPanel">
+    <div class="doc-panel-header">
+        <h2 class="doc-panel-title">📚 Segmentación Avanzada con ML</h2>
+        <button class="doc-edit-btn" id="docEditBtn">✏️ Editar</button>
+        <button class="doc-panel-close" id="docPanelClose">×</button>
+    </div>
+    
+    <div class="doc-panel-content" id="docPanelContent">
+        <!-- Resumen Ejecutivo -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📊</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    <strong>Segmentación Avanzada con Machine Learning</strong> utiliza K-Means y DBSCAN para 
+                    agrupar clientes automáticamente basándose en similitud de comportamiento. El sistema procesa 
+                    50+ variables y reduce dimensionalidad con PCA antes de aplicar clustering, identificando 
+                    segmentos naturales sin supervisión humana.
+                </p>
+                
+                <p>
+                    <strong>Datos de Entrada Procesados:</strong>
+                </p>
+                <ul>
+                    <li><strong>Datos Demográficos:</strong> Edad, ubicación, tipo de vivienda, composición familiar, ingresos estimados</li>
+                    <li><strong>Datos de Consumo:</strong> kWh mensual promedio, variabilidad, estacionalidad, horarios pico, tendencia</li>
+                    <li><strong>Datos Transaccionales:</strong> Productos contratados, antigüedad, cambios de tarifa, upgrades, LTV</li>
+                    <li><strong>Datos de Comportamiento:</strong> Frecuencia de login, uso de app, apertura de emails, engagement score</li>
+                    <li><strong>Datos de Satisfacción:</strong> NPS, quejas, valoraciones, churn risk score</li>
+                </ul>
+                
+                <div class="doc-highlight-box">
+                    <strong>🔄 Pipeline de Segmentación</strong><br>
+                    Extracción de datos → Normalización y scaling → PCA (50 vars → 15 componentes) → 
+                    K-Means para identificar K óptimo → DBSCAN para refinar → Asignación de clientes → 
+                    Perfilado de segmentos → Actualización cada 48h
+                </div>
+                
+                <p>
+                    <strong>Output del Sistema:</strong>
+                </p>
+                <ul>
+                    <li><strong>Asignación de Segmento:</strong> Cada cliente asignado a 1 de N segmentos (típicamente 5-8)</li>
+                    <li><strong>Perfil del Segmento:</strong> Características promedio, comportamientos típicos, necesidades</li>
+                    <li><strong>Tamaño y Distribución:</strong> Número de clientes por segmento, % del total, evolución temporal</li>
+                    <li><strong>Estrategias Recomendadas:</strong> Tácticas de marketing, productos a ofrecer, canales preferidos</li>
+                    <li><strong>Métricas del Segmento:</strong> LTV promedio, churn risk, satisfacción, revenue potencial</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Modelos de IA -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-model-card">
+                    <h4>1. K-Means Clustering</h4>
+                    <p>
+                        Algoritmo de clustering que agrupa clientes minimizando la varianza intra-cluster. 
+                        Utiliza el método del codo y silhouette score para determinar el número óptimo de clusters.
+                    </p>
+                    <p><strong>Uso:</strong> Identificación inicial de segmentos principales</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>2. DBSCAN (Density-Based Clustering)</h4>
+                    <p>
+                        Identifica clusters de forma arbitraria basándose en densidad, detectando automáticamente 
+                        outliers y segmentos de nicho que K-Means podría perder.
+                    </p>
+                    <p><strong>Uso:</strong> Refinamiento de segmentos y detección de micro-segmentos valiosos</p>
+                </div>
+                
+                <div class="doc-model-card">
+                    <h4>3. PCA (Principal Component Analysis)</h4>
+                    <p>
+                        Reducción de dimensionalidad que transforma 50+ variables en componentes principales, 
+                        facilitando visualización y mejorando performance de clustering.
+                    </p>
+                    <p><strong>Uso:</strong> Preprocesamiento y visualización de segmentos</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Arquitectura Técnica -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🏗️</span>
+                Arquitectura Técnica
+            </h3>
+            <div class="doc-section-content">
+                <div class="doc-tech-stack">
+                    <div class="doc-tech-item">
+                        <strong>Data Sources</strong>
+                        <span>CRM, Facturación, Web Analytics, App Móvil, Call Center</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>ML Platform</strong>
+                        <span>Python (scikit-learn, pandas), Azure ML</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Storage</strong>
+                        <span>Azure SQL Database, Azure Blob Storage</span>
+                    </div>
+                    <div class="doc-tech-item">
+                        <strong>Orchestration</strong>
+                        <span>Apache Airflow (pipeline cada 48h)</span>
+                    </div>
+                </div>
+                
+                <p><strong>Variables Analizadas (50+):</strong></p>
+                <ul>
+                    <li><strong>Demográficas:</strong> Edad, ubicación, tipo vivienda, composición familiar</li>
+                    <li><strong>Comportamiento:</strong> Consumo mensual, estacionalidad, horarios pico</li>
+                    <li><strong>Transaccionales:</strong> LTV, antigüedad, productos contratados, facturación</li>
+                    <li><strong>Engagement:</strong> Uso app, apertura emails, llamadas call center</li>
+                    <li><strong>Satisfacción:</strong> NPS, quejas, valoraciones, churn risk</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- KPIs -->
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📈</span>
+                KPIs y Métricas de Éxito
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Métricas de Calidad del Modelo:</strong></p>
+                <ul>
+                    <li><strong>Silhouette Score:</strong> 0.68 (buena separación entre clusters)</li>
+                    <li><strong>Precisión:</strong> 87% en clasificación de nuevos clientes</li>
+                    <li><strong>Estabilidad:</strong> 92% clientes mantienen segmento mes a mes</li>
+                </ul>
+                
+                <p><strong>Métricas de Negocio:</strong></p>
+                <ul>
+                    <li><strong>Tasa Conversión:</strong> +45% vs campañas no segmentadas</li>
+                    <li><strong>ROI Campañas:</strong> +180% mediante targeting preciso</li>
+                    <li><strong>Revenue Potencial:</strong> €6.78M en cross-selling dirigido</li>
+                    <li><strong>Reducción Churn:</strong> -25% en segmentos de alto riesgo</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="use-case-container">
     <div class="use-case-header">
-        <div class="use-case-icon">🔍</div>
+        <div class="use-case-icon">🎯</div>
         <div class="use-case-info">
-            <h1>Segmentación Avanzada con IA</h1>
-            <p>Identifique y agrupe clientes con precisión del 93% para maximizar relevancia y conversión de campañas.</p>
+            <h1>Segmentación Avanzada de Clientes</h1>
+            <p>Machine Learning identifica automáticamente 6 segmentos con características únicas para estrategias hiperpersonalizadas.</p>
+        </div>
+    </div>
+
+    <!-- Métricas Globales -->
+    <div class="metrics-grid-segmentacion">
+        <div class="metric-card-segmentacion">
+            <div class="metric-icon-segmentacion">👥</div>
+            <div class="metric-data">
+                <div class="metric-value-segmentacion">{{ (metricas.clientes_totales / 1000)|round(0)|int }}K</div>
+                <div class="metric-label-segmentacion">Clientes Analizados</div>
+            </div>
+        </div>
+        <div class="metric-card-segmentacion">
+            <div class="metric-icon-segmentacion">🎯</div>
+            <div class="metric-data">
+                <div class="metric-value-segmentacion">{{ metricas.segmentos_identificados }}</div>
+                <div class="metric-label-segmentacion">Segmentos Identificados</div>
+            </div>
+        </div>
+        <div class="metric-card-segmentacion">
+            <div class="metric-icon-segmentacion">📊</div>
+            <div class="metric-data">
+                <div class="metric-value-segmentacion">{{ metricas.precision_modelo }}%</div>
+                <div class="metric-label-segmentacion">Precisión Modelo</div>
+            </div>
+        </div>
+        <div class="metric-card-segmentacion">
+            <div class="metric-icon-segmentacion">💰</div>
+            <div class="metric-data">
+                <div class="metric-value-segmentacion">€{{ (metricas.revenue_potencial / 1000000)|round(1) }}M</div>
+                <div class="metric-label-segmentacion">Revenue Potencial</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info del Modelo -->
+    <div class="card">
+        <div class="card-body" style="padding: var(--spacing-l);">
+            <div class="modelo-info-grid">
+                <div class="modelo-info-item">
+                    <span class="info-label">Algoritmo:</span>
+                    <span class="info-value">{{ clustering_info.algoritmo }}</span>
+                </div>
+                <div class="modelo-info-item">
+                    <span class="info-label">Features:</span>
+                    <span class="info-value">{{ clustering_info.features_utilizadas }} variables</span>
+                </div>
+                <div class="modelo-info-item">
+                    <span class="info-label">Silhouette Score:</span>
+                    <span class="info-value">{{ clustering_info.silhouette_score }}</span>
+                </div>
+                <div class="modelo-info-item">
+                    <span class="info-label">Última Actualización:</span>
+                    <span class="info-value">{{ clustering_info.ultima_actualizacion }}</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Segmentos Identificados -->
     <div class="card">
         <div class="card-header">
-            <h2>🎯 Segmentos Identificados por IA</h2>
-            <button class="btn btn-primary btn-sm">+ Crear Nuevo Segmento</button>
+            <h2>🎯 Segmentos Identificados</h2>
+            <button class="btn btn-primary" onclick="exportarSegmentos()">📥 Exportar Análisis</button>
         </div>
         <div class="card-body">
-            <div class="segments-grid">
-                {% for segmento in segmentos %}
-                <div class="segment-card">
-                    <div class="segment-header">
-                        <h3>{{ segmento.nombre }}</h3>
-                        <span class="segment-size">{{ segmento.clientes|format_number }} clientes</span>
-                    </div>
-                    <div class="segment-body">
-                        <div class="segment-metric">
-                            <span class="metric-label">Potencial:</span>
-                            <span class="metric-value">{{ segmento.potencial }}</span>
+            <div class="segmentos-grid">
+                {% for seg in segmentos %}
+                <div class="segmento-card" style="border-left-color: {{ seg.color }};">
+                    <!-- Header del Segmento -->
+                    <div class="segmento-header">
+                        <div class="segmento-titulo">
+                            <h3 class="segmento-nombre">{{ seg.nombre }}</h3>
+                            <span class="segmento-id">{{ seg.id }}</span>
                         </div>
-                        <div class="segment-metric">
-                            <span class="metric-label">Valor promedio:</span>
-                            <span class="metric-value">{{ segmento.valor }}</span>
+                        <div class="segmento-size">
+                            <div class="size-numero">{{ (seg.clientes / 1000)|round(1) }}K</div>
+                            <div class="size-porcentaje">{{ seg.porcentaje }}%</div>
                         </div>
                     </div>
-                    <div class="segment-footer">
-                        <button class="btn btn-sm btn-primary">Crear Campaña</button>
-                        <button class="btn btn-sm btn-secondary">Ver Detalles</button>
+
+                    <!-- Características Clave -->
+                    <div class="segmento-section">
+                        <h4 class="section-title">📊 Características Clave</h4>
+                        <div class="caracteristicas-grid">
+                            <div class="caracteristica-item">
+                                <span class="carac-label">Edad Promedio</span>
+                                <span class="carac-value">{{ seg.caracteristicas.edad_promedio }} años</span>
+                            </div>
+                            <div class="caracteristica-item">
+                                <span class="carac-label">Ingreso Promedio</span>
+                                <span class="carac-value">€{{ (seg.caracteristicas.ingreso_promedio / 1000)|round(0)|int }}K</span>
+                            </div>
+                            <div class="caracteristica-item">
+                                <span class="carac-label">Consumo</span>
+                                <span class="carac-value">{{ seg.caracteristicas.consumo_promedio }} kWh/mes</span>
+                            </div>
+                            <div class="caracteristica-item">
+                                <span class="carac-label">Antigüedad</span>
+                                <span class="carac-value">{{ seg.caracteristicas.antiguedad_promedio }} años</span>
+                            </div>
+                            <div class="caracteristica-item">
+                                <span class="carac-label">Satisfacción</span>
+                                <span class="carac-value">{{ seg.caracteristicas.satisfaccion }}/10</span>
+                            </div>
+                            <div class="caracteristica-item">
+                                <span class="carac-label">LTV</span>
+                                <span class="carac-value">€{{ (seg.ltv / 1000)|round(1) }}K</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comportamiento -->
+                    <div class="segmento-section">
+                        <h4 class="section-title">🧠 Patrones de Comportamiento</h4>
+                        <ul class="comportamiento-list">
+                            {% for comp in seg.comportamiento %}
+                            <li>{{ comp }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Productos Recomendados -->
+                    <div class="segmento-section">
+                        <h4 class="section-title">💡 Productos Recomendados</h4>
+                        <div class="productos-list">
+                            {% for prod in seg.productos_recomendados %}
+                            <div class="producto-item">
+                                <div class="producto-header">
+                                    <span class="producto-nombre">{{ prod.nombre }}</span>
+                                    <span class="producto-revenue">€{{ (prod.revenue_potencial / 1000)|round(0)|int }}K</span>
+                                </div>
+                                <div class="producto-adopcion">
+                                    <div class="adopcion-bar">
+                                        <div class="adopcion-fill" style="width: {{ prod.adopcion }}%; background: {{ seg.color }};"></div>
+                                    </div>
+                                    <span class="adopcion-text">{{ prod.adopcion }}% adopción</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Estrategia -->
+                    <div class="segmento-section">
+                        <h4 class="section-title">🎯 Estrategia Recomendada</h4>
+                        <p class="estrategia-text">{{ seg.estrategia }}</p>
+                    </div>
+
+                    <!-- Métricas de Riesgo -->
+                    <div class="segmento-footer">
+                        <div class="footer-metric">
+                            <span class="metric-label-small">Churn Risk</span>
+                            <span class="churn-badge churn-{{ 'alto' if seg.churn_risk > 20 else 'medio' if seg.churn_risk > 10 else 'bajo' }}">
+                                {{ seg.churn_risk }}%
+                            </span>
+                        </div>
+                        <button class="btn btn-outline" onclick="verSegmento('{{ seg.id }}')">
+                            Ver Detalles →
+                        </button>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </div>
-
-    <!-- Métricas de Segmentación -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-value">93%</div>
-            <div class="stat-label">Precisión Segmentación</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">📊</div>
-            <div class="stat-value">+50%</div>
-            <div class="stat-label">Engagement</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
-            <div class="stat-value">+80%</div>
-            <div class="stat-label">Conversión Programas</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">📧</div>
-            <div class="stat-value">+65%</div>
-            <div class="stat-label">Apertura Emails</div>
-        </div>
-    </div>
 </div>
+
+<style>
+/* Estilos específicos para Segmentación */
+.metrics-grid-segmentacion {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card-segmentacion {
+    background: var(--neutral-background-1);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-l);
+    border: 1px solid var(--neutral-stroke-1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.metric-card-segmentacion:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-2px);
+}
+
+.metric-icon-segmentacion {
+    font-size: 40px;
+}
+
+.metric-value-segmentacion {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-weight-bold);
+    color: var(--neutral-foreground-1);
+}
+
+.metric-label-segmentacion {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+/* Info del Modelo */
+.modelo-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.modelo-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.info-value {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+/* Segmentos Grid */
+.segmentos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.segmento-card {
+    background: var(--neutral-background-1);
+    border: 1px solid var(--neutral-stroke-1);
+    border-left: 4px solid;
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.segmento-card:hover {
+    box-shadow: var(--shadow-8);
+    transform: translateY(-4px);
+}
+
+.segmento-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-l);
+    padding-bottom: var(--spacing-l);
+    border-bottom: 2px solid var(--neutral-stroke-1);
+}
+
+.segmento-titulo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.segmento-nombre {
+    font-size: var(--font-size-500);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+}
+
+.segmento-id {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    font-family: 'Consolas', monospace;
+}
+
+.segmento-size {
+    text-align: right;
+}
+
+.size-numero {
+    font-size: var(--font-size-600);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary);
+}
+
+.size-porcentaje {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+/* Secciones del Segmento */
+.segmento-section {
+    margin-bottom: var(--spacing-l);
+}
+
+.section-title {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--spacing-m) 0;
+    color: var(--neutral-foreground-2);
+}
+
+/* Características */
+.caracteristicas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-m);
+}
+
+.caracteristica-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--spacing-s);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-medium);
+}
+
+.carac-label {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+}
+
+.carac-value {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+}
+
+/* Comportamiento */
+.comportamiento-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-s);
+}
+
+.comportamiento-list li {
+    padding-left: var(--spacing-l);
+    position: relative;
+    font-size: var(--font-size-200);
+    line-height: 1.6;
+}
+
+.comportamiento-list li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: bold;
+}
+
+/* Productos */
+.productos-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.producto-item {
+    padding: var(--spacing-m);
+    background: var(--neutral-background-2);
+    border-radius: var(--border-radius-medium);
+}
+
+.producto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-s);
+}
+
+.producto-nombre {
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-semibold);
+}
+
+.producto-revenue {
+    font-size: var(--font-size-200);
+    color: var(--success);
+    font-weight: var(--font-weight-bold);
+}
+
+.producto-adopcion {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+}
+
+.adopcion-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--neutral-background-3);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.adopcion-fill {
+    height: 100%;
+    transition: width var(--duration-normal) var(--curve-easy-ease);
+}
+
+.adopcion-text {
+    font-size: var(--font-size-100);
+    color: var(--neutral-foreground-3);
+    white-space: nowrap;
+}
+
+/* Estrategia */
+.estrategia-text {
+    font-size: var(--font-size-200);
+    line-height: 1.6;
+    color: var(--neutral-foreground-2);
+    margin: 0;
+}
+
+/* Footer del Segmento */
+.segmento-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-l);
+    border-top: 1px solid var(--neutral-stroke-1);
+    margin-top: var(--spacing-l);
+}
+
+.footer-metric {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+}
+
+.metric-label-small {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+}
+
+.churn-badge {
+    padding: 4px 12px;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-200);
+    font-weight: var(--font-weight-bold);
+}
+
+.churn-alto {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.churn-medio {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.churn-bajo {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+@media (max-width: 1200px) {
+    .segmentos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function exportarSegmentos() {
+    alert('Exportar Análisis de Segmentos\n\nEn un entorno real, esto generaría:\n\n✓ Excel con detalles de cada segmento\n✓ PDF con visualizaciones\n✓ CSV para importar en CRM\n✓ Recomendaciones de campañas');
+}
+
+function verSegmento(segmentoId) {
+    alert(`Ver Detalles del Segmento: ${segmentoId}\n\nEn un entorno real, esto mostraría:\n\n✓ Lista completa de clientes\n✓ Análisis detallado de comportamiento\n✓ Simulador de campañas\n✓ Histórico de evolución del segmento\n✓ Comparación con otros segmentos`);
+}
+</script>
 {% endblock %}
