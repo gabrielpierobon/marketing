@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iberdrola AI Marketing Suite | Plataforma de IA para Marketing Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #323130;
+            background: #f5f5f5;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: #0078D4;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Use Case Cards */
+        .use-case {
+            background: white;
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .use-case h2 {
+            color: #0078D4;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .use-case-icon {
+            font-size: 2.5rem;
+        }
+
+        .use-case-description {
+            color: #605E5C;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #F3F2F1 0%, #EDEBE9 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0078D4;
+        }
+
+        .metric-label {
+            color: #605E5C;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Interactive Demo */
+        .demo-area {
+            background: #F3F2F1;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #0078D4;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #005A9E;
+        }
+
+        .demo-button.secondary {
+            background: #E1DFDD;
+            color: #323130;
+        }
+
+        .demo-button.secondary:hover {
+            background: #C8C6C4;
+        }
+
+        .demo-output {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            min-height: 200px;
+            border-left: 4px solid #0078D4;
+        }
+
+        /* Customer Profile */
+        .customer-profile {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .customer-avatar {
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
+            color: white;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .customer-info h3 {
+            color: #0078D4;
+            margin-bottom: 0.5rem;
+        }
+
+        .customer-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .detail-item {
+            background: #F3F2F1;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: #605E5C;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #323130;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            background: white;
+            border-radius: 8px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .message-user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            background: #F3F2F1;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+
+        .message-user .message-bubble {
+            background: #0078D4;
+            color: white;
+        }
+
+        .chat-input-area {
+            border-top: 1px solid #EDEBE9;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #EDEBE9;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Chart */
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-label {
+            width: 150px;
+            font-weight: 600;
+        }
+
+        .chart-bar-fill {
+            flex: 1;
+            height: 40px;
+            background: linear-gradient(90deg, #0078D4 0%, #50E6FF 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            color: white;
+            font-weight: 600;
+            transition: width 1s;
+        }
+
+        /* Risk Score */
+        .risk-score {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .risk-high { background: #D13438; color: white; }
+        .risk-medium { background: #FFB900; color: #323130; }
+        .risk-low { background: #107C10; color: white; }
+
+        /* Content Preview */
+        .content-preview {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 2px solid #EDEBE9;
+            margin-top: 1rem;
+        }
+
+        .content-preview h4 {
+            color: #0078D4;
+            margin-bottom: 1rem;
+        }
+
+        /* Input Group */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #EDEBE9;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .input-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #EDEBE9;
+            border-top-color: #0078D4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background: #323130;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content p {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .customer-profile { grid-template-columns: 1fr; }
+            .customer-details { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>⚡</span>
+                <span>Iberdrola AI Marketing Suite</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#personalization">Personalización</a></li>
+                <li><a href="#content">Contenido GenAI</a></li>
+                <li><a href="#chatbot">Chatbot IA</a></li>
+                <li><a href="#churn">Predicción Churn</a></li>
+                <li><a href="#optimization">Optimización</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Transforme su Marketing con IA</h1>
+        <p>Plataforma integral de IA y GenAI diseñada específicamente para el sector energético. Aumente conversiones un 300%, reduzca churn un 25% y multiplique su productividad por 4.</p>
+        <button class="cta-button" onclick="alert('Contacto: demo@iberdrola-ai.com')">Solicitar Demo</button>
+    </section>
+
+    <div class="container">
+        <!-- Use Case 1: Personalización Hiperpersonalizada -->
+        <div class="use-case" id="personalization">
+            <h2><span class="use-case-icon">👤</span> Personalización Hiperpersonalizada</h2>
+            <p class="use-case-description">
+                Cree experiencias únicas para cada cliente basadas en su perfil de consumo energético, 
+                comportamiento y preferencias. Aumente conversiones hasta un 320%.
+            </p>
+
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-value">+320%</div>
+                    <div class="metric-label">Conversión</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">+65%</div>
+                    <div class="metric-label">Email Open Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">5-8x</div>
+                    <div class="metric-label">ROI Marketing</div>
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <h3>Demo Interactivo: Generador de Ofertas Personalizadas</h3>
+                <div class="demo-controls">
+                    <button class="demo-button" onclick="generatePersonalizedOffer('residencial')">Cliente Residencial</button>
+                    <button class="demo-button" onclick="generatePersonalizedOffer('negocio')">Cliente Negocio</button>
+                    <button class="demo-button" onclick="generatePersonalizedOffer('alto-consumo')">Alto Consumo</button>
+                </div>
+                <div id="personalization-output" class="demo-output">
+                    <p style="color: #605E5C;">Seleccione un perfil de cliente para ver la oferta personalizada generada por IA...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Use Case 2: Generación de Contenido GenAI -->
+        <div class="use-case" id="content">
+            <h2><span class="use-case-icon">✍️</span> Generación de Contenido con GenAI</h2>
+            <p class="use-case-description">
+                Genere contenido de marketing de alta calidad en segundos. Reduzca tiempo de creación un 70-90% 
+                y aumente volumen de contenido 500%.
+            </p>
+
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-value">-85%</div>
+                    <div class="metric-label">Tiempo Creación</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">+500%</div>
+                    <div class="metric-label">Volumen Contenido</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">-50%</div>
+                    <div class="metric-label">Costes</div>
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <h3>Demo Interactivo: Generador de Campañas Email</h3>
+                <div class="input-group">
+                    <label>Objetivo de la Campaña:</label>
+                    <select id="campaign-goal">
+                        <option>Promoción Solar Residencial</option>
+                        <option>Retención Clientes</option>
+                        <option>Eficiencia Energética</option>
+                        <option>Demand Response</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Tono:</label>
+                    <select id="campaign-tone">
+                        <option>Profesional</option>
+                        <option>Cercano</option>
+                        <option>Urgente</option>
+                        <option>Educativo</option>
+                    </select>
+                </div>
+                <button class="demo-button" onclick="generateContent()">Generar Contenido con IA</button>
+                <div id="content-output" class="demo-output" style="margin-top: 1rem; display: none;">
+                    <div class="content-preview">
+                        <h4 id="content-subject"></h4>
+                        <p id="content-body"></p>
+                        <p style="margin-top: 1rem; color: #0078D4; font-weight: 600;" id="content-cta"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Use Case 3: Chatbot Conversacional -->
+        <div class="use-case" id="chatbot">
+            <h2><span class="use-case-icon">💬</span> Chatbot IA Conversacional 24/7</h2>
+            <p class="use-case-description">
+                Asistente virtual inteligente que resuelve consultas de clientes instantáneamente. 
+                Reduzca llamadas al call center un 60% y mejore satisfacción un 35%.
+            </p>
+
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-value">24/7</div>
+                    <div class="metric-label">Disponibilidad</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">-95%</div>
+                    <div class="metric-label">Tiempo Respuesta</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">+50%</div>
+                    <div class="metric-label">Resolución 1er Contacto</div>
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <h3>Demo Interactivo: Chatbot Iberdrola</h3>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="chat-message">
+                            <div class="message-bubble">
+                                👋 ¡Hola! Soy el Asistente Virtual de Iberdrola. ¿En qué puedo ayudarte hoy?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" id="chat-input" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMessage()">
+                        <button class="demo-button" onclick="sendMessage()">Enviar</button>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <button class="demo-button secondary" onclick="quickQuestion('¿Cuál es mi consumo este mes?')">¿Cuál es mi consumo?</button>
+                    <button class="demo-button secondary" onclick="quickQuestion('Quiero instalar paneles solares')">Info Solar</button>
+                    <button class="demo-button secondary" onclick="quickQuestion('¿Cómo puedo reducir mi factura?')">Reducir Factura</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Use Case 4: Predicción de Churn -->
+        <div class="use-case" id="churn">
+            <h2><span class="use-case-icon">📊</span> Predicción y Prevención de Churn</h2>
+            <p class="use-case-description">
+                Identifique clientes en riesgo de abandonar antes de que lo hagan. 
+                Reduzca churn un 25% y aumente CLV un 40% con retención proactiva.
+            </p>
+
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">Precisión Predicción</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">-25%</div>
+                    <div class="metric-label">Reducción Churn</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">10x</div>
+                    <div class="metric-label">ROI Retención</div>
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <h3>Demo Interactivo: Análisis de Riesgo de Clientes</h3>
+                <div class="demo-controls">
+                    <button class="demo-button" onclick="analyzeChurnRisk('high')">Cliente Alto Riesgo</button>
+                    <button class="demo-button" onclick="analyzeChurnRisk('medium')">Cliente Riesgo Medio</button>
+                    <button class="demo-button" onclick="analyzeChurnRisk('low')">Cliente Bajo Riesgo</button>
+                </div>
+                <div id="churn-output" class="demo-output">
+                    <p style="color: #605E5C;">Seleccione un perfil para ver el análisis de riesgo de churn...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Use Case 5: Optimización Publicitaria -->
+        <div class="use-case" id="optimization">
+            <h2><span class="use-case-icon">🎯</span> Optimización Publicitaria Autónoma</h2>
+            <p class="use-case-description">
+                IA que optimiza automáticamente sus campañas publicitarias en tiempo real. 
+                Reduzca CPA un 30% y mejore ROAS hasta un 200%.
+            </p>
+
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-value">-30%</div>
+                    <div class="metric-label">Coste por Lead</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">+200%</div>
+                    <div class="metric-label">ROAS</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">+45%</div>
+                    <div class="metric-label">Conversiones</div>
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <h3>Demo Interactivo: Optimizador de Campañas</h3>
+                <button class="demo-button" onclick="optimizeCampaigns()">Ejecutar Optimización IA</button>
+                <div id="optimization-output" class="demo-output" style="margin-top: 1rem; display: none;">
+                    <div class="chart-container">
+                        <h4 style="color: #0078D4; margin-bottom: 1.5rem;">Rendimiento de Campañas (Antes vs Después IA)</h4>
+                        <div id="campaign-charts"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Iberdrola AI Marketing Suite. Powered by Azure AI, Google Vertex AI & Salesforce Agentforce</p>
+            <p style="margin-top: 1rem;">ROI Esperado: 4:1 a 6:1 | Payback: 18-24 meses | TCO 3 años: €1M-€2.7M</p>
+        </div>
+    </footer>
+
+    <script>
+        // Personalization Demo
+        function generatePersonalizedOffer(profileType) {
+            const output = document.getElementById('personalization-output');
+            output.innerHTML = '<div class="loading"></div> Generando oferta personalizada...';
+            
+            setTimeout(() => {
+                let content = '';
+                if (profileType === 'residencial') {
+                    content = `
+                        <div class="customer-profile">
+                            <div>
+                                <div class="customer-avatar">MR</div>
+                            </div>
+                            <div class="customer-info">
+                                <h3>María Rodríguez</h3>
+                                <p><strong>Segmento:</strong> Residencial Alto Consumo</p>
+                                <div class="customer-details">
+                                    <div class="detail-item">
+                                        <div class="detail-label">Consumo Mensual</div>
+                                        <div class="detail-value">485 kWh</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Tipo Vivienda</div>
+                                        <div class="detail-value">Casa Unifamiliar</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Potencial Solar</div>
+                                        <div class="detail-value">8.5 kW</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Ahorro Estimado</div>
+                                        <div class="detail-value">€1,240/año</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%); color: white; padding: 2rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <h3 style="margin-bottom: 1rem;">🌞 Oferta Personalizada: Instalación Solar Premium</h3>
+                            <p style="font-size: 1.1rem; line-height: 1.8;">
+                                <strong>Hola María,</strong><br><br>
+                                Hemos analizado tu consumo de los últimos 12 meses (promedio 485 kWh/mes) y tenemos excelentes noticias: 
+                                tu vivienda es <strong>ideal para energía solar</strong>.<br><br>
+                                
+                                <strong>Tu paquete personalizado incluye:</strong><br>
+                                ✓ Sistema solar 8.5 kW (25 paneles de alta eficiencia)<br>
+                                ✓ Ahorro estimado: <strong>€1,240/año</strong> (€103/mes)<br>
+                                ✓ ROI en 6.8 años - Batería de respaldo incluida<br>
+                                ✓ Financiación 0% durante 24 meses<br>
+                                ✓ Instalación en 3 días - Garantía 25 años<br><br>
+                                
+                                <strong style="font-size: 1.3rem;">Oferta válida hasta: 15 de Octubre</strong>
+                            </p>
+                        </div>
+                    `;
+                } else if (profileType === 'negocio') {
+                    content = `
+                        <div class="customer-profile">
+                            <div>
+                                <div class="customer-avatar">RC</div>
+                            </div>
+                            <div class="customer-info">
+                                <h3>Restaurante Casa López</h3>
+                                <p><strong>Segmento:</strong> PYME - Hostelería</p>
+                                <div class="customer-details">
+                                    <div class="detail-item">
+                                        <div class="detail-label">Consumo Mensual</div>
+                                        <div class="detail-value">2,450 kWh</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Sector</div>
+                                        <div class="detail-value">Restauración</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Pico Consumo</div>
+                                        <div class="detail-value">20:00-23:00h</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Ahorro Potencial</div>
+                                        <div class="detail-value">€420/mes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #107C10 0%, #0B5A0B 100%); color: white; padding: 2rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <h3 style="margin-bottom: 1rem;">⚡ Plan Optimización Energética PYME</h3>
+                            <p style="font-size: 1.1rem; line-height: 1.8;">
+                                <strong>Estimado Casa López,</strong><br><br>
+                                Nuestro análisis IA detecta que su negocio podría <strong>reducir costes energéticos en €420/mes</strong> 
+                                con nuestro plan de optimización para restaurantes.<br><br>
+                                
+                                <strong>Solución a medida para su restaurante:</strong><br>
+                                ✓ Tarifa flexible horaria optimizada para hostelería<br>
+                                ✓ Sistema de gestión energética inteligente<br>
+                                ✓ Iluminación LED profesional (cocina + sala)<br>
+                                ✓ Optimización climatización (reducción 30% consumo)<br>
+                                ✓ Monitorización consumo en tiempo real<br><br>
+                                
+                                <strong>Inversión inicial: €0</strong> - Ahorro desde el primer mes<br>
+                                <strong style="font-size: 1.3rem;">ROI garantizado en 12 meses</strong>
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    content = `
+                        <div class="customer-profile">
+                            <div>
+                                <div class="customer-avatar">FI</div>
+                            </div>
+                            <div class="customer-info">
+                                <h3>Familia Iglesias</h3>
+                                <p><strong>Segmento:</strong> Residencial Alto Consumo Verano</p>
+                                <div class="customer-details">
+                                    <div class="detail-item">
+                                        <div class="detail-label">Consumo Medio</div>
+                                        <div class="detail-value">780 kWh (verano)</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Equipamiento</div>
+                                        <div class="detail-value">A/C, Piscina</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Patrón</div>
+                                        <div class="detail-value">Picos diurnos</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Potencial Ahorro</div>
+                                        <div class="detail-value">€185/mes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #FFB900 0%, #D39D00 100%); color: #323130; padding: 2rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <h3 style="margin-bottom: 1rem;">🏊 Paquete Confort Verano Inteligente</h3>
+                            <p style="font-size: 1.1rem; line-height: 1.8;">
+                                <strong>Familia Iglesias,</strong><br><br>
+                                Hemos detectado picos de consumo en verano (hasta 780 kWh/mes) relacionados con 
+                                climatización y piscina. Tenemos la solución perfecta para mantener su confort 
+                                <strong>ahorrando €185/mes</strong>.<br><br>
+                                
+                                <strong>Paquete Premium incluye:</strong><br>
+                                ✓ Bomba de calor piscina eficiencia A+++ (ahorro 60%)<br>
+                                ✓ Sistema domótica control A/C por zonas<br>
+                                ✓ Tarifa super valle para cargar piscina (madrugada)<br>
+                                ✓ App móvil: control consumo en tiempo real<br>
+                                ✓ Alertas inteligentes de optimización<br><br>
+                                
+                                <strong>Promoción especial:</strong> 40% descuento instalación<br>
+                                <strong style="font-size: 1.3rem;">Ahorro primer verano: €555 garantizado</strong>
+                            </p>
+                        </div>
+                    `;
+                }
+                output.innerHTML = content;
+            }, 1500);
+        }
+
+        // Content Generation Demo
+        function generateContent() {
+            const goal = document.getElementById('campaign-goal').value;
+            const tone = document.getElementById('campaign-tone').value;
+            const output = document.getElementById('content-output');
+            
+            output.style.display = 'none';
+            const parent = output.parentElement;
+            const loading = document.createElement('div');
+            loading.className = 'loading';
+            loading.style.marginTop = '1rem';
+            parent.appendChild(loading);
+            
+            setTimeout(() => {
+                loading.remove();
+                
+                let subject, body, cta;
+                if (goal === 'Promoción Solar Residencial') {
+                    subject = tone === 'Urgente' 
+                        ? '⚡ ÚLTIMOS DÍAS: Ahorra hasta €1,500/año con Solar' 
+                        : '🌞 Descubre cuánto puedes ahorrar con energía solar';
+                    body = `Estimado cliente,
+
+La energía solar nunca ha sido tan accesible. Nuestro sistema de última generación se adapta perfectamente a tu consumo actual, permitiéndote generar tu propia electricidad y reducir drásticamente tu factura.
+
+Con nuestro análisis personalizado gratuito, descubrirás:
+• El sistema solar ideal para tu hogar
+• Tu ahorro exacto mes a mes
+• Financiación sin entrada y a tu medida
+• Instalación profesional en solo 3 días
+
+Más de 50,000 familias ya están ahorrando con Iberdrola Solar.`;
+                    cta = '👉 Calcula tu ahorro en 2 minutos - Sin compromiso';
+                } else if (goal === 'Retención Clientes') {
+                    subject = '💙 Te echamos de menos - Vuelve con ventajas exclusivas';
+                    body = `Hola,
+
+Hemos notado que estás considerando otras opciones energéticas. Queremos asegurarnos de que estás recibiendo el mejor servicio posible.
+
+Como cliente valorado, hemos preparado una oferta especial solo para ti:
+• Revisión completa de tu tarifa actual
+• Optimización personalizada de tu plan
+• 3 meses con precio preferente
+• Atención prioritaria 24/7
+
+Tu satisfacción es nuestra prioridad. Déjanos demostrarte por qué miles de clientes confían en Iberdrola.`;
+                    cta = '📞 Habla con tu gestor personal ahora';
+                } else {
+                    subject = '💡 5 formas de reducir tu factura eléctrica este mes';
+                    body = `Hola,
+
+¿Sabías que puedes reducir tu consumo energético hasta un 30% sin cambiar tus hábitos?
+
+Te compartimos 5 consejos profesionales que marcan la diferencia:
+1. Optimiza el uso de electrodomésticos en horas valle
+2. Ajusta la temperatura del termostato 2°C
+3. Aprovecha la luz natural al máximo
+4. Desconecta dispositivos en standby
+5. Considera cambiar a iluminación LED
+
+Además, nuestra app te muestra tu consumo en tiempo real y te sugiere mejoras personalizadas cada semana.`;
+                    cta = '📱 Descarga la app y empieza a ahorrar hoy';
+                }
+                
+                document.getElementById('content-subject').textContent = subject;
+                document.getElementById('content-body').textContent = body;
+                document.getElementById('content-cta').textContent = cta;
+                output.style.display = 'block';
+            }, 2000);
+        }
+
+        // Chatbot Demo
+        const chatResponses = {
+            'consumo': '📊 Tu consumo este mes es de <strong>342 kWh</strong>, un 8% menos que el mes pasado. ¡Excelente trabajo! ¿Te gustaría ver consejos personalizados para reducirlo aún más?',
+            'solar': '🌞 ¡Excelente decisión! La instalación solar puede ahorrarte hasta <strong>€1,200/año</strong>. Te he enviado una simulación personalizada a tu email. ¿Quieres que te contacte un especialista?',
+            'reducir': '💡 Basándome en tu perfil, puedes ahorrar <strong>€45/mes</strong> cambiando a nuestra tarifa flexible y optimizando el uso de electrodomésticos. ¿Te genero un plan personalizado?',
+            'factura': '📄 Tu última factura es de <strong>€89.50</strong> (periodo 1-30 Sep). Puedes descargarla desde tu área de cliente o te la envío por email. ¿Qué prefieres?',
+            'averia': '⚠️ Lamento el inconveniente. He registrado tu incidencia con el código <strong>#IB-2847</strong>. Un técnico te contactará en las próximas 2 horas. ¿Hay algo más que pueda ayudarte?',
+            'default': '🤖 Entiendo tu consulta. Permíteme revisar tu información... <br><br>Te recomiendo: <br>• Revisar tu área de cliente<br>• Contactar con atención al cliente: 900 123 456<br>• Visitar nuestras FAQs<br><br>¿Hay algo específico en lo que pueda ayudarte?'
+        };
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('chat-messages');
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-message message-user';
+            userMsg.innerHTML = `<div class="message-bubble">${message}</div>`;
+            messagesContainer.appendChild(userMsg);
+            
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Generate bot response
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-message';
+                
+                let response = chatResponses.default;
+                const lowerMessage = message.toLowerCase();
+                
+                if (lowerMessage.includes('consumo')) response = chatResponses.consumo;
+                else if (lowerMessage.includes('solar') || lowerMessage.includes('paneles')) response = chatResponses.solar;
+                else if (lowerMessage.includes('reducir') || lowerMessage.includes('ahorrar')) response = chatResponses.reducir;
+                else if (lowerMessage.includes('factura')) response = chatResponses.factura;
+                else if (lowerMessage.includes('averia') || lowerMessage.includes('incidencia')) response = chatResponses.averia;
+                
+                botMsg.innerHTML = `<div class="message-bubble">${response}</div>`;
+                messagesContainer.appendChild(botMsg);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+        }
+
+        function quickQuestion(question) {
+            document.getElementById('chat-input').value = question;
+            sendMessage();
+        }
+
+        // Churn Prediction Demo
+        function analyzeChurnRisk(riskLevel) {
+            const output = document.getElementById('churn-output');
+            output.innerHTML = '<div class="loading"></div> Analizando datos del cliente con IA...';
+            
+            setTimeout(() => {
+                let content = '';
+                if (riskLevel === 'high') {
+                    content = `
+                        <div class="customer-profile">
+                            <div>
+                                <div class="customer-avatar">JM</div>
+                            </div>
+                            <div class="customer-info">
+                                <h3>Juan Martínez</h3>
+                                <p>Cliente desde: 3 años | ID: CL-28492</p>
+                                <div style="margin-top: 1rem;">
+                                    <span class="risk-score risk-high">⚠️ RIESGO ALTO: 87%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <h4 style="color: #D13438; margin-bottom: 1rem;">🚨 Factores de Riesgo Detectados:</h4>
+                            <div style="background: #FFF4F4; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #D13438;">
+                                <ul style="margin-left: 1.5rem; line-height: 2;">
+                                    <li><strong>3 contactos</strong> al servicio de atención en último mes</li>
+                                    <li><strong>2 quejas</strong> sobre facturación no resueltas</li>
+                                    <li><strong>Reducción consumo 35%</strong> últimos 2 meses</li>
+                                    <li><strong>No ha abierto</strong> últimos 5 emails</li>
+                                    <li><strong>Búsquedas web</strong> de competidores detectadas</li>
+                                </ul>
+                            </div>
+                            <h4 style="color: #0078D4; margin: 2rem 0 1rem;">💡 Acciones Recomendadas (Automatizadas):</h4>
+                            <div style="background: #F3F2F1; padding: 1.5rem; border-radius: 8px;">
+                                <p style="margin-bottom: 1rem;"><strong>✅ Acción 1:</strong> Contacto inmediato gestor personal (llamada programada 14:30 hoy)</p>
+                                <p style="margin-bottom: 1rem;"><strong>✅ Acción 2:</strong> Oferta retención enviada (descuento 20% próximos 6 meses)</p>
+                                <p style="margin-bottom: 1rem;"><strong>✅ Acción 3:</strong> Revisión gratuita instalación eléctrica programada</p>
+                                <p><strong>✅ Acción 4:</strong> Email personalizado CEO disculpándose por inconvenientes</p>
+                            </div>
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: #107C10; color: white; border-radius: 8px;">
+                                <strong>Probabilidad retención con intervención IA: 73%</strong><br>
+                                Valor lifetime cliente: €4,280 | Coste retención: €145 | ROI: 29:1
+                            </div>
+                        </div>
+                    `;
+                } else if (riskLevel === 'medium') {
+                    content = `
+                        <div class="customer-profile">
+                            <div>
+                                <div class="customer-avatar">AC</div>
+                            </div>
+                            <div class="customer-info">
+                                <h3>Ana Castro</h3>
+                                <p>Cliente desde: 5 años | ID: CL-19283</p>
+                                <div style="margin-top: 1rem;">
+                                    <span class="risk-score risk-medium">⚠️ RIESGO MEDIO: 42%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <h4 style="color: #FFB900; margin-bottom: 1rem;">⚡ Señales de Alerta:</h4>
+                            <div style="background: #FFFBF0; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #FFB900;">
+                                <ul style="margin-left: 1.5rem; line-height: 2;">
+                                    <li><strong>Engagement reducido</strong> - No interacción últimas 3 campañas</li>
+                                    <li><strong>Consumo estable</strong> pero no ha actualizado datos en 18 meses</li>
+                                    <li><strong>Tarifa subóptima</strong> - Pagaría €23/mes menos con plan flexible</li>
+                                    <li><strong>No usa app móvil</strong> ni área cliente online</li>
+                                </ul>
+                            </div>
+                            <h4 style="color: #0078D4; margin: 2rem 0 1rem;">💡 Estrategia de Retención Preventiva:</h4>
+                            <div style="background: #F3F2F1; padding: 1.5rem; border-radius: 8px;">
+                                <p style="margin-bottom: 1rem;"><strong>📧 Email personalizado:</strong> "Ana, estás pagando de más - te mostramos cómo ahorrar €276/año"</p>
+                                <p style="margin-bottom: 1rem;"><strong>🎁 Incentivo:</strong> 3 meses descuento 15% al cambiar a tarifa optimizada</p>
+                                <p style="margin-bottom: 1rem;"><strong>📱 Onboarding app:</strong> Tutorial personalizado + €10 primer uso</p>
+                                <p><strong>📊 Follow-up:</strong> Informe mensual ahorro conseguido</p>
+                            </div>
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: #0078D4; color: white; border-radius: 8px;">
+                                <strong>Probabilidad prevención churn: 85%</strong><br>
+                                Coste intervención: €35 | Valor cliente: €6,420 | ROI: 183:1
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    content = `
+                        <div class="customer-profile">
+                            <div>
+                                <div class="customer-avatar">LG</div>
+                            </div>
+                            <div class="customer-info">
+                                <h3>Laura Gómez</h3>
+                                <p>Cliente desde: 8 años | ID: CL-09471</p>
+                                <div style="margin-top: 1rem;">
+                                    <span class="risk-score risk-low">✅ RIESGO BAJO: 12%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <h4 style="color: #107C10; margin-bottom: 1rem;">✨ Cliente Fidelizada - Perfil Promotor</h4>
+                            <div style="background: #F0FFF0; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #107C10;">
+                                <ul style="margin-left: 1.5rem; line-height: 2;">
+                                    <li><strong>NPS: 9/10</strong> - Recomendó Iberdrola a 3 familiares</li>
+                                    <li><strong>Engagement alto</strong> - Abre 80% emails, usa app semanalmente</li>
+                                    <li><strong>Consumo creciente</strong> - Añadió carga coche eléctrico</li>
+                                    <li><strong>Tarifa óptima</strong> - Plan flexible ajustado a su perfil</li>
+                                    <li><strong>Sin incidencias</strong> - 0 contactos soporte en 12 meses</li>
+                                </ul>
+                            </div>
+                            <h4 style="color: #0078D4; margin: 2rem 0 1rem;">🚀 Oportunidades de Cross-Sell:</h4>
+                            <div style="background: #F3F2F1; padding: 1.5rem; border-radius: 8px;">
+                                <p style="margin-bottom: 1rem;"><strong>🌞 Solar + Batería:</strong> Probabilidad conversión 68% (€18K potencial)</p>
+                                <p style="margin-bottom: 1rem;"><strong>🏡 Smart Home:</strong> Probabilidad 52% (termostato + enchufes inteligentes)</p>
+                                <p style="margin-bottom: 1rem;"><strong>⚡ Plan EV Premium:</strong> Probabilidad 78% (tarifa súper valle optimizada)</p>
+                                <p><strong>💙 Programa Referidos:</strong> Candidata ideal - incentivo €100 por referido</p>
+                            </div>
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: #107C10; color: white; border-radius: 8px;">
+                                <strong>Valor Lifetime Proyectado: €12,850</strong><br>
+                                Potencial Cross-sell: €21,400 | Probabilidad retención 96%
+                            </div>
+                        </div>
+                    `;
+                }
+                output.innerHTML = content;
+            }, 2000);
+        }
+
+        // Campaign Optimization Demo
+        function optimizeCampaigns() {
+            const output = document.getElementById('optimization-output');
+            output.style.display = 'none';
+            
+            const parent = output.parentElement;
+            const loading = document.createElement('div');
+            loading.innerHTML = '<div class="loading"></div> <span style="margin-left: 1rem;">IA analizando 15,000 variables en tiempo real...</span>';
+            loading.style.marginTop = '1rem';
+            loading.style.display = 'flex';
+            loading.style.alignItems = 'center';
+            parent.appendChild(loading);
+            
+            setTimeout(() => {
+                loading.remove();
+                
+                const campaigns = [
+                    { name: 'Google Search', before: 42, after: 78 },
+                    { name: 'Meta Ads', before: 38, after: 69 },
+                    { name: 'Display Network', before: 25, after: 51 },
+                    { name: 'YouTube', before: 31, after: 72 },
+                    { name: 'LinkedIn B2B', before: 47, after: 85 }
+                ];
+                
+                let chartsHTML = '';
+                campaigns.forEach(camp => {
+                    const improvement = ((camp.after - camp.before) / camp.before * 100).toFixed(0);
+                    chartsHTML += `
+                        <div class="chart-bar">
+                            <div class="chart-label">${camp.name}</div>
+                            <div style="flex: 1; display: flex; gap: 1rem; align-items: center;">
+                                <div style="flex: 1; background: #EDEBE9; height: 40px; border-radius: 4px; overflow: hidden; position: relative;">
+                                    <div style="background: #C8C6C4; height: 100%; width: ${camp.before}%; display: flex; align-items: center; padding: 0 0.5rem; color: #323130; font-weight: 600; font-size: 0.9rem;">
+                                        ${camp.before}%
+                                    </div>
+                                </div>
+                                <span style="font-size: 1.5rem;">→</span>
+                                <div style="flex: 1; background: #EDEBE9; height: 40px; border-radius: 4px; overflow: hidden; position: relative;">
+                                    <div class="chart-bar-fill" style="width: ${camp.after}%;">
+                                        ${camp.after}%
+                                    </div>
+                                </div>
+                                <span style="color: #107C10; font-weight: 700; min-width: 70px;">+${improvement}%</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('campaign-charts').innerHTML = chartsHTML;
+                output.style.display = 'block';
+                
+                // Animate bars
+                setTimeout(() => {
+                    document.querySelectorAll('.chart-bar-fill').forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    });
+                }, 100);
+                
+                // Add summary
+                setTimeout(() => {
+                    const summary = document.createElement('div');
+                    summary.style.marginTop = '2rem';
+                    summary.style.padding = '1.5rem';
+                    summary.style.background = 'linear-gradient(135deg, #0078D4 0%, #005A9E 100%)';
+                    summary.style.color = 'white';
+                    summary.style.borderRadius = '8px';
+                    summary.innerHTML = `
+                        <h4 style="margin-bottom: 1rem;">📈 Resultados Optimización IA (últimas 48 horas)</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700;">-28%</div>
+                                <div style="opacity: 0.9;">Coste por Lead</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700;">+65%</div>
+                                <div style="opacity: 0.9;">Conversiones</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700;">+187%</div>
+                                <div style="opacity: 0.9;">ROAS</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700;">€8,240</div>
+                                <div style="opacity: 0.9;">Ahorro Mensual</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.9;">
+                            <strong>Acciones IA ejecutadas:</strong> Rebalanceo presupuesto entre canales (23 ajustes), 
+                            optimización puja automática (148 keywords), pausado creatividades bajo rendimiento (12), 
+                            activación audiencias lookalike alto LTV (5 nuevas).
+                        </p>
+                    `;
+                    document.getElementById('campaign-charts').appendChild(summary);
+                }, 2000);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
