@@ -9,6 +9,12 @@
             <p class="subtitle">Guía completa del enfoque de IA para Marketing en Iberdrola</p>
         </div>
         <div class="header-actions">
+            <button class="btn btn-secondary" id="editBtn">
+                <span>✏️</span> <span id="editBtnText">Editar</span>
+            </button>
+            <button class="btn btn-secondary" id="resetBtn" onclick="resetContent()" title="Restaurar contenido original">
+                <span>🔄</span> Restaurar
+            </button>
             <button class="btn btn-secondary" onclick="descargarPDF()">
                 <span>📄</span> Descargar PDF
             </button>
@@ -19,6 +25,11 @@
                 <span>🔍</span> Buscar
             </button>
         </div>
+    </div>
+    
+    <!-- Indicador de guardado -->
+    <div id="saveIndicator" class="save-indicator-intro">
+        <span>💾</span> Guardando cambios...
     </div>
 
     <!-- Navegación Lateral -->
@@ -69,12 +80,12 @@
         <main class="doc-content">
             <!-- Introducción -->
             <section id="introduccion" class="doc-section">
-                <h1 class="doc-title">Introducción</h1>
-                <p class="doc-text">
+                <h1 class="doc-title editable-content" contenteditable="false">Introducción</h1>
+                <p class="doc-text editable-content" contenteditable="false">
                     Bienvenido a la documentación técnica de <strong>Iberdrola AI for Marketing</strong>, una plataforma integral que aprovecha 
                     las últimas tecnologías de Inteligencia Artificial para transformar las operaciones de marketing digital.
                 </p>
-                <p class="doc-text">
+                <p class="doc-text editable-content" contenteditable="false">
                     Esta plataforma integra múltiples capacidades de IA que abarcan desde la personalización de experiencias hasta la 
                     optimización de campañas, pasando por generación de contenido y análisis predictivo de clientes.
                 </p>
@@ -95,35 +106,35 @@
 
             <!-- Enfoque General de IA -->
             <section id="enfoque-general" class="doc-section">
-                <h1 class="doc-title">Enfoque General de IA para Marketing</h1>
+                <h1 class="doc-title editable-content" contenteditable="false">Enfoque General de IA para Marketing</h1>
                 
-                <h2 class="doc-subtitle">Filosofía y Principios</h2>
-                <p class="doc-text">
+                <h2 class="doc-subtitle editable-content" contenteditable="false">Filosofía y Principios</h2>
+                <p class="doc-text editable-content" contenteditable="false">
                     Nuestro enfoque de IA para marketing se basa en tres pilares fundamentales:
                 </p>
 
                 <div class="principios-grid">
                     <div class="principio-card">
                         <div class="principio-icon">🎯</div>
-                        <h3>Personalización a Escala</h3>
-                        <p>Cada cliente recibe experiencias únicas y relevantes, impulsadas por modelos de ML que aprenden continuamente de sus interacciones.</p>
+                        <h3 class="editable-content" contenteditable="false">Personalización a Escala</h3>
+                        <p class="editable-content" contenteditable="false">Cada cliente recibe experiencias únicas y relevantes, impulsadas por modelos de ML que aprenden continuamente de sus interacciones.</p>
                     </div>
                     <div class="principio-card">
                         <div class="principio-icon">🔄</div>
-                        <h3>Optimización Continua</h3>
-                        <p>Los sistemas de IA ajustan automáticamente las estrategias de marketing en tiempo real basándose en el rendimiento observado.</p>
+                        <h3 class="editable-content" contenteditable="false">Optimización Continua</h3>
+                        <p class="editable-content" contenteditable="false">Los sistemas de IA ajustan automáticamente las estrategias de marketing en tiempo real basándose en el rendimiento observado.</p>
                     </div>
                     <div class="principio-card">
                         <div class="principio-icon">📊</div>
-                        <h3>Decisiones Data-Driven</h3>
-                        <p>Todas las recomendaciones y acciones están respaldadas por análisis riguroso de datos y modelos predictivos validados.</p>
+                        <h3 class="editable-content" contenteditable="false">Decisiones Data-Driven</h3>
+                        <p class="editable-content" contenteditable="false">Todas las recomendaciones y acciones están respaldadas por análisis riguroso de datos y modelos predictivos validados.</p>
                     </div>
                 </div>
 
-                <h2 class="doc-subtitle">Stack Tecnológico</h2>
+                <h2 class="doc-subtitle editable-content" contenteditable="false">Stack Tecnológico</h2>
                 <div class="tech-stack-grid">
                     <div class="tech-category">
-                        <h4>Machine Learning</h4>
+                        <h4 class="editable-content" contenteditable="false">Machine Learning</h4>
                         <div class="tech-tags">
                             <span class="tech-tag">scikit-learn</span>
                             <span class="tech-tag">XGBoost</span>
@@ -133,7 +144,7 @@
                         </div>
                     </div>
                     <div class="tech-category">
-                        <h4>NLP & GenAI</h4>
+                        <h4 class="editable-content" contenteditable="false">NLP & GenAI</h4>
                         <div class="tech-tags">
                             <span class="tech-tag">GPT-4</span>
                             <span class="tech-tag">Claude 3</span>
@@ -143,7 +154,7 @@
                         </div>
                     </div>
                     <div class="tech-category">
-                        <h4>Data Processing</h4>
+                        <h4 class="editable-content" contenteditable="false">Data Processing</h4>
                         <div class="tech-tags">
                             <span class="tech-tag">Apache Spark</span>
                             <span class="tech-tag">Pandas</span>
@@ -152,7 +163,7 @@
                         </div>
                     </div>
                     <div class="tech-category">
-                        <h4>MLOps</h4>
+                        <h4 class="editable-content" contenteditable="false">MLOps</h4>
                         <div class="tech-tags">
                             <span class="tech-tag">MLflow</span>
                             <span class="tech-tag">Kubeflow</span>
@@ -162,45 +173,45 @@
                     </div>
                 </div>
 
-                <h2 class="doc-subtitle">Pipeline de ML</h2>
+                <h2 class="doc-subtitle editable-content" contenteditable="false">Pipeline de ML</h2>
                 <div class="pipeline-diagram">
                     <div class="pipeline-step">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h4>Ingesta de Datos</h4>
-                            <p>Recopilación desde múltiples fuentes (CRM, Analytics, IoT)</p>
+                            <h4 class="editable-content" contenteditable="false">Ingesta de Datos</h4>
+                            <p class="editable-content" contenteditable="false">Recopilación desde múltiples fuentes (CRM, Analytics, IoT)</p>
                         </div>
                     </div>
                     <div class="pipeline-arrow">→</div>
                     <div class="pipeline-step">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h4>Feature Engineering</h4>
-                            <p>Transformación y creación de variables predictivas</p>
+                            <h4 class="editable-content" contenteditable="false">Feature Engineering</h4>
+                            <p class="editable-content" contenteditable="false">Transformación y creación de variables predictivas</p>
                         </div>
                     </div>
                     <div class="pipeline-arrow">→</div>
                     <div class="pipeline-step">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h4>Entrenamiento</h4>
-                            <p>Modelos entrenados con validación cruzada</p>
+                            <h4 class="editable-content" contenteditable="false">Entrenamiento</h4>
+                            <p class="editable-content" contenteditable="false">Modelos entrenados con validación cruzada</p>
                         </div>
                     </div>
                     <div class="pipeline-arrow">→</div>
                     <div class="pipeline-step">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h4>Despliegue</h4>
-                            <p>APIs REST con baja latencia y alta disponibilidad</p>
+                            <h4 class="editable-content" contenteditable="false">Despliegue</h4>
+                            <p class="editable-content" contenteditable="false">APIs REST con baja latencia y alta disponibilidad</p>
                         </div>
                     </div>
                     <div class="pipeline-arrow">→</div>
                     <div class="pipeline-step">
                         <div class="step-number">5</div>
                         <div class="step-content">
-                            <h4>Monitorización</h4>
-                            <p>Tracking de performance y detección de drift</p>
+                            <h4 class="editable-content" contenteditable="false">Monitorización</h4>
+                            <p class="editable-content" contenteditable="false">Tracking de performance y detección de drift</p>
                         </div>
                     </div>
                 </div>
@@ -208,8 +219,8 @@
 
             <!-- Arquitectura -->
             <section id="arquitectura" class="doc-section">
-                <h1 class="doc-title">Arquitectura del Sistema</h1>
-                <p class="doc-text">
+                <h1 class="doc-title editable-content" contenteditable="false">Arquitectura del Sistema</h1>
+                <p class="doc-text editable-content" contenteditable="false">
                     La plataforma está construida sobre una arquitectura de microservicios que permite escalabilidad, 
                     mantenibilidad y despliegue independiente de cada capacidad de IA.
                 </p>
@@ -255,40 +266,40 @@
             <!-- Casos de Uso -->
             {% for categoria_doc in casos_uso_docs %}
             <section class="doc-section">
-                <h1 class="doc-title doc-category-title">{{ categoria_doc.categoria }}</h1>
+                <h1 class="doc-title doc-category-title editable-content" contenteditable="false">{{ categoria_doc.categoria }}</h1>
                 
                 {% for caso in categoria_doc.casos %}
                 <div id="{{ caso.id }}" class="caso-uso-doc">
                     <div class="caso-header">
                         <span class="caso-icon-large">{{ caso.icono }}</span>
                         <div>
-                            <h2 class="caso-nombre">{{ caso.nombre }}</h2>
-                            <p class="caso-descripcion-doc">{{ caso.descripcion }}</p>
+                            <h2 class="caso-nombre editable-content" contenteditable="false">{{ caso.nombre }}</h2>
+                            <p class="caso-descripcion-doc editable-content" contenteditable="false">{{ caso.descripcion }}</p>
                         </div>
                     </div>
 
                     <div class="doc-subsection">
-                        <h3 class="doc-subsection-title">🧠 Enfoque de IA</h3>
-                        <p class="doc-text">{{ caso.enfoque_ia }}</p>
+                        <h3 class="doc-subsection-title editable-content" contenteditable="false">🧠 Enfoque de IA</h3>
+                        <p class="doc-text editable-content" contenteditable="false">{{ caso.enfoque_ia }}</p>
                     </div>
 
                     <div class="doc-subsection">
-                        <h3 class="doc-subsection-title">📥 Datos de Entrada</h3>
-                        <p class="doc-text">{{ caso.datos_entrada }}</p>
+                        <h3 class="doc-subsection-title editable-content" contenteditable="false">📥 Datos de Entrada</h3>
+                        <p class="doc-text editable-content" contenteditable="false">{{ caso.datos_entrada }}</p>
                     </div>
 
                     <div class="doc-subsection">
-                        <h3 class="doc-subsection-title">⚙️ Procesamiento</h3>
-                        <p class="doc-text">{{ caso.procesamiento }}</p>
+                        <h3 class="doc-subsection-title editable-content" contenteditable="false">⚙️ Procesamiento</h3>
+                        <p class="doc-text editable-content" contenteditable="false">{{ caso.procesamiento }}</p>
                     </div>
 
                     <div class="doc-subsection">
-                        <h3 class="doc-subsection-title">📤 Salida</h3>
-                        <p class="doc-text">{{ caso.salida }}</p>
+                        <h3 class="doc-subsection-title editable-content" contenteditable="false">📤 Salida</h3>
+                        <p class="doc-text editable-content" contenteditable="false">{{ caso.salida }}</p>
                     </div>
 
                     <div class="doc-subsection">
-                        <h3 class="doc-subsection-title">🤖 Modelos y Técnicas</h3>
+                        <h3 class="doc-subsection-title editable-content" contenteditable="false">🤖 Modelos y Técnicas</h3>
                         <div class="modelos-list">
                             {% for modelo in caso.modelos %}
                             <span class="modelo-badge">{{ modelo }}</span>
@@ -311,8 +322,8 @@
 
             <!-- API Reference -->
             <section id="api-reference" class="doc-section">
-                <h1 class="doc-title">API Reference</h1>
-                <p class="doc-text">
+                <h1 class="doc-title editable-content" contenteditable="false">API Reference</h1>
+                <p class="doc-text editable-content" contenteditable="false">
                     Todas las capacidades de IA están disponibles a través de APIs REST con autenticación OAuth 2.0.
                 </p>
 
@@ -320,7 +331,7 @@
                     <div class="endpoint-method">POST</div>
                     <div class="endpoint-path">/api/v1/personalization/recommend</div>
                 </div>
-                <p class="doc-text">Obtiene recomendaciones personalizadas para un usuario.</p>
+                <p class="doc-text editable-content" contenteditable="false">Obtiene recomendaciones personalizadas para un usuario.</p>
 
                 <div class="code-example">
                     <div class="code-header">
@@ -342,41 +353,41 @@
                         <span class="info-box-icon">📖</span>
                         <strong>Documentación Completa de APIs</strong>
                     </div>
-                    <p>Para la documentación completa de todas las APIs, visita la sección <a href="{{ url_for('integracion_apis') }}">APIs & Conectores</a>.</p>
+                    <p class="editable-content" contenteditable="false">Para la documentación completa de todas las APIs, visita la sección <a href="{{ url_for('integracion_apis') }}">APIs & Conectores</a>.</p>
                 </div>
             </section>
 
             <!-- Best Practices -->
             <section id="best-practices" class="doc-section">
-                <h1 class="doc-title">Best Practices</h1>
+                <h1 class="doc-title editable-content" contenteditable="false">Best Practices</h1>
                 
                 <div class="best-practice-item">
-                    <h3>✅ Monitorización Continua</h3>
-                    <p class="doc-text">
+                    <h3 class="editable-content" contenteditable="false">✅ Monitorización Continua</h3>
+                    <p class="doc-text editable-content" contenteditable="false">
                         Implementa alertas para detectar degradación del modelo (concept drift) y anomalías en las predicciones.
                         Revisa las métricas de performance semanalmente.
                     </p>
                 </div>
 
                 <div class="best-practice-item">
-                    <h3>✅ A/B Testing</h3>
-                    <p class="doc-text">
+                    <h3 class="editable-content" contenteditable="false">✅ A/B Testing</h3>
+                    <p class="doc-text editable-content" contenteditable="false">
                         Siempre valida nuevos modelos o cambios significativos mediante A/B tests antes de desplegar a producción completa.
                         Mantén un grupo de control para medir el impacto real.
                     </p>
                 </div>
 
                 <div class="best-practice-item">
-                    <h3>✅ Explicabilidad</h3>
-                    <p class="doc-text">
+                    <h3 class="editable-content" contenteditable="false">✅ Explicabilidad</h3>
+                    <p class="doc-text editable-content" contenteditable="false">
                         Utiliza técnicas como SHAP values para entender qué factores influyen en las predicciones.
                         Documenta las decisiones del modelo para cumplir con regulaciones.
                     </p>
                 </div>
 
                 <div class="best-practice-item">
-                    <h3>✅ Data Quality</h3>
-                    <p class="doc-text">
+                    <h3 class="editable-content" contenteditable="false">✅ Data Quality</h3>
+                    <p class="doc-text editable-content" contenteditable="false">
                         La calidad de los modelos depende de la calidad de los datos. Implementa validaciones robustas
                         y procesos de limpieza de datos antes del entrenamiento.
                     </p>
@@ -966,5 +977,268 @@ function copiarCodigo(id) {
     navigator.clipboard.writeText(code);
     alert('✅ Código copiado al portapapeles!');
 }
+
+// ==================== MODO EDICIÓN ====================
+console.log('Script de edición cargado');
+var editMode = false;
+var originalContent = {};
+
+// Cargar contenido guardado al inicio
+function loadSavedContent() {
+    const savedContent = localStorage.getItem('introduccion_content');
+    if (savedContent) {
+        try {
+            const content = JSON.parse(savedContent);
+            console.log('Cargando contenido guardado:', Object.keys(content).length, 'elementos');
+            
+            Object.keys(content).forEach(index => {
+                const elements = document.querySelectorAll('.editable-content');
+                if (elements[index]) {
+                    elements[index].innerHTML = content[index];
+                }
+            });
+        } catch (e) {
+            console.error('Error al cargar contenido guardado:', e);
+        }
+    }
+}
+
+// Guardar contenido en localStorage
+function saveContentToStorage(elements) {
+    const content = {};
+    elements.forEach((el, index) => {
+        content[index] = el.innerHTML;
+    });
+    localStorage.setItem('introduccion_content', JSON.stringify(content));
+    console.log('Contenido guardado en localStorage');
+}
+
+// Resetear contenido al original
+function resetContent() {
+    if (confirm('¿Estás seguro de que quieres restaurar el contenido original?\n\nEsto eliminará todos los cambios que hayas hecho.')) {
+        localStorage.removeItem('introduccion_content');
+        location.reload();
+    }
+}
+
+function toggleEditMode() {
+    console.log('=== INICIO toggleEditMode ===');
+    console.log('editMode actual:', editMode);
+    
+    editMode = !editMode;
+    console.log('editMode después de toggle:', editMode);
+    
+    const editBtn = document.getElementById('editBtn');
+    const editBtnText = document.getElementById('editBtnText');
+    const editableElements = document.querySelectorAll('.editable-content');
+    
+    console.log('Botón encontrado:', editBtn);
+    console.log('Texto del botón encontrado:', editBtnText);
+    console.log('Elementos editables encontrados:', editableElements.length);
+    
+    if (!editBtn || !editBtnText) {
+        console.error('ERROR: No se encontraron los elementos del botón');
+        alert('Error: No se encontró el botón de edición');
+        return;
+    }
+    
+    if (editableElements.length === 0) {
+        console.error('ERROR: No se encontraron elementos editables');
+        alert('Error: No se encontraron elementos editables');
+        return;
+    }
+    
+    console.log('Entrando en if editMode:', editMode);
+    
+    if (editMode) {
+        console.log('ACTIVANDO MODO EDICIÓN');
+        // Activar modo edición
+        editBtn.classList.add('active');
+        editBtn.style.background = '#4caf50';
+        editBtnText.textContent = 'Guardar';
+        
+        console.log('Procesando', editableElements.length, 'elementos...');
+        editableElements.forEach((el, index) => {
+            // Guardar contenido original
+            originalContent[index] = el.innerHTML;
+            
+            // Hacer editable
+            el.contentEditable = 'true';
+            el.style.outline = '2px dashed #667eea';
+            el.style.outlineOffset = '4px';
+            el.style.padding = '8px';
+            el.style.borderRadius = '4px';
+            el.style.background = 'rgba(102, 126, 234, 0.05)';
+            el.style.cursor = 'text';
+            
+            // Agregar evento de cambio
+            el.addEventListener('input', handleContentChange);
+        });
+        
+        console.log('Elementos procesados. Mostrando alerta...');
+        alert('✏️ Modo edición activado\n\nPuedes editar cualquier texto en la página.\nHaz clic en "Guardar" cuando termines.');
+        console.log('=== FIN ACTIVACIÓN ===');
+    } else {
+        // Guardar cambios
+        saveAllChanges(editableElements);
+        
+        // Desactivar modo edición
+        editBtn.classList.remove('active');
+        editBtn.style.background = '';
+        editBtnText.textContent = 'Editar';
+        
+        editableElements.forEach(el => {
+            el.contentEditable = 'false';
+            el.style.outline = '';
+            el.style.outlineOffset = '';
+            el.style.padding = '';
+            el.style.borderRadius = '';
+            el.style.background = '';
+            el.style.cursor = '';
+            
+            el.removeEventListener('input', handleContentChange);
+        });
+        console.log('=== FIN DESACTIVACIÓN ===');
+    }
+    
+    console.log('=== FIN toggleEditMode ===');
+}
+
+// Verificar que el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM listo');
+    
+    // Cargar contenido guardado
+    loadSavedContent();
+    
+    const editBtn = document.getElementById('editBtn');
+    console.log('Botón de edición en DOM:', editBtn);
+    
+    // Agregar event listener al botón
+    if (editBtn) {
+        console.log('Agregando event listener al botón');
+        editBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Click detectado en botón de edición');
+            console.log('Tipo de toggleEditMode:', typeof toggleEditMode);
+            console.log('toggleEditMode es:', toggleEditMode);
+            console.log('Llamando a toggleEditMode...');
+            
+            // Llamar directamente
+            console.log('=== INICIO MANUAL ===');
+            editMode = !editMode;
+            console.log('editMode cambiado a:', editMode);
+            
+            const editBtnLocal = document.getElementById('editBtn');
+            const editBtnTextLocal = document.getElementById('editBtnText');
+            const editableElementsLocal = document.querySelectorAll('.editable-content');
+            
+            console.log('Elementos encontrados:', editableElementsLocal.length);
+            
+            if (editMode) {
+                console.log('Activando edición...');
+                editBtnLocal.style.background = '#4caf50';
+                editBtnTextLocal.textContent = 'Guardar';
+                
+                editableElementsLocal.forEach((el, index) => {
+                    el.contentEditable = 'true';
+                    el.style.outline = '2px dashed #667eea';
+                    el.style.outlineOffset = '4px';
+                    el.style.padding = '8px';
+                    el.style.background = 'rgba(102, 126, 234, 0.05)';
+                });
+                
+                alert('✏️ Modo edición activado!');
+            } else {
+                console.log('Desactivando edición...');
+                
+                // Guardar cambios en localStorage
+                saveContentToStorage(editableElementsLocal);
+                
+                // Mostrar indicador de guardado
+                const saveIndicator = document.getElementById('saveIndicator');
+                if (saveIndicator) {
+                    saveIndicator.style.display = 'flex';
+                    setTimeout(() => {
+                        saveIndicator.style.display = 'none';
+                    }, 2000);
+                }
+                
+                editBtnLocal.style.background = '';
+                editBtnTextLocal.textContent = 'Editar';
+                
+                editableElementsLocal.forEach(el => {
+                    el.contentEditable = 'false';
+                    el.style.outline = '';
+                    el.style.outlineOffset = '';
+                    el.style.padding = '';
+                    el.style.background = '';
+                });
+                
+                alert('💾 Cambios guardados!\n\nLos cambios se mantendrán incluso si refrescas la página.');
+            }
+        });
+    } else {
+        console.error('No se encontró el botón editBtn');
+    }
+});
+
+function handleContentChange(e) {
+    // Mostrar indicador de cambios sin guardar
+    console.log('Contenido modificado:', e.target);
+}
+
+function saveAllChanges(elements) {
+    const changes = [];
+    
+    elements.forEach((el, index) => {
+        if (el.innerHTML !== originalContent[index]) {
+            changes.push({
+                index: index,
+                oldContent: originalContent[index],
+                newContent: el.innerHTML,
+                element: el.tagName
+            });
+        }
+    });
+    
+    if (changes.length > 0) {
+        // Mostrar indicador de guardado
+        const saveIndicator = document.getElementById('saveIndicator');
+        saveIndicator.style.display = 'flex';
+        
+        // Simular guardado (aquí podrías hacer una llamada AJAX para guardar en el servidor)
+        setTimeout(() => {
+            saveIndicator.style.display = 'none';
+            alert(`💾 Cambios guardados correctamente!\n\n${changes.length} elemento(s) modificado(s).`);
+            
+            // Limpiar contenido original
+            originalContent = {};
+        }, 1000);
+        
+        console.log('Cambios guardados:', changes);
+    } else {
+        alert('ℹ️ No hay cambios para guardar.');
+    }
+}
+
+// Atajos de teclado
+document.addEventListener('keydown', function(e) {
+    // Ctrl/Cmd + E para toggle edit mode
+    if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+        e.preventDefault();
+        toggleEditMode();
+    }
+    
+    // Ctrl/Cmd + S para guardar (si está en modo edición)
+    if ((e.ctrlKey || e.metaKey) && e.key === 's' && editMode) {
+        e.preventDefault();
+        toggleEditMode(); // Esto guardará los cambios
+    }
+});
 </script>
+
+<!-- Incluir Asistente Virtual Fijo -->
+{% include 'asistente_panel_fijo.html' %}
+
 {% endblock %}

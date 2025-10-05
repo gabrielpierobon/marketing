@@ -1,0 +1,575 @@
+<!-- Asistente Virtual Panel -->
+<div class="assistant-panel" id="assistantPanel">
+    <div class="assistant-header">
+        <div class="assistant-avatar">
+            <div class="avatar-circle">
+                <span class="avatar-icon">🤖</span>
+                <div class="avatar-status"></div>
+            </div>
+        </div>
+        <div class="assistant-info">
+            <h3 class="assistant-name">Asistente IA</h3>
+            <p class="assistant-status">En línea • Listo para ayudar</p>
+        </div>
+        <button class="assistant-minimize" onclick="toggleAssistant()">
+            <span id="assistantToggleIcon">−</span>
+        </button>
+    </div>
+
+    <div class="assistant-body" id="assistantBody">
+        <div class="assistant-welcome">
+            <div class="welcome-icon">👋</div>
+            <h4>¡Hola! Soy tu asistente virtual</h4>
+            <p>Estoy aquí para ayudarte a navegar y aprovechar al máximo esta plataforma.</p>
+        </div>
+
+        <div class="assistant-messages" id="assistantMessages">
+            <!-- Mensaje inicial -->
+            <div class="assistant-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <p>¿En qué puedo ayudarte hoy?</p>
+                    <span class="message-time">Ahora</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="assistant-suggestions">
+            <div class="suggestions-title">Sugerencias rápidas:</div>
+            <button class="suggestion-btn" onclick="askAssistant('¿Cómo funciona esta sección?')">
+                <span>💡</span> ¿Cómo funciona esta sección?
+            </button>
+            <button class="suggestion-btn" onclick="askAssistant('¿Qué puedo hacer aquí?')">
+                <span>🎯</span> ¿Qué puedo hacer aquí?
+            </button>
+            <button class="suggestion-btn" onclick="askAssistant('Muéstrame un ejemplo')">
+                <span>📊</span> Muéstrame un ejemplo
+            </button>
+            <button class="suggestion-btn" onclick="askAssistant('¿Cómo integro esto con mis sistemas?')">
+                <span>🔌</span> ¿Cómo integro esto?
+            </button>
+        </div>
+
+        <div class="assistant-input-container">
+            <input 
+                type="text" 
+                class="assistant-input" 
+                id="assistantInput"
+                placeholder="Escribe tu pregunta..."
+                onkeypress="handleAssistantKeyPress(event)"
+            />
+            <button class="assistant-send-btn" onclick="sendAssistantMessage()">
+                <span>📤</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.assistant-panel {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 380px;
+    max-height: 600px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.assistant-panel.minimized .assistant-body {
+    display: none;
+}
+
+.assistant-panel.minimized {
+    max-height: 80px;
+}
+
+.assistant-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px 16px 0 0;
+    color: white;
+}
+
+.assistant-avatar {
+    position: relative;
+}
+
+.avatar-circle {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.avatar-icon {
+    font-size: 24px;
+}
+
+.avatar-status {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    background: #4caf50;
+    border: 2px solid white;
+    border-radius: 50%;
+    animation: pulse-status 2s infinite;
+}
+
+@keyframes pulse-status {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.assistant-info {
+    flex: 1;
+}
+
+.assistant-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.assistant-status {
+    margin: 4px 0 0 0;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.assistant-minimize {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.assistant-minimize:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.assistant-body {
+    display: flex;
+    flex-direction: column;
+    height: 520px;
+    overflow: hidden;
+}
+
+.assistant-welcome {
+    padding: 24px;
+    text-align: center;
+    background: linear-gradient(to bottom, #f8f9ff, white);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.welcome-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.assistant-welcome h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.assistant-welcome p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.assistant-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.assistant-message {
+    display: flex;
+    gap: 8px;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.user-message .message-avatar {
+    background: #e0e0e0;
+}
+
+.message-content {
+    flex: 1;
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 12px;
+    border-top-left-radius: 4px;
+}
+
+.user-message .message-content {
+    background: #667eea;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 4px;
+}
+
+.message-content p {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.message-time {
+    font-size: 11px;
+    color: #999;
+}
+
+.user-message .message-time {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.assistant-suggestions {
+    padding: 12px 16px;
+    border-top: 1px solid #e0e0e0;
+    background: #fafafa;
+}
+
+.suggestions-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.suggestion-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.suggestion-btn:hover {
+    background: #f5f5f5;
+    border-color: #667eea;
+    transform: translateX(4px);
+}
+
+.suggestion-btn span {
+    margin-right: 6px;
+}
+
+.assistant-input-container {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+    border-top: 1px solid #e0e0e0;
+    background: white;
+    border-radius: 0 0 16px 16px;
+}
+
+.assistant-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.assistant-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.assistant-send-btn {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.assistant-send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.assistant-send-btn:active {
+    transform: scale(0.95);
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #999;
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .assistant-panel {
+        right: 10px;
+        bottom: 10px;
+        width: calc(100% - 20px);
+        max-width: 380px;
+    }
+}
+</style>
+
+<script>
+// Respuestas contextuales según la página
+const assistantResponses = {
+    'dashboard': {
+        '¿Cómo funciona esta sección?': 'La Torre de Control es tu centro de mando principal. Aquí puedes ver métricas clave en tiempo real, monitorear el rendimiento de tus campañas y acceder rápidamente a todas las funcionalidades de IA.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Monitorear KPIs en tiempo real, 2) Ver el rendimiento semanal, 3) Acceder a casos de uso activos, 4) Revisar alertas y notificaciones, 5) Navegar a cualquier módulo desde los accesos rápidos.',
+        'Muéstrame un ejemplo': 'Por ejemplo, si ves que el engagement ha bajado un 5%, puedes hacer clic en "Predicción de Churn" para identificar clientes en riesgo y tomar acción inmediata.',
+        '¿Cómo integro esto con mis sistemas?': 'Ve a la sección "Integración" en el menú lateral para ver cómo conectar el dashboard con tus sistemas existentes mediante APIs REST.'
+    },
+    'integracion_datos': {
+        '¿Cómo funciona esta sección?': 'Aquí gestionas todas las fuentes de datos conectadas a la plataforma. Puedes ver el estado de cada conexión, la frecuencia de sincronización y qué casos de uso utilizan cada fuente.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver todas las fuentes de datos conectadas, 2) Monitorear el estado de sincronización, 3) Revisar el volumen de registros, 4) Identificar qué casos de uso usan cada fuente, 5) Configurar nuevas conexiones.',
+        'Muéstrame un ejemplo': 'Por ejemplo, si conectas tu CRM con 2.5M de registros, automáticamente estará disponible para los casos de uso de Segmentación, Churn y Personalización.',
+        '¿Cómo integro esto con mis sistemas?': 'Usamos conectores estándar para CRM, ERP, Analytics y más. También ofrecemos APIs personalizadas y webhooks para integraciones específicas.'
+    },
+    'integracion_apis': {
+        '¿Cómo funciona esta sección?': 'Esta sección muestra cómo los resultados de los modelos de IA se pueden integrar en tus aplicaciones empresariales mediante APIs REST.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver todos los endpoints disponibles, 2) Revisar métricas de uso y rendimiento, 3) Copiar código de ejemplo, 4) Ver qué aplicaciones están integradas, 5) Probar las APIs en tiempo real.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes llamar al endpoint /api/v1/churn/predict desde tu CRM para obtener la probabilidad de churn de un cliente en tiempo real.',
+        '¿Cómo integro esto con mis sistemas?': 'Cada endpoint tiene ejemplos en Python, JavaScript y cURL. También proporcionamos SDKs oficiales y documentación completa de OpenAPI.'
+    },
+    'laboratorio': {
+        '¿Cómo funciona esta sección?': 'El Laboratorio es tu espacio de experimentación. Aquí puedes conectarte a las fuentes de datos, escribir código Python, ejecutar análisis exploratorios y crear visualizaciones personalizadas.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ejecutar notebooks Jupyter, 2) Conectarte a cualquier fuente de datos, 3) Usar librerías de ML (pandas, sklearn, etc.), 4) Crear visualizaciones, 5) Compartir análisis con tu equipo.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes cargar datos de campañas, hacer un análisis de correlación entre variables y crear un modelo predictivo personalizado.',
+        '¿Cómo integro esto con mis sistemas?': 'Los notebooks pueden acceder a todas las fuentes de datos conectadas. También puedes exportar tus análisis como APIs o integrarlos en los flujos de trabajo existentes.'
+    },
+    'monitorizacion': {
+        '¿Cómo funciona esta sección?': 'Aquí monitorizas el estado de salud de toda la plataforma: rendimiento de modelos, uso de recursos, logs de actividad y auditoría de operaciones.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver métricas del sistema en tiempo real, 2) Revisar logs de actividad, 3) Monitorear el rendimiento de modelos, 4) Detectar anomalías, 5) Auditar operaciones de usuarios.',
+        'Muéstrame un ejemplo': 'Por ejemplo, si un modelo de recomendación tiene una precisión inferior al 85%, recibirás una alerta automática para reentrenarlo.',
+        '¿Cómo integro esto con mis sistemas?': 'Puedes integrar las métricas con herramientas como Grafana, Datadog o Prometheus mediante nuestras APIs de monitorización.'
+    },
+    'configuracion': {
+        '¿Cómo funciona esta sección?': 'Aquí configuras todos los aspectos de la plataforma: usuarios, permisos, integraciones, notificaciones y preferencias generales.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Gestionar usuarios y roles, 2) Configurar integraciones, 3) Personalizar notificaciones, 4) Ajustar límites de uso, 5) Configurar políticas de seguridad.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes crear un rol "Analista de Marketing" con acceso solo a visualización de datos, sin permisos de edición.',
+        '¿Cómo integro esto con mis sistemas?': 'Soportamos SSO (SAML, OAuth), LDAP/Active Directory y gestión de usuarios mediante API para sincronización automática.'
+    },
+    'default': {
+        '¿Cómo funciona esta sección?': 'Esta sección te permite aprovechar las capacidades de IA para mejorar tus operaciones de marketing. Explora las diferentes opciones disponibles en el menú lateral.',
+        '¿Qué puedo hacer aquí?': 'Puedes acceder a múltiples casos de uso de IA: personalización, predicción de churn, optimización de campañas, generación de contenido y más.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes usar el motor de recomendaciones para personalizar la experiencia de cada cliente basándote en su comportamiento histórico.',
+        '¿Cómo integro esto con mis sistemas?': 'Todas las funcionalidades están disponibles mediante APIs REST. Ve a la sección "Integración" para ver ejemplos de código y documentación.'
+    }
+};
+
+let currentPage = 'default';
+
+function toggleAssistant() {
+    const panel = document.getElementById('assistantPanel');
+    const icon = document.getElementById('assistantToggleIcon');
+    panel.classList.toggle('minimized');
+    icon.textContent = panel.classList.contains('minimized') ? '+' : '−';
+}
+
+function askAssistant(question) {
+    sendAssistantMessage(question);
+}
+
+function handleAssistantKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendAssistantMessage();
+    }
+}
+
+function sendAssistantMessage(predefinedQuestion = null) {
+    const input = document.getElementById('assistantInput');
+    const question = predefinedQuestion || input.value.trim();
+    
+    if (!question) return;
+    
+    // Limpiar input
+    if (!predefinedQuestion) {
+        input.value = '';
+    }
+    
+    // Agregar mensaje del usuario
+    addMessage(question, 'user');
+    
+    // Simular "escribiendo..."
+    setTimeout(() => {
+        showTypingIndicator();
+        
+        // Responder después de un delay
+        setTimeout(() => {
+            hideTypingIndicator();
+            const response = getResponse(question);
+            addMessage(response, 'assistant');
+        }, 1000 + Math.random() * 1000);
+    }, 300);
+}
+
+function addMessage(text, type) {
+    const messagesContainer = document.getElementById('assistantMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `assistant-message ${type === 'user' ? 'user-message' : ''}`;
+    
+    const now = new Date();
+    const time = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    
+    messageDiv.innerHTML = `
+        <div class="message-avatar">${type === 'user' ? '👤' : '🤖'}</div>
+        <div class="message-content">
+            <p>${text}</p>
+            <span class="message-time">${time}</span>
+        </div>
+    `;
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function showTypingIndicator() {
+    const messagesContainer = document.getElementById('assistantMessages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'assistant-message';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+        <div class="message-avatar">🤖</div>
+        <div class="message-content">
+            <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+    `;
+    messagesContainer.appendChild(typingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function hideTypingIndicator() {
+    const indicator = document.getElementById('typingIndicator');
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+function getResponse(question) {
+    const responses = assistantResponses[currentPage] || assistantResponses['default'];
+    
+    // Buscar respuesta exacta
+    if (responses[question]) {
+        return responses[question];
+    }
+    
+    // Buscar por palabras clave
+    const lowerQuestion = question.toLowerCase();
+    
+    if (lowerQuestion.includes('funciona') || lowerQuestion.includes('cómo')) {
+        return responses['¿Cómo funciona esta sección?'];
+    }
+    if (lowerQuestion.includes('hacer') || lowerQuestion.includes('puedo')) {
+        return responses['¿Qué puedo hacer aquí?'];
+    }
+    if (lowerQuestion.includes('ejemplo') || lowerQuestion.includes('muestra')) {
+        return responses['Muéstrame un ejemplo'];
+    }
+    if (lowerQuestion.includes('integr') || lowerQuestion.includes('api') || lowerQuestion.includes('conectar')) {
+        return responses['¿Cómo integro esto con mis sistemas?'];
+    }
+    
+    // Respuesta por defecto
+    return 'Interesante pregunta. Te recomiendo explorar la documentación en la sección "Introducción" o contactar con el equipo de soporte para más detalles específicos.';
+}
+
+// Detectar la página actual
+document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname;
+    if (path.includes('dashboard')) currentPage = 'dashboard';
+    else if (path.includes('integracion_datos')) currentPage = 'integracion_datos';
+    else if (path.includes('integracion_apis')) currentPage = 'integracion_apis';
+    else if (path.includes('laboratorio')) currentPage = 'laboratorio';
+    else if (path.includes('monitorizacion')) currentPage = 'monitorizacion';
+    else if (path.includes('configuracion')) currentPage = 'configuracion';
+});
+</script>

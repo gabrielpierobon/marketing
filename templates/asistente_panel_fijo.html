@@ -1,0 +1,619 @@
+<!-- Panel Fijo de Asistente Virtual -->
+<div class="assistant-fixed-panel">
+    <div class="assistant-fixed-header">
+        <div class="assistant-avatar-large">
+            <div class="avatar-circle-large">
+                <span class="avatar-icon-large">🤖</span>
+                <div class="avatar-status-large"></div>
+            </div>
+        </div>
+        <div class="assistant-title-section">
+            <h2 class="assistant-title">Asistente IA</h2>
+            <p class="assistant-subtitle">En línea • Listo para ayudar</p>
+        </div>
+    </div>
+
+    <div class="assistant-welcome-section">
+        <div class="welcome-emoji">👋</div>
+        <h3>¡Hola! Soy tu asistente virtual</h3>
+        <p>Estoy aquí para ayudarte a navegar y aprovechar al máximo esta plataforma.</p>
+    </div>
+
+    <div class="assistant-chat-container" id="assistantChatContainer">
+        <!-- Mensaje inicial -->
+        <div class="chat-message assistant-msg">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+                <p>¿En qué puedo ayudarte hoy?</p>
+                <span class="msg-time">Ahora</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="assistant-suggestions-section">
+        <div class="suggestions-header">Sugerencias rápidas:</div>
+        <div class="suggestions-grid">
+            <button class="suggestion-card" onclick="askAssistantFixed('¿Cómo funciona esta sección?')">
+                <span class="suggestion-icon">💡</span>
+                <span class="suggestion-text">¿Cómo funciona esta sección?</span>
+            </button>
+            <button class="suggestion-card" onclick="askAssistantFixed('¿Qué puedo hacer aquí?')">
+                <span class="suggestion-icon">🎯</span>
+                <span class="suggestion-text">¿Qué puedo hacer aquí?</span>
+            </button>
+            <button class="suggestion-card" onclick="askAssistantFixed('Muéstrame un ejemplo')">
+                <span class="suggestion-icon">📊</span>
+                <span class="suggestion-text">Muéstrame un ejemplo</span>
+            </button>
+            <button class="suggestion-card" onclick="askAssistantFixed('¿Cómo integro esto?')">
+                <span class="suggestion-icon">🔌</span>
+                <span class="suggestion-text">¿Cómo integro esto?</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="assistant-input-section">
+        <input 
+            type="text" 
+            class="assistant-text-input" 
+            id="assistantFixedInput"
+            placeholder="Escribe tu pregunta..."
+            onkeypress="handleAssistantFixedKeyPress(event)"
+        />
+        <button class="assistant-send-button" onclick="sendAssistantFixedMessage()">
+            <span>📤</span>
+        </button>
+    </div>
+</div>
+
+<style>
+/* Panel Fijo del Asistente */
+.assistant-fixed-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 420px;
+    height: 100vh;
+    background: white;
+    border-left: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Ajustar el contenido principal para dejar espacio al panel */
+.main-content {
+    margin-right: 420px !important;
+}
+
+.assistant-fixed-header {
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.assistant-avatar-large {
+    position: relative;
+}
+
+.avatar-circle-large {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.avatar-icon-large {
+    font-size: 32px;
+}
+
+.avatar-status-large {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: #4caf50;
+    border: 3px solid white;
+    border-radius: 50%;
+    animation: pulse-status-large 2s infinite;
+}
+
+@keyframes pulse-status-large {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+.assistant-title-section {
+    flex: 1;
+}
+
+.assistant-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+}
+
+.assistant-subtitle {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    opacity: 0.9;
+    color: white;
+}
+
+.assistant-welcome-section {
+    padding: 32px 24px;
+    text-align: center;
+    background: linear-gradient(to bottom, #f8f9ff, white);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.welcome-emoji {
+    font-size: 56px;
+    margin-bottom: 16px;
+    animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(20deg); }
+    75% { transform: rotate(-20deg); }
+}
+
+.assistant-welcome-section h3 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+.assistant-welcome-section p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.assistant-chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #fafafa;
+}
+
+.chat-message {
+    display: flex;
+    gap: 12px;
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.msg-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.user-msg .msg-avatar {
+    background: #e0e0e0;
+    order: 2;
+}
+
+.msg-bubble {
+    flex: 1;
+    background: white;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border-top-left-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.user-msg .msg-bubble {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 4px;
+}
+
+.msg-bubble p {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.msg-time {
+    font-size: 11px;
+    color: #999;
+    font-weight: 500;
+}
+
+.user-msg .msg-time {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.assistant-suggestions-section {
+    padding: 20px 24px;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+}
+
+.suggestions-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.suggestions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.suggestion-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 12px;
+    background: #f8f9ff;
+    border: 2px solid #e8ebff;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.suggestion-card:hover {
+    background: white;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.suggestion-icon {
+    font-size: 24px;
+}
+
+.suggestion-text {
+    font-size: 12px;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.assistant-input-section {
+    display: flex;
+    gap: 12px;
+    padding: 20px 24px;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+}
+
+.assistant-text-input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.assistant-text-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.assistant-send-button {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.assistant-send-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.assistant-send-button:active {
+    transform: scale(0.95);
+}
+
+.typing-indicator-fixed {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px;
+}
+
+.typing-dot-fixed {
+    width: 10px;
+    height: 10px;
+    background: #999;
+    border-radius: 50%;
+    animation: typing-fixed 1.4s infinite;
+}
+
+.typing-dot-fixed:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot-fixed:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing-fixed {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    30% {
+        transform: translateY(-12px);
+        opacity: 1;
+    }
+}
+
+/* Scrollbar personalizado */
+.assistant-chat-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.assistant-chat-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.assistant-chat-container::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 4px;
+}
+
+.assistant-chat-container::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .assistant-fixed-panel {
+        width: 360px;
+    }
+    
+    .main-content {
+        margin-right: 360px !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .assistant-fixed-panel {
+        display: none;
+    }
+    
+    .main-content {
+        margin-right: 0 !important;
+    }
+}
+</style>
+
+<script>
+// Respuestas contextuales según la página
+const assistantFixedResponses = {
+    'dashboard': {
+        '¿Cómo funciona esta sección?': 'La Torre de Control es tu centro de mando principal. Aquí puedes ver métricas clave en tiempo real, monitorear el rendimiento de tus campañas y acceder rápidamente a todas las funcionalidades de IA.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Monitorear KPIs en tiempo real, 2) Ver el rendimiento semanal, 3) Acceder a casos de uso activos, 4) Revisar alertas y notificaciones, 5) Navegar a cualquier módulo desde los accesos rápidos.',
+        'Muéstrame un ejemplo': 'Por ejemplo, si ves que el engagement ha bajado un 5%, puedes hacer clic en "Predicción de Churn" para identificar clientes en riesgo y tomar acción inmediata.',
+        '¿Cómo integro esto?': 'Ve a la sección "Integración" en el menú lateral para ver cómo conectar el dashboard con tus sistemas existentes mediante APIs REST.'
+    },
+    'integracion_datos': {
+        '¿Cómo funciona esta sección?': 'Aquí gestionas todas las fuentes de datos conectadas a la plataforma. Puedes ver el estado de cada conexión, la frecuencia de sincronización y qué casos de uso utilizan cada fuente.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver todas las fuentes de datos conectadas, 2) Monitorear el estado de sincronización, 3) Revisar el volumen de registros, 4) Identificar qué casos de uso usan cada fuente, 5) Configurar nuevas conexiones.',
+        'Muéstrame un ejemplo': 'Por ejemplo, si conectas tu CRM con 2.5M de registros, automáticamente estará disponible para los casos de uso de Segmentación, Churn y Personalización.',
+        '¿Cómo integro esto?': 'Usamos conectores estándar para CRM, ERP, Analytics y más. También ofrecemos APIs personalizadas y webhooks para integraciones específicas.'
+    },
+    'integracion_apis': {
+        '¿Cómo funciona esta sección?': 'Esta sección muestra cómo los resultados de los modelos de IA se pueden integrar en tus aplicaciones empresariales mediante APIs REST.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver todos los endpoints disponibles, 2) Revisar métricas de uso y rendimiento, 3) Copiar código de ejemplo, 4) Ver qué aplicaciones están integradas, 5) Probar las APIs en tiempo real.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes llamar al endpoint /api/v1/churn/predict desde tu CRM para obtener la probabilidad de churn de un cliente en tiempo real.',
+        '¿Cómo integro esto?': 'Cada endpoint tiene ejemplos en Python, JavaScript y cURL. También proporcionamos SDKs oficiales y documentación completa de OpenAPI.'
+    },
+    'laboratorio': {
+        '¿Cómo funciona esta sección?': 'El Laboratorio es tu espacio de experimentación. Aquí puedes conectarte a las fuentes de datos, escribir código Python, ejecutar análisis exploratorios y crear visualizaciones personalizadas.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ejecutar notebooks Jupyter, 2) Conectarte a cualquier fuente de datos, 3) Usar librerías de ML (pandas, sklearn, etc.), 4) Crear visualizaciones, 5) Compartir análisis con tu equipo.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes cargar datos de campañas, hacer un análisis de correlación entre variables y crear un modelo predictivo personalizado.',
+        '¿Cómo integro esto?': 'Los notebooks pueden acceder a todas las fuentes de datos conectadas. También puedes exportar tus análisis como APIs o integrarlos en los flujos de trabajo existentes.'
+    },
+    'monitorizacion': {
+        '¿Cómo funciona esta sección?': 'Aquí monitorizas el estado de salud de toda la plataforma: rendimiento de modelos, uso de recursos, logs de actividad y auditoría de operaciones.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver métricas del sistema en tiempo real, 2) Revisar logs de actividad, 3) Monitorear el rendimiento de modelos, 4) Detectar anomalías, 5) Auditar operaciones de usuarios.',
+        'Muéstrame un ejemplo': 'Por ejemplo, si un modelo de recomendación tiene una precisión inferior al 85%, recibirás una alerta automática para reentrenarlo.',
+        '¿Cómo integro esto?': 'Puedes integrar las métricas con herramientas como Grafana, Datadog o Prometheus mediante nuestras APIs de monitorización.'
+    },
+    'configuracion': {
+        '¿Cómo funciona esta sección?': 'Aquí configuras todos los aspectos de la plataforma: usuarios, permisos, integraciones, notificaciones y preferencias generales.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Gestionar usuarios y roles, 2) Configurar integraciones, 3) Personalizar notificaciones, 4) Ajustar límites de uso, 5) Configurar políticas de seguridad.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes crear un rol "Analista de Marketing" con acceso solo a visualización de datos, sin permisos de edición.',
+        '¿Cómo integro esto?': 'Soportamos SSO (SAML, OAuth), LDAP/Active Directory y gestión de usuarios mediante API para sincronización automática.'
+    },
+    'introduccion': {
+        '¿Cómo funciona esta sección?': 'Esta es la documentación técnica completa de la plataforma. Aquí encontrarás información detallada sobre cada caso de uso, arquitectura del sistema, enfoque de IA y mejores prácticas.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Explorar la documentación de cada caso de uso, 2) Entender la arquitectura del sistema, 3) Ver ejemplos de código, 4) Aprender sobre el enfoque de IA, 5) Editar el contenido haciendo clic en "Editar".',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes navegar a la sección de "Personalización" para entender cómo funciona el motor de recomendaciones, qué datos utiliza y cómo se procesa la información.',
+        '¿Cómo integro esto?': 'Cada caso de uso tiene ejemplos de código en Python, JavaScript y cURL. También puedes ver la documentación completa de las APIs en la sección "API Reference".'
+    },
+    'default': {
+        '¿Cómo funciona esta sección?': 'Esta sección te permite aprovechar las capacidades de IA para mejorar tus operaciones de marketing. Explora las diferentes opciones disponibles en el menú lateral.',
+        '¿Qué puedo hacer aquí?': 'Puedes acceder a múltiples casos de uso de IA: personalización, predicción de churn, optimización de campañas, generación de contenido y más.',
+        'Muéstrame un ejemplo': 'Por ejemplo, puedes usar el motor de recomendaciones para personalizar la experiencia de cada cliente basándote en su comportamiento histórico.',
+        '¿Cómo integro esto?': 'Todas las funcionalidades están disponibles mediante APIs REST. Ve a la sección "Integración" para ver ejemplos de código y documentación.'
+    }
+};
+
+let currentPageFixed = 'default';
+
+function askAssistantFixed(question) {
+    sendAssistantFixedMessage(question);
+}
+
+function handleAssistantFixedKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendAssistantFixedMessage();
+    }
+}
+
+function sendAssistantFixedMessage(predefinedQuestion = null) {
+    const input = document.getElementById('assistantFixedInput');
+    const question = predefinedQuestion || input.value.trim();
+    
+    if (!question) return;
+    
+    // Limpiar input
+    if (!predefinedQuestion) {
+        input.value = '';
+    }
+    
+    // Agregar mensaje del usuario
+    addFixedMessage(question, 'user');
+    
+    // Simular "escribiendo..."
+    setTimeout(() => {
+        showFixedTypingIndicator();
+        
+        // Responder después de un delay
+        setTimeout(() => {
+            hideFixedTypingIndicator();
+            const response = getFixedResponse(question);
+            addFixedMessage(response, 'assistant');
+        }, 1000 + Math.random() * 1000);
+    }, 300);
+}
+
+function addFixedMessage(text, type) {
+    const chatContainer = document.getElementById('assistantChatContainer');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${type === 'user' ? 'user-msg' : 'assistant-msg'}`;
+    
+    const now = new Date();
+    const time = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    
+    messageDiv.innerHTML = `
+        <div class="msg-avatar">${type === 'user' ? '👤' : '🤖'}</div>
+        <div class="msg-bubble">
+            <p>${text}</p>
+            <span class="msg-time">${time}</span>
+        </div>
+    `;
+    
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function showFixedTypingIndicator() {
+    const chatContainer = document.getElementById('assistantChatContainer');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message assistant-msg';
+    typingDiv.id = 'typingIndicatorFixed';
+    typingDiv.innerHTML = `
+        <div class="msg-avatar">🤖</div>
+        <div class="msg-bubble">
+            <div class="typing-indicator-fixed">
+                <div class="typing-dot-fixed"></div>
+                <div class="typing-dot-fixed"></div>
+                <div class="typing-dot-fixed"></div>
+            </div>
+        </div>
+    `;
+    chatContainer.appendChild(typingDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function hideFixedTypingIndicator() {
+    const indicator = document.getElementById('typingIndicatorFixed');
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+function getFixedResponse(question) {
+    const responses = assistantFixedResponses[currentPageFixed] || assistantFixedResponses['default'];
+    
+    // Buscar respuesta exacta
+    if (responses[question]) {
+        return responses[question];
+    }
+    
+    // Buscar por palabras clave
+    const lowerQuestion = question.toLowerCase();
+    
+    if (lowerQuestion.includes('funciona') || lowerQuestion.includes('cómo')) {
+        return responses['¿Cómo funciona esta sección?'];
+    }
+    if (lowerQuestion.includes('hacer') || lowerQuestion.includes('puedo')) {
+        return responses['¿Qué puedo hacer aquí?'];
+    }
+    if (lowerQuestion.includes('ejemplo') || lowerQuestion.includes('muestra')) {
+        return responses['Muéstrame un ejemplo'];
+    }
+    if (lowerQuestion.includes('integr') || lowerQuestion.includes('api') || lowerQuestion.includes('conectar')) {
+        return responses['¿Cómo integro esto?'];
+    }
+    
+    // Respuesta por defecto
+    return 'Interesante pregunta. Te recomiendo explorar la documentación en la sección "Introducción" o contactar con el equipo de soporte para más detalles específicos. ¿Hay algo más en lo que pueda ayudarte?';
+}
+
+// Detectar la página actual
+document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname;
+    if (path.includes('dashboard')) currentPageFixed = 'dashboard';
+    else if (path.includes('integracion_datos')) currentPageFixed = 'integracion_datos';
+    else if (path.includes('integracion_apis')) currentPageFixed = 'integracion_apis';
+    else if (path.includes('laboratorio')) currentPageFixed = 'laboratorio';
+    else if (path.includes('monitorizacion')) currentPageFixed = 'monitorizacion';
+    else if (path.includes('configuracion')) currentPageFixed = 'configuracion';
+    else if (path.includes('introduccion')) currentPageFixed = 'introduccion';
+});
+</script>

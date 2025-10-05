@@ -179,16 +179,58 @@ body {
 }
 
 .nav-section {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Sección colapsable */
+.collapsible-section {
+    margin-bottom: 0.5rem;
+}
+
+.nav-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 0 0.5rem;
+}
+
+.nav-section-header:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .nav-section-title {
-    padding: 0.5rem 1.5rem;
+    padding: 0;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    opacity: 0.7;
+    opacity: 0.9;
     letter-spacing: 0.5px;
+}
+
+.nav-section-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+    opacity: 0.7;
+}
+
+.nav-section-content {
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.collapsible-section.collapsed .nav-section-content {
+    max-height: 0;
+}
+
+/* Subitems */
+.nav-subitem {
+    padding-left: 2.5rem !important;
+    font-size: 0.85rem;
 }
 
 .nav-item {
@@ -842,6 +884,7 @@ body {
 .login-features h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
+    color: white;
 }
 
 .feature-list {
@@ -858,15 +901,27 @@ body {
 
 .feature-icon {
     font-size: 2rem;
+    color: white;
 }
 
 .feature-item h3 {
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
+    color: white;
 }
 
 .feature-item p {
     opacity: 0.9;
+    color: white;
+}
+
+.feature-content {
+    color: white;
+}
+
+.feature-content h3,
+.feature-content p {
+    color: white;
 }
 
 /* ==================== DASHBOARD ==================== */
@@ -3394,4 +3449,47 @@ a, button, input, select, textarea {
 
 .link-small:hover {
     text-decoration: underline;
+}
+
+/* ==================== MODO EDICIÓN INTRODUCCIÓN ==================== */
+.save-indicator-intro {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #4caf50;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    z-index: 10000;
+    animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.editable-content[contenteditable="true"] {
+    transition: all 0.2s ease;
+    min-height: 20px;
+}
+
+.editable-content[contenteditable="true"]:hover {
+    background: rgba(102, 126, 234, 0.1) !important;
+}
+
+.editable-content[contenteditable="true"]:focus {
+    outline: 2px solid #667eea !important;
+    background: white !important;
 }

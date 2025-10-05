@@ -31,53 +31,57 @@
                 <span class="nav-text">{{ menu_config.dashboard.menu_name }}</span>
             </a>
 
-            <!-- Categorías dinámicas -->
+            <!-- Categorías dinámicas con desplegables -->
             {% for category in menu_config.categories %}
-            <div class="nav-section">
-                <div class="nav-section-title">{{ category.title }}</div>
-                
-                {% for item in category.menu_items %}
-                <a href="{{ url_for(item.endpoint) }}" class="nav-item {% if request.endpoint == item.endpoint %}active{% endif %}">
-                    <span class="nav-icon">{{ item.icon }}</span>
-                    <span class="nav-text">{{ item.menu_name }}</span>
-                </a>
-                {% endfor %}
+            <div class="nav-section collapsible-section">
+                <div class="nav-section-header" onclick="toggleSection(this)">
+                    <span class="nav-section-title">{{ category.title }}</span>
+                    <span class="nav-section-arrow">▼</span>
+                </div>
+                <div class="nav-section-content">
+                    {% for item in category.menu_items %}
+                    <a href="{{ url_for(item.endpoint) }}" class="nav-item nav-subitem {% if request.endpoint == item.endpoint %}active{% endif %}">
+                        <span class="nav-icon">{{ item.icon }}</span>
+                        <span class="nav-text">{{ item.menu_name }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
             {% endfor %}
 
             <!-- Configuración -->
-            <div class="nav-section">
-                <div class="nav-section-title">Configuración</div>
-                
-                <a href="{{ url_for('configuracion') }}" class="nav-item {% if request.endpoint == 'configuracion' %}active{% endif %}">
-                    <span class="nav-icon">{{ menu_config.configuracion.icon }}</span>
-                    <span class="nav-text">{{ menu_config.configuracion.menu_name }}</span>
-                </a>
-            </div>
+            <a href="{{ url_for('configuracion') }}" class="nav-item {% if request.endpoint == 'configuracion' %}active{% endif %}">
+                <span class="nav-icon">{{ menu_config.configuracion.icon }}</span>
+                <span class="nav-text">{{ menu_config.configuracion.menu_name }}</span>
+            </a>
 
-            <!-- Integración de Datos -->
-            <div class="nav-section">
-                <div class="nav-section-title">Data & Integraciones</div>
-                
-                <a href="{{ url_for('integracion_datos') }}" class="nav-item {% if request.endpoint == 'integracion_datos' %}active{% endif %}">
-                    <span class="nav-icon">{{ menu_config.integracion_datos.icon }}</span>
-                    <span class="nav-text">{{ menu_config.integracion_datos.menu_name }}</span>
-                </a>
-                
-                <a href="{{ url_for('integracion_apis') }}" class="nav-item {% if request.endpoint == 'integracion_apis' %}active{% endif %}">
-                    <span class="nav-icon">{{ menu_config.integracion_apis.icon }}</span>
-                    <span class="nav-text">{{ menu_config.integracion_apis.menu_name }}</span>
-                </a>
-                
-                <a href="{{ url_for('laboratorio') }}" class="nav-item {% if request.endpoint == 'laboratorio' %}active{% endif %}">
-                    <span class="nav-icon">{{ menu_config.laboratorio.icon }}</span>
-                    <span class="nav-text">{{ menu_config.laboratorio.menu_name }}</span>
-                </a>
-                
-                <a href="{{ url_for('monitorizacion') }}" class="nav-item {% if request.endpoint == 'monitorizacion' %}active{% endif %}">
-                    <span class="nav-icon">{{ menu_config.monitorizacion.icon }}</span>
-                    <span class="nav-text">{{ menu_config.monitorizacion.menu_name }}</span>
-                </a>
+            <!-- Data & Integraciones con desplegable -->
+            <div class="nav-section collapsible-section">
+                <div class="nav-section-header" onclick="toggleSection(this)">
+                    <span class="nav-section-title">Data & Integraciones</span>
+                    <span class="nav-section-arrow">▼</span>
+                </div>
+                <div class="nav-section-content">
+                    <a href="{{ url_for('integracion_datos') }}" class="nav-item nav-subitem {% if request.endpoint == 'integracion_datos' %}active{% endif %}">
+                        <span class="nav-icon">{{ menu_config.integracion_datos.icon }}</span>
+                        <span class="nav-text">{{ menu_config.integracion_datos.menu_name }}</span>
+                    </a>
+                    
+                    <a href="{{ url_for('integracion_apis') }}" class="nav-item nav-subitem {% if request.endpoint == 'integracion_apis' %}active{% endif %}">
+                        <span class="nav-icon">{{ menu_config.integracion_apis.icon }}</span>
+                        <span class="nav-text">{{ menu_config.integracion_apis.menu_name }}</span>
+                    </a>
+                    
+                    <a href="{{ url_for('laboratorio') }}" class="nav-item nav-subitem {% if request.endpoint == 'laboratorio' %}active{% endif %}">
+                        <span class="nav-icon">{{ menu_config.laboratorio.icon }}</span>
+                        <span class="nav-text">{{ menu_config.laboratorio.menu_name }}</span>
+                    </a>
+                    
+                    <a href="{{ url_for('monitorizacion') }}" class="nav-item nav-subitem {% if request.endpoint == 'monitorizacion' %}active{% endif %}">
+                        <span class="nav-icon">{{ menu_config.monitorizacion.icon }}</span>
+                        <span class="nav-text">{{ menu_config.monitorizacion.menu_name }}</span>
+                    </a>
+                </div>
             </div>
         </nav>
 
@@ -139,6 +143,46 @@
     {% endif %}
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <script>
+    // Toggle de secciones colapsables del menú
+    function toggleSection(header) {
+        const section = header.parentElement;
+        const content = section.querySelector('.nav-section-content');
+        const arrow = section.querySelector('.nav-section-arrow');
+        
+        section.classList.toggle('collapsed');
+        
+        if (section.classList.contains('collapsed')) {
+            content.style.maxHeight = '0';
+            arrow.style.transform = 'rotate(-90deg)';
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            arrow.style.transform = 'rotate(0deg)';
+        }
+    }
+    
+    // Expandir automáticamente la sección que contiene el item activo
+    document.addEventListener('DOMContentLoaded', function() {
+        const activeSections = document.querySelectorAll('.collapsible-section');
+        
+        activeSections.forEach(section => {
+            const activeItem = section.querySelector('.nav-subitem.active');
+            if (activeItem) {
+                const content = section.querySelector('.nav-section-content');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                // Colapsar por defecto si no tiene items activos
+                section.classList.add('collapsed');
+                const content = section.querySelector('.nav-section-content');
+                const arrow = section.querySelector('.nav-section-arrow');
+                content.style.maxHeight = '0';
+                arrow.style.transform = 'rotate(-90deg)';
+            }
+        });
+    });
+    </script>
+    
     {% block extra_js %}{% endblock %}
 </body>
 </html>
