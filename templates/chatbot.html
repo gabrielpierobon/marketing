@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Chatbot IA Conversacional - Iberdrola AI{% endblock %}
+
+{% block page_title %}Chatbot IA Conversacional 24/7{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">💬</div>
+        <div class="use-case-info">
+            <h1>Chatbot IA Conversacional 24/7</h1>
+            <p>Asistente virtual inteligente que resuelve consultas de clientes instantáneamente. Reduzca llamadas al call center un 60% y mejore satisfacción un 35%.</p>
+        </div>
+    </div>
+
+    <!-- Métricas del Caso de Uso -->
+    <div class="metrics-row">
+        <div class="metric-box">
+            <div class="metric-box-value">24/7</div>
+            <div class="metric-box-label">Disponibilidad</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">-95%</div>
+            <div class="metric-box-label">Tiempo Respuesta</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">+50%</div>
+            <div class="metric-box-label">Resolución 1er Contacto</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">€30K-80K</div>
+            <div class="metric-box-label">Inversión Inicial</div>
+        </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="card">
+        <div class="card-header">
+            <h2>💬 Asistente Virtual Iberdrola</h2>
+            <span class="badge badge-success">● En Línea</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message bot-message">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-bubble">
+                            <p>👋 ¡Hola! Soy el Asistente Virtual de Iberdrola. ¿En qué puedo ayudarte hoy?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') enviarMensaje()">
+                    <button class="btn btn-primary" onclick="enviarMensaje()">Enviar</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="quick-questions">
+                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('¿Cuál es mi consumo este mes?')">
+                    📊 ¿Cuál es mi consumo?
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('Quiero instalar paneles solares')">
+                    🌞 Info Solar
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('¿Cómo puedo reducir mi factura?')">
+                    💡 Reducir Factura
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="preguntaRapida('Tengo una avería')">
+                    ⚠️ Reportar Avería
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas del Chatbot -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">💬</div>
+            <div class="stat-value">1,247</div>
+            <div class="stat-label">Conversaciones Hoy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value">1.2s</div>
+            <div class="stat-label">Tiempo Respuesta</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">😊</div>
+            <div class="stat-value">4.8/5</div>
+            <div class="stat-label">Satisfacción</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value">87%</div>
+            <div class="stat-label">Resolución Automática</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function enviarMensaje() {
+    const input = document.getElementById('chat-input');
+    const mensaje = input.value.trim();
+    if (!mensaje) return;
+
+    const messagesContainer = document.getElementById('chat-messages');
+    
+    // Agregar mensaje del usuario
+    const userMsg = document.createElement('div');
+    userMsg.className = 'chat-message user-message';
+    userMsg.innerHTML = `
+        <div class="message-bubble">
+            <p>${mensaje}</p>
+        </div>
+        <div class="message-avatar">👤</div>
+    `;
+    messagesContainer.appendChild(userMsg);
+    
+    input.value = '';
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Mostrar indicador de escritura
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'chat-message bot-message typing-indicator';
+    typingIndicator.id = 'typing-indicator';
+    typingIndicator.innerHTML = `
+        <div class="message-avatar">🤖</div>
+        <div class="message-bubble">
+            <div class="typing-dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `;
+    messagesContainer.appendChild(typingIndicator);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Enviar a API
+    fetch('/api/chatbot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mensaje: mensaje })
+    })
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            // Remover indicador de escritura
+            document.getElementById('typing-indicator').remove();
+            
+            // Agregar respuesta del bot
+            const botMsg = document.createElement('div');
+            botMsg.className = 'chat-message bot-message';
+            
+            let accionesHTML = '';
+            if (data.acciones && data.acciones.length > 0) {
+                accionesHTML = '<div class="message-actions">';
+                data.acciones.forEach(accion => {
+                    accionesHTML += `<button class="btn btn-sm btn-outline">${accion}</button>`;
+                });
+                accionesHTML += '</div>';
+            }
+            
+            botMsg.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-bubble">
+                    <p>${data.texto}</p>
+                    ${accionesHTML}
+                </div>
+            `;
+            messagesContainer.appendChild(botMsg);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 1000);
+    })
+    .catch(error => {
+        document.getElementById('typing-indicator').remove();
+        console.error('Error:', error);
+    });
+}
+
+function preguntaRapida(pregunta) {
+    document.getElementById('chat-input').value = pregunta;
+    enviarMensaje();
+}
+</script>
+{% endblock %}

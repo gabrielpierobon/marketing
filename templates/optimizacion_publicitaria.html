@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Optimización Publicitaria - Iberdrola AI{% endblock %}
+
+{% block page_title %}Optimización Publicitaria Autónoma{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">🎯</div>
+        <div class="use-case-info">
+            <h1>Optimización Publicitaria Autónoma</h1>
+            <p>IA que optimiza automáticamente sus campañas publicitarias en tiempo real. Reduzca CPA un 30% y mejore ROAS hasta un 200%.</p>
+        </div>
+    </div>
+
+    <!-- Métricas del Caso de Uso -->
+    <div class="metrics-row">
+        <div class="metric-box">
+            <div class="metric-box-value">-30%</div>
+            <div class="metric-box-label">Coste por Lead</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">+200%</div>
+            <div class="metric-box-label">ROAS</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">+45%</div>
+            <div class="metric-box-label">Conversiones</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">€25K-60K</div>
+            <div class="metric-box-label">Inversión Inicial</div>
+        </div>
+    </div>
+
+    <!-- Optimizador de Campañas -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🤖 Optimizador Autónomo de Campañas</h2>
+            <span class="badge badge-success">Activo</span>
+        </div>
+        <div class="card-body">
+            <p class="card-description">
+                El sistema analiza en tiempo real más de 15,000 variables para optimizar automáticamente 
+                el rendimiento de todas sus campañas publicitarias.
+            </p>
+
+            <button class="btn btn-primary btn-lg" onclick="ejecutarOptimizacion()">
+                <span>⚡</span> Ejecutar Optimización IA
+            </button>
+
+            <div id="optimization-output" class="demo-output" style="display: none; margin-top: 2rem;">
+                <!-- Contenido generado -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Campañas Activas -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📊 Campañas Activas</h2>
+        </div>
+        <div class="card-body">
+            <div class="campaigns-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campaña</th>
+                            <th>Presupuesto</th>
+                            <th>Impresiones</th>
+                            <th>Clicks</th>
+                            <th>Conversiones</th>
+                            <th>ROAS</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Solar Residencial Q4</strong></td>
+                            <td>€15,000</td>
+                            <td>1,247,890</td>
+                            <td>34,521</td>
+                            <td>892</td>
+                            <td class="positive">4.8x</td>
+                            <td><span class="badge badge-success">Optimizada</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Retención Clientes</strong></td>
+                            <td>€8,500</td>
+                            <td>456,123</td>
+                            <td>12,890</td>
+                            <td>445</td>
+                            <td class="positive">3.2x</td>
+                            <td><span class="badge badge-success">Optimizada</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>PYME Eficiencia</strong></td>
+                            <td>€12,000</td>
+                            <td>892,456</td>
+                            <td>23,567</td>
+                            <td>678</td>
+                            <td class="positive">5.1x</td>
+                            <td><span class="badge badge-success">Optimizada</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EV Charging</strong></td>
+                            <td>€10,000</td>
+                            <td>678,234</td>
+                            <td>18,945</td>
+                            <td>534</td>
+                            <td class="warning">2.1x</td>
+                            <td><span class="badge badge-warning">En Optimización</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function ejecutarOptimizacion() {
+    const output = document.getElementById('optimization-output');
+    output.style.display = 'block';
+    output.innerHTML = '<div class="loading-spinner"></div><p class="loading-text">IA analizando 15,000 variables en tiempo real...</p>';
+
+    fetch('/api/optimizar-campanas', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            let campanasHTML = '';
+            data.campanas.forEach(camp => {
+                const mejora = ((camp.despues - camp.antes) / camp.antes * 100).toFixed(0);
+                campanasHTML += `
+                    <div class="optimization-row">
+                        <div class="campaign-name">${camp.nombre}</div>
+                        <div class="campaign-comparison">
+                            <div class="before-bar">
+                                <div class="bar-fill bar-before" style="width: ${camp.antes}%;">
+                                    ${camp.antes}%
+                                </div>
+                            </div>
+                            <span class="arrow">→</span>
+                            <div class="after-bar">
+                                <div class="bar-fill bar-after" style="width: ${camp.despues}%;">
+                                    ${camp.despues}%
+                                </div>
+                            </div>
+                            <span class="improvement">+${mejora}%</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            output.innerHTML = `
+                <div class="optimization-results">
+                    <h3>📈 Resultados de Optimización (Antes vs Después IA)</h3>
+                    <div class="campaigns-comparison">
+                        ${campanasHTML}
+                    </div>
+
+                    <div class="optimization-summary">
+                        <h4>📊 Resumen de Optimización (últimas 48 horas)</h4>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <div class="summary-value">${data.resumen.reduccion_cpl}%</div>
+                                <div class="summary-label">Coste por Lead</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value">+${data.resumen.aumento_conversiones}%</div>
+                                <div class="summary-label">Conversiones</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value">+${data.resumen.mejora_roas}%</div>
+                                <div class="summary-label">ROAS</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value">€${data.resumen.ahorro_mensual.toLocaleString()}</div>
+                                <div class="summary-label">Ahorro Mensual</div>
+                            </div>
+                        </div>
+                        <p class="summary-actions">
+                            <strong>Acciones IA ejecutadas:</strong> Rebalanceo presupuesto entre canales (${data.resumen.ajustes_presupuesto} ajustes), 
+                            optimización puja automática (${data.resumen.keywords_optimizadas} keywords), 
+                            pausado creatividades bajo rendimiento (${data.resumen.creatividades_pausadas}), 
+                            activación audiencias lookalike alto LTV (${data.resumen.audiencias_nuevas} nuevas).
+                        </p>
+                    </div>
+                </div>
+            `;
+        }, 3000);
+    })
+    .catch(error => {
+        output.innerHTML = '<div class="alert alert-error">Error al optimizar campañas. Por favor, intenta de nuevo.</div>';
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}A/B Testing Automatizado - Iberdrola AI{% endblock %}
+
+{% block page_title %}A/B Testing Automatizado con IA{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">🧪</div>
+        <div class="use-case-info">
+            <h1>A/B Testing Automatizado</h1>
+            <p>Optimice continuamente sus campañas con testing automatizado. 6 años de experimentación en 3 meses.</p>
+        </div>
+    </div>
+
+    <!-- Tests Activos -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🧪 Tests A/B Activos</h2>
+            <button class="btn btn-primary btn-sm">+ Crear Nuevo Test</button>
+        </div>
+        <div class="card-body">
+            <div class="tests-list">
+                {% for test in tests %}
+                <div class="test-item">
+                    <div class="test-info">
+                        <h3>{{ test.nombre }}</h3>
+                        <div class="test-variants">
+                            <span class="variant">A: {{ test.variante_a }}</span>
+                            <span class="vs">vs</span>
+                            <span class="variant">B: {{ test.variante_b }}</span>
+                        </div>
+                    </div>
+                    <div class="test-result">
+                        <span class="winner-badge">Ganador: {{ test.ganador }}</span>
+                        <span class="improvement">{{ test.mejora }} mejora</span>
+                    </div>
+                    <div class="test-actions">
+                        <button class="btn btn-sm btn-primary">Ver Detalles</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">🧪</div>
+            <div class="stat-value">47</div>
+            <div class="stat-label">Tests Activos</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value">6x</div>
+            <div class="stat-label">Velocidad vs Manual</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-value">+35%</div>
+            <div class="stat-label">Lift Conversiones</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value">-90%</div>
+            <div class="stat-label">Tiempo Análisis</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

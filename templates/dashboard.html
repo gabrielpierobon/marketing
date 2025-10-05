@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Iberdrola AI Marketing Suite{% endblock %}
+
+{% block page_title %}Dashboard Principal{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Métricas Principales -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon" style="background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);">👥</div>
+            <div class="metric-content">
+                <div class="metric-label">Clientes Activos</div>
+                <div class="metric-value">{{ metrics.clientes_activos|format_number }}</div>
+                <div class="metric-change positive">+2.3% vs mes anterior</div>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon" style="background: linear-gradient(135deg, #107C10 0%, #0B5A0B 100%);">📈</div>
+            <div class="metric-content">
+                <div class="metric-label">ROI Promedio</div>
+                <div class="metric-value">{{ metrics.roi_promedio }}:1</div>
+                <div class="metric-change positive">+0.8 vs objetivo</div>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon" style="background: linear-gradient(135deg, #FFB900 0%, #D39D00 100%);">💰</div>
+            <div class="metric-content">
+                <div class="metric-label">Ahorro Mensual</div>
+                <div class="metric-value">{{ metrics.ahorro_mensual|format_currency }}</div>
+                <div class="metric-change positive">+15.2% vs mes anterior</div>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon" style="background: linear-gradient(135deg, #D13438 0%, #A4262C 100%);">🎯</div>
+            <div class="metric-content">
+                <div class="metric-label">Campañas Activas</div>
+                <div class="metric-value">{{ metrics.campanas_activas }}</div>
+                <div class="metric-change neutral">12 finalizan esta semana</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPIs Secundarios -->
+    <div class="kpis-grid">
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-title">Engagement Rate</span>
+                <span class="kpi-value">{{ metrics.engagement_rate }}%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ metrics.engagement_rate }}%; background: #0078D4;"></div>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-title">Reducción Churn</span>
+                <span class="kpi-value">{{ metrics.churn_reduccion }}%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ metrics.churn_reduccion * 4 }}%; background: #107C10;"></div>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-title">Leads Generados</span>
+                <span class="kpi-value">{{ metrics.leads_generados|format_number }}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 78%; background: #FFB900;"></div>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-title">Conversion Rate</span>
+                <span class="kpi-value">{{ metrics.conversion_rate }}%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ metrics.conversion_rate * 2.5 }}%; background: #D13438;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="dashboard-main">
+        <!-- Actividad Reciente -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Actividad Reciente</h2>
+                <button class="btn btn-secondary btn-sm">Ver Todo</button>
+            </div>
+            <div class="activity-list">
+                {% for actividad in actividades %}
+                <div class="activity-item activity-{{ actividad.tipo }}">
+                    <div class="activity-icon">{{ actividad.icono }}</div>
+                    <div class="activity-content">
+                        <div class="activity-title">{{ actividad.titulo }}</div>
+                        <div class="activity-description">{{ actividad.descripcion }}</div>
+                    </div>
+                    <div class="activity-time">{{ actividad.tiempo }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Acceso Rápido -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Acceso Rápido</h2>
+            </div>
+            <div class="quick-actions">
+                <a href="{{ url_for('personalizacion') }}" class="quick-action-card">
+                    <span class="quick-action-icon">👤</span>
+                    <span class="quick-action-title">Personalización</span>
+                    <span class="quick-action-desc">Generar ofertas personalizadas</span>
+                </a>
+                <a href="{{ url_for('contenido_genai') }}" class="quick-action-card">
+                    <span class="quick-action-icon">✍️</span>
+                    <span class="quick-action-title">Contenido GenAI</span>
+                    <span class="quick-action-desc">Crear campañas con IA</span>
+                </a>
+                <a href="{{ url_for('chatbot') }}" class="quick-action-card">
+                    <span class="quick-action-icon">💬</span>
+                    <span class="quick-action-title">Chatbot IA</span>
+                    <span class="quick-action-desc">Probar asistente virtual</span>
+                </a>
+                <a href="{{ url_for('prediccion_churn') }}" class="quick-action-card">
+                    <span class="quick-action-icon">📈</span>
+                    <span class="quick-action-title">Predicción Churn</span>
+                    <span class="quick-action-desc">Analizar riesgo clientes</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Derecho -->
+    <div class="dashboard-sidebar">
+        <!-- Rendimiento Semanal -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Rendimiento Semanal</h3>
+            </div>
+            <div class="weekly-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Emails Enviados</span>
+                    <span class="stat-value">145,230</span>
+                    <span class="stat-trend positive">+12%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Open Rate</span>
+                    <span class="stat-value">67.3%</span>
+                    <span class="stat-trend positive">+8.2%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Click Rate</span>
+                    <span class="stat-value">23.8%</span>
+                    <span class="stat-trend positive">+5.1%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Conversiones</span>
+                    <span class="stat-value">1,847</span>
+                    <span class="stat-trend positive">+18%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas IA -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Alertas IA</h3>
+            </div>
+            <div class="alerts-list">
+                <div class="alert-item alert-warning">
+                    <span class="alert-icon">⚠️</span>
+                    <div class="alert-content">
+                        <div class="alert-title">12 clientes alto riesgo</div>
+                        <div class="alert-desc">Requieren atención inmediata</div>
+                    </div>
+                </div>
+                <div class="alert-item alert-success">
+                    <span class="alert-icon">✅</span>
+                    <div class="alert-content">
+                        <div class="alert-title">Campaña Solar optimizada</div>
+                        <div class="alert-desc">ROI +23% en 48 horas</div>
+                    </div>
+                </div>
+                <div class="alert-item alert-info">
+                    <span class="alert-icon">💡</span>
+                    <div class="alert-content">
+                        <div class="alert-title">Nueva oportunidad detectada</div>
+                        <div class="alert-desc">Segmento EV con alto potencial</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animación de métricas al cargar
+document.addEventListener('DOMContentLoaded', function() {
+    const metricValues = document.querySelectorAll('.metric-value');
+    metricValues.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            el.style.transition = 'all 0.5s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 100);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Personalización Hiperpersonalizada - Iberdrola AI{% endblock %}
+
+{% block page_title %}Personalización Hiperpersonalizada{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">👤</div>
+        <div class="use-case-info">
+            <h1>Personalización Hiperpersonalizada</h1>
+            <p>Cree experiencias únicas para cada cliente basadas en su perfil de consumo energético, comportamiento y preferencias.</p>
+        </div>
+    </div>
+
+    <!-- Métricas del Caso de Uso -->
+    <div class="metrics-row">
+        <div class="metric-box">
+            <div class="metric-box-value">+320%</div>
+            <div class="metric-box-label">Conversión</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">+65%</div>
+            <div class="metric-box-label">Email Open Rate</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">5-8x</div>
+            <div class="metric-box-label">ROI Marketing</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">€100K-300K</div>
+            <div class="metric-box-label">Inversión Inicial</div>
+        </div>
+    </div>
+
+    <!-- Demo Interactivo -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🎯 Generador de Ofertas Personalizadas con IA</h2>
+            <span class="badge badge-success">Activo</span>
+        </div>
+        <div class="card-body">
+            <p class="card-description">
+                Seleccione un perfil de cliente para generar automáticamente una oferta personalizada 
+                basada en su consumo energético, comportamiento y preferencias detectadas por IA.
+            </p>
+
+            <div class="demo-controls">
+                <button class="btn btn-primary" onclick="generarOferta('residencial')">
+                    <span>🏠</span> Cliente Residencial
+                </button>
+                <button class="btn btn-success" onclick="generarOferta('negocio')">
+                    <span>🏢</span> Cliente Negocio
+                </button>
+                <button class="btn btn-warning" onclick="generarOferta('alto-consumo')">
+                    <span>⚡</span> Alto Consumo
+                </button>
+            </div>
+
+            <div id="oferta-output" class="demo-output" style="display: none;">
+                <!-- El contenido se carga dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Tecnologías Utilizadas -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🔧 Tecnologías y Capacidades</h2>
+        </div>
+        <div class="card-body">
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">🤖</div>
+                    <div class="tech-name">Salesforce Einstein</div>
+                    <div class="tech-desc">Scoring predictivo y personalización</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📊</div>
+                    <div class="tech-name">Bidgely UtilityAI</div>
+                    <div class="tech-desc">Análisis consumo energético</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🎯</div>
+                    <div class="tech-name">Amazon Personalize</div>
+                    <div class="tech-desc">Recomendaciones tiempo real</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">💡</div>
+                    <div class="tech-name">Brillion</div>
+                    <div class="tech-desc">Targeting precisión 93%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📈 Resultados Comprobados</h2>
+        </div>
+        <div class="card-body">
+            <div class="success-stories">
+                <div class="success-story">
+                    <div class="success-company">Octopus Energy</div>
+                    <div class="success-metric">80% satisfacción</div>
+                    <div class="success-desc">IA generativa supera humanos en atención</div>
+                </div>
+                <div class="success-story">
+                    <div class="success-company">McKinsey Research</div>
+                    <div class="success-metric">+10% ventas</div>
+                    <div class="success-desc">Utilities con personalización efectiva</div>
+                </div>
+                <div class="success-story">
+                    <div class="success-company">Utilities USA</div>
+                    <div class="success-metric">+40% adopción TOU</div>
+                    <div class="success-desc">Programas con mensajes personalizados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function generarOferta(perfil) {
+    const output = document.getElementById('oferta-output');
+    output.style.display = 'block';
+    output.innerHTML = '<div class="loading-spinner"></div><p class="loading-text">Analizando datos del cliente y generando oferta personalizada...</p>';
+
+    fetch('/api/generar-oferta', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ perfil: perfil })
+    })
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            const colorClass = data.oferta.color === 'blue' ? 'primary' : 
+                              data.oferta.color === 'green' ? 'success' : 'warning';
+            
+            let detallesHTML = '';
+            for (const [key, value] of Object.entries(data.cliente)) {
+                if (key !== 'nombre' && key !== 'avatar' && key !== 'segmento') {
+                    const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    detallesHTML += `
+                        <div class="detail-box">
+                            <div class="detail-label">${label}</div>
+                            <div class="detail-value">${value}</div>
+                        </div>
+                    `;
+                }
+            }
+
+            let beneficiosHTML = '';
+            data.oferta.beneficios.forEach(beneficio => {
+                beneficiosHTML += `<li>${beneficio}</li>`;
+            });
+
+            output.innerHTML = `
+                <div class="customer-profile-card">
+                    <div class="customer-avatar-large">${data.cliente.avatar}</div>
+                    <div class="customer-info-section">
+                        <h3>${data.cliente.nombre}</h3>
+                        <p class="customer-segment">${data.cliente.segmento}</p>
+                        <div class="customer-details-grid">
+                            ${detallesHTML}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="oferta-card oferta-${colorClass}">
+                    <h3>${data.oferta.titulo}</h3>
+                    <p class="oferta-descripcion">${data.oferta.descripcion}</p>
+                    <div class="oferta-beneficios">
+                        <strong>Incluye:</strong>
+                        <ul>${beneficiosHTML}</ul>
+                    </div>
+                    <div class="oferta-footer">
+                        <button class="btn btn-${colorClass} btn-lg">
+                            ${data.oferta.cta}
+                        </button>
+                        <p class="oferta-validez">${data.oferta.validez}</p>
+                    </div>
+                </div>
+            `;
+        }, 1500);
+    })
+    .catch(error => {
+        output.innerHTML = '<div class="alert alert-error">Error al generar oferta. Por favor, intenta de nuevo.</div>';
+    });
+}
+</script>
+{% endblock %}

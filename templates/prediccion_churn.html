@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Predicción de Churn - Iberdrola AI{% endblock %}
+
+{% block page_title %}Predicción y Prevención de Churn{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">📈</div>
+        <div class="use-case-info">
+            <h1>Predicción y Prevención de Churn</h1>
+            <p>Identifique clientes en riesgo de abandonar antes de que lo hagan. Reduzca churn un 25% y aumente CLV un 40% con retención proactiva.</p>
+        </div>
+    </div>
+
+    <!-- Métricas del Caso de Uso -->
+    <div class="metrics-row">
+        <div class="metric-box">
+            <div class="metric-box-value">85%</div>
+            <div class="metric-box-label">Precisión Predicción</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">-25%</div>
+            <div class="metric-box-label">Reducción Churn</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">10x</div>
+            <div class="metric-box-label">ROI Retención</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">€200K-500K</div>
+            <div class="metric-box-label">Inversión Inicial</div>
+        </div>
+    </div>
+
+    <!-- Lista de Clientes en Riesgo -->
+    <div class="card">
+        <div class="card-header">
+            <h2>⚠️ Clientes en Riesgo</h2>
+            <div class="card-header-actions">
+                <select class="form-control form-control-sm">
+                    <option>Todos los niveles</option>
+                    <option>Alto riesgo</option>
+                    <option>Riesgo medio</option>
+                    <option>Bajo riesgo</option>
+                </select>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="churn-list">
+                {% for cliente in clientes %}
+                <div class="churn-item churn-{{ cliente.nivel }}" onclick="analizarCliente('{{ cliente.id }}')">
+                    <div class="churn-avatar">{{ cliente.nombre[:2].upper() }}</div>
+                    <div class="churn-info">
+                        <div class="churn-name">{{ cliente.nombre }}</div>
+                        <div class="churn-id">{{ cliente.id }}</div>
+                    </div>
+                    <div class="churn-risk">
+                        <div class="risk-score risk-{{ cliente.nivel }}">{{ cliente.riesgo }}%</div>
+                        <div class="risk-label">Riesgo {{ cliente.nivel }}</div>
+                    </div>
+                    <div class="churn-value">
+                        <div class="value-amount">{{ cliente.valor|format_currency }}</div>
+                        <div class="value-label">Valor Lifetime</div>
+                    </div>
+                    <div class="churn-action">
+                        <button class="btn btn-sm btn-primary">Analizar</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Análisis Detallado -->
+    <div id="analisis-output" class="card" style="display: none;">
+        <!-- El contenido se carga dinámicamente -->
+    </div>
+
+    <!-- Resumen de Acciones -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value">127</div>
+            <div class="stat-label">Clientes Alto Riesgo</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value">89</div>
+            <div class="stat-label">Campañas Activas</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value">€847K</div>
+            <div class="stat-label">Valor en Riesgo</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value">73%</div>
+            <div class="stat-label">Tasa Retención</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function analizarCliente(clienteId) {
+    const output = document.getElementById('analisis-output');
+    output.style.display = 'block';
+    output.innerHTML = '<div class="card-body"><div class="loading-spinner"></div><p class="loading-text">Analizando datos del cliente con IA...</p></div>';
+    
+    // Scroll al análisis
+    output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    fetch(`/api/analizar-churn/${clienteId}`)
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            const riskClass = data.cliente.nivel;
+            const riskColor = riskClass === 'alto' ? 'danger' : riskClass === 'medio' ? 'warning' : 'success';
+            
+            let factoresHTML = '';
+            data.factores.forEach(factor => {
+                factoresHTML += `<li>${factor}</li>`;
+            });
+
+            let accionesHTML = '';
+            data.acciones.forEach((accion, index) => {
+                accionesHTML += `<p><strong>✅ Acción ${index + 1}:</strong> ${accion}</p>`;
+            });
+
+            output.innerHTML = `
+                <div class="card-header">
+                    <h2>📊 Análisis Detallado de Riesgo</h2>
+                    <button class="btn btn-sm btn-secondary" onclick="document.getElementById('analisis-output').style.display='none'">Cerrar</button>
+                </div>
+                <div class="card-body">
+                    <div class="customer-profile-card">
+                        <div class="customer-avatar-large">${data.cliente.avatar}</div>
+                        <div class="customer-info-section">
+                            <h3>${data.cliente.nombre}</h3>
+                            <p>Cliente desde: ${data.cliente.antiguedad} | ID: ${data.cliente.id}</p>
+                            <div style="margin-top: 1rem;">
+                                <span class="risk-badge risk-badge-${riskClass}">
+                                    ⚠️ RIESGO ${data.cliente.nivel.toUpperCase()}: ${data.cliente.riesgo}%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h3 class="section-title section-${riskColor}">
+                            ${riskClass === 'alto' ? '🚨' : riskClass === 'medio' ? '⚡' : '✨'} 
+                            ${riskClass === 'alto' ? 'Factores de Riesgo Detectados' : riskClass === 'medio' ? 'Señales de Alerta' : 'Cliente Fidelizado - Perfil Promotor'}
+                        </h3>
+                        <div class="factors-box factors-${riskColor}">
+                            <ul>${factoresHTML}</ul>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h3 class="section-title section-primary">
+                            💡 ${riskClass === 'bajo' ? 'Oportunidades de Cross-Sell' : 'Acciones Recomendadas (Automatizadas)'}
+                        </h3>
+                        <div class="actions-box">
+                            ${accionesHTML}
+                        </div>
+                    </div>
+
+                    <div class="roi-summary roi-${riskColor}">
+                        <strong>
+                            ${riskClass === 'bajo' ? 'Valor Lifetime Proyectado' : 'Probabilidad retención con intervención IA'}: 
+                            ${data.probabilidad_retencion}%
+                        </strong><br>
+                        Valor lifetime cliente: ${data.valor_lifetime|format_currency} | 
+                        Coste ${riskClass === 'bajo' ? 'potencial cross-sell' : 'retención'}: ${data.coste_retencion|format_currency} | 
+                        ROI: ${data.roi}
+                    </div>
+                </div>
+            `;
+        }, 2000);
+    })
+    .catch(error => {
+        output.innerHTML = '<div class="card-body"><div class="alert alert-error">Error al analizar cliente. Por favor, intenta de nuevo.</div></div>';
+    });
+}
+</script>
+{% endblock %}

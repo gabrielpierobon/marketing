@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Configuración - Iberdrola AI{% endblock %}
+
+{% block page_title %}Configuración de la Plataforma{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="card">
+        <div class="card-header">
+            <h2>⚙️ Configuración General</h2>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label>Nombre de la Empresa</label>
+                    <input type="text" class="form-control" value="Iberdrola España">
+                </div>
+                <div class="form-group">
+                    <label>Idioma</label>
+                    <select class="form-control">
+                        <option selected>Español</option>
+                        <option>English</option>
+                        <option>Português</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Zona Horaria</label>
+                    <select class="form-control">
+                        <option selected>Europe/Madrid (GMT+1)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>🔒 Seguridad y Privacidad</h2>
+        </div>
+        <div class="card-body">
+            <div class="security-item">
+                <div>
+                    <strong>Autenticación de Dos Factores</strong>
+                    <p>Protege tu cuenta con verificación adicional</p>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="security-item">
+                <div>
+                    <strong>Certificación ISO/IEC 42001</strong>
+                    <p>Sistema de Gestión de IA Certificado</p>
+                </div>
+                <span class="badge badge-success">✓ Activo</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

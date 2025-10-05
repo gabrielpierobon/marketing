@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Monitorización de Marca - Iberdrola AI{% endblock %}
+
+{% block page_title %}Monitorización de Marca en Tiempo Real{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">📡</div>
+        <div class="use-case-info">
+            <h1>Monitorización de Marca en Tiempo Real</h1>
+            <p>Detecte crisis y oportunidades antes de que escalen. Análisis de sentimiento en 100+ idiomas y 100K+ fuentes.</p>
+        </div>
+    </div>
+
+    <!-- Menciones Recientes -->
+    <div class="card">
+        <div class="card-header">
+            <h2>💬 Menciones Recientes</h2>
+            <div class="sentiment-filters">
+                <button class="btn btn-sm btn-success">Positivo (847)</button>
+                <button class="btn btn-sm btn-secondary">Neutral (234)</button>
+                <button class="btn btn-sm btn-danger">Negativo (45)</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mentions-list">
+                {% for mencion in menciones %}
+                <div class="mention-item mention-{{ mencion.sentimiento }}">
+                    <div class="mention-icon">
+                        {% if mencion.sentimiento == 'positivo' %}😊
+                        {% elif mencion.sentimiento == 'neutral' %}😐
+                        {% else %}😟{% endif %}
+                    </div>
+                    <div class="mention-content">
+                        <div class="mention-source">{{ mencion.fuente }}</div>
+                        <div class="mention-text">{{ mencion.texto }}</div>
+                        <div class="mention-time">{{ mencion.tiempo }}</div>
+                    </div>
+                    <div class="mention-actions">
+                        <button class="btn btn-sm btn-outline">Responder</button>
+                        <button class="btn btn-sm btn-outline">Escalar</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">💬</div>
+            <div class="stat-value">1,126</div>
+            <div class="stat-label">Menciones Hoy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">😊</div>
+            <div class="stat-value">75%</div>
+            <div class="stat-label">Sentimiento Positivo</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value">1.2 min</div>
+            <div class="stat-label">Tiempo Detección</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value">-85%</div>
+            <div class="stat-label">Response Time</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Segmentación Avanzada - Iberdrola AI{% endblock %}
+
+{% block page_title %}Segmentación Avanzada con IA{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">🔍</div>
+        <div class="use-case-info">
+            <h1>Segmentación Avanzada con IA</h1>
+            <p>Identifique y agrupe clientes con precisión del 93% para maximizar relevancia y conversión de campañas.</p>
+        </div>
+    </div>
+
+    <!-- Segmentos Identificados -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🎯 Segmentos Identificados por IA</h2>
+            <button class="btn btn-primary btn-sm">+ Crear Nuevo Segmento</button>
+        </div>
+        <div class="card-body">
+            <div class="segments-grid">
+                {% for segmento in segmentos %}
+                <div class="segment-card">
+                    <div class="segment-header">
+                        <h3>{{ segmento.nombre }}</h3>
+                        <span class="segment-size">{{ segmento.clientes|format_number }} clientes</span>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-metric">
+                            <span class="metric-label">Potencial:</span>
+                            <span class="metric-value">{{ segmento.potencial }}</span>
+                        </div>
+                        <div class="segment-metric">
+                            <span class="metric-label">Valor promedio:</span>
+                            <span class="metric-value">{{ segmento.valor }}</span>
+                        </div>
+                    </div>
+                    <div class="segment-footer">
+                        <button class="btn btn-sm btn-primary">Crear Campaña</button>
+                        <button class="btn btn-sm btn-secondary">Ver Detalles</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas de Segmentación -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value">93%</div>
+            <div class="stat-label">Precisión Segmentación</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value">+50%</div>
+            <div class="stat-label">Engagement</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value">+80%</div>
+            <div class="stat-label">Conversión Programas</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📧</div>
+            <div class="stat-value">+65%</div>
+            <div class="stat-label">Apertura Emails</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

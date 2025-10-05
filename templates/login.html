@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión - Iberdrola AI Marketing Suite{% endblock %}
+
+{% block login_content %}
+<div class="login-container">
+    <div class="login-box">
+        <div class="login-header">
+            <div class="login-logo">
+                <span class="logo-icon-large">⚡</span>
+                <h1>Iberdrola AI Marketing Suite</h1>
+                <p>Plataforma de Inteligencia Artificial para Marketing Digital</p>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('login') }}" class="login-form">
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" required 
+                       placeholder="usuario@iberdrola.com" 
+                       class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required 
+                       placeholder="••••••••" 
+                       class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+                Iniciar Sesión
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <div class="demo-credentials">
+                <p><strong>Credenciales de Demo:</strong></p>
+                <ul>
+                    <li><code>admin@iberdrola.com</code> / <code>demo2025</code></li>
+                    <li><code>marketing@iberdrola.com</code> / <code>demo2025</code></li>
+                    <li><code>demo@iberdrola.com</code> / <code>demo2025</code></li>
+                </ul>
+            </div>
+            <p class="login-info">
+                <small>© 2025 Iberdrola AI Marketing Suite. Powered by Azure AI, Vertex AI & Salesforce Agentforce</small>
+            </p>
+        </div>
+    </div>
+
+    <div class="login-features">
+        <h2>Transforme su Marketing con IA</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <span class="feature-icon">🚀</span>
+                <div>
+                    <h3>ROI 4:1 a 6:1</h3>
+                    <p>Retorno comprobado en 18-24 meses</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📊</span>
+                <div>
+                    <h3>10 Casos de Uso</h3>
+                    <p>Soluciones completas de IA para marketing</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">⚡</span>
+                <div>
+                    <h3>Tiempo Real</h3>
+                    <p>Optimización y análisis instantáneo</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🔒</span>
+                <div>
+                    <h3>Certificado ISO/IEC 42001</h3>
+                    <p>Primera empresa globalmente certificada</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

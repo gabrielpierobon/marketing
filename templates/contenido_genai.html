@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Generación de Contenido GenAI - Iberdrola AI{% endblock %}
+
+{% block page_title %}Generación de Contenido con GenAI{% endblock %}
+
+{% block content %}
+<div class="use-case-container">
+    <div class="use-case-header">
+        <div class="use-case-icon">✍️</div>
+        <div class="use-case-info">
+            <h1>Generación de Contenido con GenAI</h1>
+            <p>Genere contenido de marketing de alta calidad en segundos. Reduzca tiempo de creación un 70-90% y aumente volumen de contenido 500%.</p>
+        </div>
+    </div>
+
+    <!-- Métricas del Caso de Uso -->
+    <div class="metrics-row">
+        <div class="metric-box">
+            <div class="metric-box-value">-85%</div>
+            <div class="metric-box-label">Tiempo Creación</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">+500%</div>
+            <div class="metric-box-label">Volumen Contenido</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">-50%</div>
+            <div class="metric-box-label">Costes</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-box-value">€50K-150K</div>
+            <div class="metric-box-label">Inversión Inicial</div>
+        </div>
+    </div>
+
+    <!-- Generador de Contenido -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🤖 Generador de Campañas Email con IA</h2>
+            <span class="badge badge-success">GPT-4 Powered</span>
+        </div>
+        <div class="card-body">
+            <form id="content-form" onsubmit="generarContenido(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="objetivo">Objetivo de la Campaña</label>
+                        <select id="objetivo" class="form-control">
+                            <option value="solar">Promoción Solar Residencial</option>
+                            <option value="retencion">Retención Clientes</option>
+                            <option value="eficiencia">Eficiencia Energética</option>
+                            <option value="demand-response">Demand Response</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tono">Tono del Mensaje</label>
+                        <select id="tono" class="form-control">
+                            <option value="profesional">Profesional</option>
+                            <option value="cercano">Cercano</option>
+                            <option value="urgente">Urgente</option>
+                            <option value="educativo">Educativo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <span>✨</span> Generar Contenido con IA
+                </button>
+            </form>
+
+            <div id="content-output" class="demo-output" style="display: none; margin-top: 2rem;">
+                <!-- Contenido generado -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas de Uso -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📧</div>
+            <div class="stat-value">1,247</div>
+            <div class="stat-label">Emails Generados Hoy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value">2.3 seg</div>
+            <div class="stat-label">Tiempo Promedio</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value">92%</div>
+            <div class="stat-label">Score Calidad</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value">€42K</div>
+            <div class="stat-label">Ahorro Mensual</div>
+        </div>
+    </div>
+
+    <!-- Modelos IA Disponibles -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🧠 Modelos de IA Disponibles</h2>
+        </div>
+        <div class="card-body">
+            <div class="models-grid">
+                <div class="model-card">
+                    <div class="model-header">
+                        <span class="model-name">GPT-4 Turbo</span>
+                        <span class="badge badge-success">Activo</span>
+                    </div>
+                    <div class="model-desc">Texto de alta calidad, razonamiento avanzado</div>
+                    <div class="model-stats">
+                        <span>📊 80% uso</span>
+                        <span>⚡ 2.1s promedio</span>
+                    </div>
+                </div>
+                <div class="model-card">
+                    <div class="model-header">
+                        <span class="model-name">Claude 3.5 Sonnet</span>
+                        <span class="badge badge-info">Disponible</span>
+                    </div>
+                    <div class="model-desc">Contenido ético, análisis profundo</div>
+                    <div class="model-stats">
+                        <span>📊 15% uso</span>
+                        <span>⚡ 1.8s promedio</span>
+                    </div>
+                </div>
+                <div class="model-card">
+                    <div class="model-header">
+                        <span class="model-name">Gemini 1.5 Pro</span>
+                        <span class="badge badge-info">Disponible</span>
+                    </div>
+                    <div class="model-desc">Multimodal, contexto 2M tokens</div>
+                    <div class="model-stats">
+                        <span>📊 5% uso</span>
+                        <span>⚡ 2.4s promedio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function generarContenido(event) {
+    event.preventDefault();
+    
+    const objetivo = document.getElementById('objetivo').value;
+    const tono = document.getElementById('tono').value;
+    const output = document.getElementById('content-output');
+    
+    output.style.display = 'block';
+    output.innerHTML = '<div class="loading-spinner"></div><p class="loading-text">Generando contenido con IA...</p>';
+
+    fetch('/api/generar-contenido', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ objetivo: objetivo, tono: tono })
+    })
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            output.innerHTML = `
+                <div class="content-preview-card">
+                    <div class="content-header">
+                        <h3>✉️ Contenido Generado</h3>
+                        <div class="content-meta">
+                            <span class="badge badge-success">Score: ${data.score_predicho}/100</span>
+                            <span class="badge badge-info">${data.variaciones} variaciones</span>
+                            <span class="badge badge-secondary">${data.tiempo_generacion}s</span>
+                        </div>
+                    </div>
+
+                    <div class="email-preview">
+                        <div class="email-subject">
+                            <strong>Asunto:</strong> ${data.asunto}
+                        </div>
+                        <div class="email-body">
+                            ${data.cuerpo.replace(/\n/g, '<br>')}
+                        </div>
+                        <div class="email-cta">
+                            ${data.cta}
+                        </div>
+                    </div>
+
+                    <div class="content-actions">
+                        <button class="btn btn-primary">
+                            <span>📋</span> Copiar al Portapapeles
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>✏️</span> Editar
+                        </button>
+                        <button class="btn btn-success">
+                            <span>📤</span> Enviar a Campaña
+                        </button>
+                        <button class="btn btn-outline" onclick="generarContenido(event)">
+                            <span>🔄</span> Generar Nueva Variación
+                        </button>
+                    </div>
+
+                    <div class="content-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Palabras:</span>
+                            <span class="stat-value">${data.palabras}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Tiempo generación:</span>
+                            <span class="stat-value">${data.tiempo_generacion}s</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Variaciones disponibles:</span>
+                            <span class="stat-value">${data.variaciones}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }, 2000);
+    })
+    .catch(error => {
+        output.innerHTML = '<div class="alert alert-error">Error al generar contenido. Por favor, intenta de nuevo.</div>';
+    });
+}
+</script>
+{% endblock %}

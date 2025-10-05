@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Iberdrola AI Marketing Suite{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% if session.user_email %}
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Iberdrola AI</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('dashboard') }}" class="nav-item {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Casos de Uso IA</div>
+                
+                <a href="{{ url_for('personalizacion') }}" class="nav-item {% if request.endpoint == 'personalizacion' %}active{% endif %}">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Personalización</span>
+                </a>
+
+                <a href="{{ url_for('contenido_genai') }}" class="nav-item {% if request.endpoint == 'contenido_genai' %}active{% endif %}">
+                    <span class="nav-icon">✍️</span>
+                    <span class="nav-text">Contenido GenAI</span>
+                </a>
+
+                <a href="{{ url_for('chatbot') }}" class="nav-item {% if request.endpoint == 'chatbot' %}active{% endif %}">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">Chatbot IA</span>
+                </a>
+
+                <a href="{{ url_for('prediccion_churn') }}" class="nav-item {% if request.endpoint == 'prediccion_churn' %}active{% endif %}">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Predicción Churn</span>
+                </a>
+
+                <a href="{{ url_for('optimizacion_publicitaria') }}" class="nav-item {% if request.endpoint == 'optimizacion_publicitaria' %}active{% endif %}">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Optimización Ads</span>
+                </a>
+
+                <a href="{{ url_for('segmentacion_avanzada') }}" class="nav-item {% if request.endpoint == 'segmentacion_avanzada' %}active{% endif %}">
+                    <span class="nav-icon">🔍</span>
+                    <span class="nav-text">Segmentación</span>
+                </a>
+
+                <a href="{{ url_for('ab_testing') }}" class="nav-item {% if request.endpoint == 'ab_testing' %}active{% endif %}">
+                    <span class="nav-icon">🧪</span>
+                    <span class="nav-text">A/B Testing</span>
+                </a>
+
+                <a href="{{ url_for('monitorizacion_marca') }}" class="nav-item {% if request.endpoint == 'monitorizacion_marca' %}active{% endif %}">
+                    <span class="nav-icon">📡</span>
+                    <span class="nav-text">Monitorización</span>
+                </a>
+
+                <a href="{{ url_for('motor_recomendaciones') }}" class="nav-item {% if request.endpoint == 'motor_recomendaciones' %}active{% endif %}">
+                    <span class="nav-icon">🎁</span>
+                    <span class="nav-text">Recomendaciones</span>
+                </a>
+
+                <a href="{{ url_for('attribution_marketing') }}" class="nav-item {% if request.endpoint == 'attribution_marketing' %}active{% endif %}">
+                    <span class="nav-icon">🔗</span>
+                    <span class="nav-text">Attribution</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Configuración</div>
+                
+                <a href="{{ url_for('configuracion') }}" class="nav-item {% if request.endpoint == 'configuracion' %}active{% endif %}">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Configuración</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">{{ session.user_avatar }}</div>
+                <div class="user-details">
+                    <div class="user-name">{{ session.user_name }}</div>
+                    <div class="user-role">{{ session.user_rol }}</div>
+                </div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-btn" title="Cerrar Sesión">
+                <span>🚪</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                {% block page_title %}Dashboard{% endblock %}
+            </div>
+            <div class="top-bar-actions">
+                <button class="icon-btn" title="Notificaciones">
+                    <span class="badge">3</span>
+                    🔔
+                </button>
+                <button class="icon-btn" title="Ayuda">❓</button>
+            </div>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <span class="alert-icon">
+                                {% if category == 'success' %}✅{% elif category == 'error' %}❌{% elif category == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+                            </span>
+                            <span class="alert-message">{{ message }}</span>
+                            <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Page Content -->
+        <div class="content-wrapper">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    {% else %}
+    <!-- Login Page (no sidebar) -->
+    {% block login_content %}{% endblock %}
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
