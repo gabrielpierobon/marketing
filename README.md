@@ -1,4 +1,4 @@
-# Iberdrola AI Marketing Suite
+# AI Marketing Suite
 
 Plataforma SaaS completa de Inteligencia Artificial para Marketing Digital en el Sector Energético.
 
@@ -36,7 +36,7 @@ Plataforma SaaS completa de Inteligencia Artificial para Marketing Digital en el
 
 1. **Clonar o navegar al directorio del proyecto:**
 ```bash
-cd iberdrola
+cd ...
 ```
 
 2. **Crear y activar el entorno virtual:**
@@ -221,8 +221,3 @@ Este proyecto es una demostración para fines educativos y de presentación.
 ## 👥 Contacto
 
 Para más información sobre la implementación de soluciones de IA en marketing digital para el sector energético, contacta con el equipo de Capgemini.
-
----
-
-**© 2025 Iberdrola AI Marketing Suite**  
-*Powered by Azure AI, Google Vertex AI & Salesforce Agentforce*
