@@ -1,7 +1,23 @@
-// Main JavaScript for Iberdrola AI Marketing Suite
+// Main JavaScript for Iberdrola AI Marketing Suite - Fluent 2 Enhanced
 
-// Auto-hide flash messages after 5 seconds
+// ==================== FLUENT 2 REVEAL EFFECT ====================
+// Track mouse position for reveal effect
+document.addEventListener('mousemove', (e) => {
+    document.querySelectorAll('.btn, .card').forEach(element => {
+        const rect = element.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        element.style.setProperty('--mouse-x', `${x}%`);
+        element.style.setProperty('--mouse-y', `${y}%`);
+    });
+});
+
+// ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Fluent animations
+    initFluentAnimations();
+    
+    // Auto-hide flash messages after 5 seconds
     const flashMessages = document.querySelectorAll('.alert');
     flashMessages.forEach(function(message) {
         setTimeout(function() {
@@ -13,16 +29,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    // Animate metric values on dashboard
+    // Animate metric values on dashboard with stagger
     const metricValues = document.querySelectorAll('.metric-value');
-    metricValues.forEach(function(el) {
+    metricValues.forEach(function(el, index) {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(10px)';
+        el.style.transform = 'translateY(20px)';
         setTimeout(function() {
-            el.style.transition = 'all 0.5s ease';
+            el.style.transition = 'all 0.6s cubic-bezier(0, 0.5, 0.3, 1)';
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
-        }, 100);
+        }, 100 + (index * 50));
+    });
+
+    // Animate cards with stagger
+    const cards = document.querySelectorAll('.card, .metric-card');
+    cards.forEach(function(card, index) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(function() {
+            card.style.transition = 'all 0.6s cubic-bezier(0, 0.5, 0.3, 1)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 150 + (index * 75));
     });
 
     // Smooth scroll for navigation
@@ -38,7 +66,78 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Add ripple effect to buttons
+    addRippleEffect();
 });
+
+// ==================== FLUENT ANIMATIONS ====================
+function initFluentAnimations() {
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards and sections
+    document.querySelectorAll('.card, .metric-card, section').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// ==================== RIPPLE EFFECT ====================
+function addRippleEffect() {
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+}
+
+// Add ripple CSS dynamically
+const style = document.createElement('style');
+style.textContent = `
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        transform: scale(0);
+        animation: ripple-animation 0.6s ease-out;
+        pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // Utility function to format numbers
 function formatNumber(num) {
