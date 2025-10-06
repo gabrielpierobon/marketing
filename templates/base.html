@@ -31,23 +31,71 @@
                 <span class="nav-text">{{ menu_config.dashboard.menu_name }}</span>
             </a>
 
-            <!-- Categorías dinámicas con desplegables -->
-            {% for category in menu_config.categories %}
-            <div class="nav-section collapsible-section">
-                <div class="nav-section-header" onclick="toggleSection(this)">
-                    <span class="nav-section-title">{{ category.title }}</span>
-                    <span class="nav-section-arrow">▼</span>
-                </div>
-                <div class="nav-section-content">
+            <!-- Vista por Categoría o Roadmap -->
+            {% if menu_config.menu_view_mode == 'roadmap' %}
+                <!-- Vista por Roadmap -->
+                {% set quick_wins_items = [] %}
+                {% set year_2_plus_items = [] %}
+                {% for category in menu_config.categories %}
                     {% for item in category.menu_items %}
-                    <a href="{{ url_for(item.endpoint) }}" class="nav-item nav-subitem {% if request.endpoint == item.endpoint %}active{% endif %}">
-                        <span class="nav-icon">{{ item.icon }}</span>
-                        <span class="nav-text">{{ item.menu_name }}</span>
-                    </a>
+                        {% if item.roadmap_group == 'quick_wins' %}
+                            {% set _ = quick_wins_items.append(item) %}
+                        {% else %}
+                            {% set _ = year_2_plus_items.append(item) %}
+                        {% endif %}
                     {% endfor %}
+                {% endfor %}
+                
+                <!-- Quick Wins -->
+                <div class="nav-section collapsible-section roadmap-section quick-wins-section">
+                    <div class="nav-section-header" onclick="toggleSection(this)">
+                        <span class="nav-section-title">{{ menu_config.roadmap_groups.quick_wins.title }}</span>
+                        <span class="nav-section-arrow">▼</span>
+                    </div>
+                    <div class="nav-section-content">
+                        {% for item in quick_wins_items %}
+                        <a href="{{ url_for(item.endpoint) }}" class="nav-item nav-subitem {% if request.endpoint == item.endpoint %}active{% endif %}">
+                            <span class="nav-icon">{{ item.icon }}</span>
+                            <span class="nav-text">{{ item.menu_name }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                
+                <!-- Año 2+ Wins -->
+                <div class="nav-section collapsible-section roadmap-section year-2-plus-section">
+                    <div class="nav-section-header" onclick="toggleSection(this)">
+                        <span class="nav-section-title">{{ menu_config.roadmap_groups.year_2_plus.title }}</span>
+                        <span class="nav-section-arrow">▼</span>
+                    </div>
+                    <div class="nav-section-content">
+                        {% for item in year_2_plus_items %}
+                        <a href="{{ url_for(item.endpoint) }}" class="nav-item nav-subitem {% if request.endpoint == item.endpoint %}active{% endif %}">
+                            <span class="nav-icon">{{ item.icon }}</span>
+                            <span class="nav-text">{{ item.menu_name }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <!-- Vista por Categoría (por defecto) -->
+                {% for category in menu_config.categories %}
+                <div class="nav-section collapsible-section">
+                    <div class="nav-section-header" onclick="toggleSection(this)">
+                        <span class="nav-section-title">{{ category.title }}</span>
+                        <span class="nav-section-arrow">▼</span>
+                    </div>
+                    <div class="nav-section-content">
+                        {% for item in category.menu_items %}
+                        <a href="{{ url_for(item.endpoint) }}" class="nav-item nav-subitem {% if request.endpoint == item.endpoint %}active{% endif %}">
+                            <span class="nav-icon">{{ item.icon }}</span>
+                            <span class="nav-text">{{ item.menu_name }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
 
             <!-- Configuración -->
             <a href="{{ url_for('configuracion') }}" class="nav-item {% if request.endpoint == 'configuracion' %}active{% endif %}">

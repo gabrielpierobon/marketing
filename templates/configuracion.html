@@ -98,6 +98,90 @@
         </div>
     </div>
 
+    <!-- Vista del Menú -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🗂️ Organización del Menú</h2>
+            <p style="font-size: 14px; color: var(--neutral-foreground-3); margin-top: 8px;">
+                Configura cómo se agrupan los casos de uso en el menú lateral
+            </p>
+        </div>
+        <div class="card-body">
+            <div class="menu-view-selector">
+                <div class="view-option" data-view="category">
+                    <div class="view-option-header">
+                        <input type="radio" name="menu_view" id="view_category" value="category" 
+                               {% if menu_config.menu_view_mode == 'category' %}checked{% endif %}>
+                        <label for="view_category">
+                            <strong>📁 Por Categoría</strong>
+                        </label>
+                    </div>
+                    <p class="view-option-description">
+                        Agrupa los casos de uso por tipo: Customer Engagement, Content & Creative, Campaign Optimization, Customer Intelligence
+                    </p>
+                    <div class="view-option-preview">
+                        <div class="preview-item">📊 Customer Engagement</div>
+                        <div class="preview-subitem">→ Personalización, Recomendaciones, Chatbot</div>
+                        <div class="preview-item">✍️ Content & Creative</div>
+                        <div class="preview-subitem">→ Generación GenAI, Monitorización</div>
+                    </div>
+                </div>
+
+                <div class="view-option" data-view="roadmap">
+                    <div class="view-option-header">
+                        <input type="radio" name="menu_view" id="view_roadmap" value="roadmap"
+                               {% if menu_config.menu_view_mode == 'roadmap' %}checked{% endif %}>
+                        <label for="view_roadmap">
+                            <strong>🚀 Por Roadmap</strong>
+                        </label>
+                    </div>
+                    <p class="view-option-description">
+                        Agrupa los casos de uso por fase de implementación: Quick Wins (Año 1) vs Año 2+
+                    </p>
+                    <div class="view-option-preview">
+                        <div class="preview-item" style="color: #10b981;">🚀 Quick Wins (Año 1)</div>
+                        <div class="preview-subitem">→ 4 casos de uso de rápida implementación</div>
+                        <div class="preview-item" style="color: #3b82f6;">🎯 Año 2+ Wins</div>
+                        <div class="preview-subitem">→ 6 casos de uso estratégicos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="roadmap-info-box">
+                <h4>📋 Distribución por Roadmap:</h4>
+                <div class="roadmap-distribution">
+                    <div class="roadmap-group quick-wins">
+                        <h5>🚀 Quick Wins (Año 1)</h5>
+                        <ul>
+                            <li>💬 Agentes Conversacionales</li>
+                            <li>✍️ Generación de contenido con GenAI</li>
+                            <li>📡 Monitorización de marca</li>
+                            <li>🧪 A/B Testing Automatizado</li>
+                        </ul>
+                        <p class="roadmap-note">Baja dependencia de datos • Implementación rápida • Valor inmediato</p>
+                    </div>
+                    <div class="roadmap-group year-2-plus">
+                        <h5>🎯 Año 2+ Wins</h5>
+                        <ul>
+                            <li>👤 Personalización de experiencias</li>
+                            <li>🎁 Motor de recomendaciones</li>
+                            <li>🎯 Optimización Publicitaria</li>
+                            <li>🔗 Modelos de atribución</li>
+                            <li>🔍 Segmentación de clientes</li>
+                            <li>📈 Predicción de abandonos</li>
+                        </ul>
+                        <p class="roadmap-note">Alta dependencia de datos • Integración profunda • Visión estratégica</p>
+                    </div>
+                </div>
+            </div>
+
+            <button id="save-menu-view" class="btn btn-primary">
+                💾 Aplicar Vista de Menú
+            </button>
+            <div id="view-save-status" class="save-status"></div>
+        </div>
+    </div>
+
     <!-- Configuración General -->
     <div class="card">
         <div class="card-header">
@@ -160,6 +244,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveBtn = document.getElementById('save-menu-config');
     const resetBtn = document.getElementById('reset-menu-config');
     const saveStatus = document.getElementById('save-status');
+    const saveViewBtn = document.getElementById('save-menu-view');
+    const viewSaveStatus = document.getElementById('view-save-status');
+    
+    // Guardar vista de menú
+    saveViewBtn.addEventListener('click', async function() {
+        const selectedView = document.querySelector('input[name="menu_view"]:checked').value;
+        
+        try {
+            const response = await fetch('/api/set-menu-view', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ view_mode: selectedView })
+            });
+            
+            if (response.ok) {
+                viewSaveStatus.innerHTML = '<span style="color: var(--success-color);">✓ Vista aplicada correctamente</span>';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                viewSaveStatus.innerHTML = '<span style="color: var(--error-color);">✗ Error al cambiar vista</span>';
+            }
+        } catch (error) {
+            viewSaveStatus.innerHTML = '<span style="color: var(--error-color);">✗ Error de conexión</span>';
+        }
+    });
     
     // Guardar configuración
     saveBtn.addEventListener('click', async function() {

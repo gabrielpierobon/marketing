@@ -3493,3 +3493,183 @@ a, button, input, select, textarea {
     outline: 2px solid #667eea !important;
     background: white !important;
 }
+
+/* ==================== CONFIGURACIÓN DE VISTA DE MENÚ ==================== */
+.menu-view-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-xl);
+}
+
+.view-option {
+    padding: var(--spacing-l);
+    background: var(--neutral-background-2);
+    border: 2px solid var(--neutral-stroke-1);
+    border-radius: var(--border-radius-large);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--curve-easy-ease);
+}
+
+.view-option:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.view-option:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.15);
+}
+
+.view-option-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+}
+
+.view-option-header input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.view-option-header label {
+    cursor: pointer;
+    font-size: var(--font-size-400);
+    color: var(--neutral-foreground-1);
+    margin: 0;
+}
+
+.view-option-description {
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-2);
+    margin-bottom: var(--spacing-m);
+    line-height: 1.5;
+}
+
+.view-option-preview {
+    background: var(--neutral-background-1);
+    padding: var(--spacing-m);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--neutral-stroke-1);
+}
+
+.preview-item {
+    font-size: var(--font-size-300);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: var(--spacing-s);
+}
+
+.preview-subitem {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    margin-left: var(--spacing-l);
+    margin-bottom: var(--spacing-s);
+}
+
+.roadmap-info-box {
+    background: var(--neutral-background-1);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-large);
+    border: 1px solid var(--neutral-stroke-1);
+    margin-bottom: var(--spacing-l);
+}
+
+.roadmap-info-box h4 {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-foreground-1);
+    margin-bottom: var(--spacing-l);
+}
+
+.roadmap-distribution {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-l);
+}
+
+.roadmap-group {
+    padding: var(--spacing-l);
+    border-radius: var(--border-radius-medium);
+    border: 2px solid;
+}
+
+.roadmap-group.quick-wins {
+    background: rgba(16, 185, 129, 0.05);
+    border-color: #10b981;
+}
+
+.roadmap-group.year-2-plus {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: #3b82f6;
+}
+
+.roadmap-group h5 {
+    font-size: var(--font-size-400);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-m);
+}
+
+.roadmap-group.quick-wins h5 {
+    color: #10b981;
+}
+
+.roadmap-group.year-2-plus h5 {
+    color: #3b82f6;
+}
+
+.roadmap-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-m) 0;
+}
+
+.roadmap-group li {
+    font-size: var(--font-size-300);
+    color: var(--neutral-foreground-1);
+    padding: var(--spacing-s) 0;
+    border-bottom: 1px solid var(--neutral-stroke-1);
+}
+
+.roadmap-group li:last-child {
+    border-bottom: none;
+}
+
+.roadmap-note {
+    font-size: var(--font-size-200);
+    color: var(--neutral-foreground-3);
+    font-style: italic;
+    margin: 0;
+}
+
+/* Estilos para las secciones de roadmap en el sidebar */
+.roadmap-section .nav-section-header {
+    position: relative;
+}
+
+.quick-wins-section .nav-section-header {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%);
+}
+
+.quick-wins-section .nav-section-header:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.05) 100%);
+}
+
+.quick-wins-section .nav-section-title {
+    color: #10b981;
+}
+
+.year-2-plus-section .nav-section-header {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
+}
+
+.year-2-plus-section .nav-section-header:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%);
+}
+
+.year-2-plus-section .nav-section-title {
+    color: #3b82f6;
+}

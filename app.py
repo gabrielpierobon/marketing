@@ -2678,6 +2678,41 @@ def reset_menu_config():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/set-menu-view', methods=['POST'])
+@login_required
+def set_menu_view():
+    """Cambia el modo de vista del menú (category o roadmap)"""
+    try:
+        data = request.get_json()
+        view_mode = data.get('view_mode', 'category')
+        
+        if view_mode not in ['category', 'roadmap']:
+            return jsonify({'success': False, 'error': 'Modo de vista inválido'}), 400
+        
+        # Leer configuración actual
+        config_path = os.path.join(os.path.dirname(__file__), 'config', 'menu_config.json')
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = json.load(f)
+        
+        # Actualizar modo de vista
+        config['menu_view_mode'] = view_mode
+        
+        # Guardar configuración
+        with open(config_path, 'w', encoding='utf-8') as f:
+            json.dump(config, f, indent=2, ensure_ascii=False)
+        
+        # Recargar configuración
+        global MENU_CONFIG
+        MENU_CONFIG = load_menu_config()
+        
+        return jsonify({
+            'success': True, 
+            'message': f'Vista cambiada a {view_mode}',
+            'view_mode': view_mode
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 # ==================== MANEJO DE ERRORES ====================
 
 @app.errorhandler(404)

@@ -1,4 +1,5 @@
 {
+  "menu_view_mode": "category",
   "categories": [
     {
       "id": "customer_engagement",
@@ -7,19 +8,22 @@
           "endpoint": "personalizacion",
           "icon": "👤",
           "menu_name": "Personalización de experiencias",
-          "page_title": "Personalización la experiencia de tus clientes"
+          "page_title": "Personalización la experiencia de tus clientes",
+          "roadmap_group": "year_2_plus"
         },
         {
           "endpoint": "motor_recomendaciones",
           "icon": "🎁",
           "menu_name": "Motor de recomendaciones",
-          "page_title": "Motor de Recomendaciones"
+          "page_title": "Motor de Recomendaciones",
+          "roadmap_group": "year_2_plus"
         },
         {
           "endpoint": "chatbot",
           "icon": "💬",
           "menu_name": "Agentes Conversacionales",
-          "page_title": "Agentes IA Conversacionales 24/7"
+          "page_title": "Agentes IA Conversacionales 24/7",
+          "roadmap_group": "quick_wins"
         }
       ],
       "title": "Customer Engagement"
@@ -31,13 +35,15 @@
           "endpoint": "contenido_genai",
           "icon": "✍️",
           "menu_name": "Generación de contenido con GenAI",
-          "page_title": "Generación de Contenido con GenAI"
+          "page_title": "Generación de Contenido con GenAI",
+          "roadmap_group": "quick_wins"
         },
         {
           "endpoint": "monitorizacion_marca",
           "icon": "📡",
           "menu_name": "Monitorización de marca",
-          "page_title": "Monitorización de Marca en Tiempo Real"
+          "page_title": "Monitorización de Marca en Tiempo Real",
+          "roadmap_group": "quick_wins"
         }
       ],
       "title": "Content & Creative"
@@ -49,19 +55,22 @@
           "endpoint": "optimizacion_publicitaria",
           "icon": "🎯",
           "menu_name": "Optimización Publicitaria ",
-          "page_title": "Optimización Publicitaria Autónoma"
+          "page_title": "Optimización Publicitaria Autónoma",
+          "roadmap_group": "year_2_plus"
         },
         {
           "endpoint": "ab_testing",
           "icon": "🧪",
           "menu_name": "A/B Testing Automatizado ",
-          "page_title": "A/B Testing Automatizado con IA"
+          "page_title": "A/B Testing Automatizado con IA",
+          "roadmap_group": "quick_wins"
         },
         {
           "endpoint": "attribution_marketing",
           "icon": "🔗",
           "menu_name": "Modelos de atribución",
-          "page_title": "Attribution Marketing Multi-Touch"
+          "page_title": "Attribution Marketing Multi-Touch",
+          "roadmap_group": "year_2_plus"
         }
       ],
       "title": "Campaign Optimization"
@@ -73,18 +82,32 @@
           "endpoint": "segmentacion_avanzada",
           "icon": "🔍",
           "menu_name": "Segmentación de clientes",
-          "page_title": "Segmentación Avanzada de Clientes"
+          "page_title": "Segmentación Avanzada de Clientes",
+          "roadmap_group": "year_2_plus"
         },
         {
           "endpoint": "prediccion_churn",
           "icon": "📈",
           "menu_name": "Predicción de abandonos",
-          "page_title": "Predicción y Prevención de Churn"
+          "page_title": "Predicción y Prevención de Churn",
+          "roadmap_group": "year_2_plus"
         }
       ],
       "title": "Customer Intelligence"
     }
   ],
+  "roadmap_groups": {
+    "quick_wins": {
+      "title": "🚀 Quick Wins (Año 1)",
+      "description": "Casos de uso de rápida implementación con impacto inmediato",
+      "color": "#10b981"
+    },
+    "year_2_plus": {
+      "title": "🎯 Año 2+ Wins",
+      "description": "Casos de uso estratégicos de largo plazo",
+      "color": "#3b82f6"
+    }
+  },
   "configuracion": {
     "icon": "⚙️",
     "menu_name": "Configuración",
