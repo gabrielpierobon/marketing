@@ -19,6 +19,12 @@
         </div>
 
         <nav class="sidebar-nav">
+            <!-- Home -->
+            <a href="{{ url_for('home') }}" class="nav-item {% if request.endpoint == 'home' %}active{% endif %}">
+                <span class="nav-icon">{{ menu_config.home.icon }}</span>
+                <span class="nav-text">{{ menu_config.home.menu_name }}</span>
+            </a>
+            
             <!-- Introducción -->
             <a href="{{ url_for('introduccion') }}" class="nav-item {% if request.endpoint == 'introduccion' %}active{% endif %}">
                 <span class="nav-icon">{{ menu_config.introduccion.icon }}</span>

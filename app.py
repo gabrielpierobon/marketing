@@ -28,6 +28,10 @@ MENU_CONFIG = load_menu_config()
 
 # Función helper para obtener el título de página según el endpoint
 def get_page_title(endpoint):
+    # Buscar en home
+    if endpoint == 'home':
+        return MENU_CONFIG.get('home', {}).get('page_title', 'Home - Iberdrola AI')
+    
     # Buscar en dashboard
     if endpoint == 'dashboard':
         return MENU_CONFIG.get('dashboard', {}).get('page_title', 'Dashboard Principal')
@@ -109,10 +113,10 @@ def login_required(f):
 
 # ==================== RUTAS DE AUTENTICACIÓN ====================
 
-@app.route('/')
+@app.route('/index')
 def index():
     if 'user_email' in session:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('home'))
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -128,7 +132,7 @@ def login():
             session['user_rol'] = USERS_DB[email]['rol']
             session['user_avatar'] = USERS_DB[email]['avatar']
             flash(f'¡Bienvenido/a, {USERS_DB[email]["nombre"]}!', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('home'))
         else:
             flash('Credenciales incorrectas. Intenta de nuevo.', 'error')
     
@@ -139,6 +143,15 @@ def logout():
     session.clear()
     flash('Has cerrado sesión correctamente.', 'info')
     return redirect(url_for('login'))
+
+# ==================== HOME PAGE ====================
+
+@app.route('/home')
+@app.route('/')
+@login_required
+def home():
+    """Página principal con accesos rápidos a todas las secciones"""
+    return render_template('home.html', menu_config=MENU_CONFIG)
 
 # ==================== DASHBOARD PRINCIPAL ====================
 

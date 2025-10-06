@@ -1,5 +1,10 @@
 {
   "menu_view_mode": "roadmap",
+  "home": {
+    "icon": "🏠",
+    "menu_name": "Home",
+    "page_title": "Home - Iberdrola AI"
+  },
   "categories": [
     {
       "id": "customer_engagement",

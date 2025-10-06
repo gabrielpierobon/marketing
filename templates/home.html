@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Iberdrola AI{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <div class="home-header">
+        <h1 class="home-title">Bienvenido a Iberdrola AI Marketing Suite</h1>
+        <p class="home-subtitle">Selecciona una sección para comenzar</p>
+    </div>
+
+    <div class="home-grid">
+        <!-- 1. Torre de Control -->
+        <a href="{{ url_for('dashboard') }}" class="home-card">
+            <div class="home-card-icon">📊</div>
+            <div class="home-card-content">
+                <h2 class="home-card-title">Torre de Control</h2>
+                <p class="home-card-description">
+                    Dashboard principal con métricas en tiempo real de todos los servicios de IA
+                </p>
+            </div>
+            <div class="home-card-arrow">→</div>
+        </a>
+
+        <!-- 2. Documentación -->
+        <a href="{{ url_for('introduccion') }}" class="home-card">
+            <div class="home-card-icon">📚</div>
+            <div class="home-card-content">
+                <h2 class="home-card-title">Documentación</h2>
+                <p class="home-card-description">
+                    Guía completa de la plataforma y documentación técnica de cada caso de uso
+                </p>
+            </div>
+            <div class="home-card-arrow">→</div>
+        </a>
+
+        <!-- 3. Casos de Uso -->
+        <div class="home-card home-card-with-selector">
+            <div class="home-card-icon">🎯</div>
+            <div class="home-card-content">
+                <h2 class="home-card-title">Casos de Uso</h2>
+                <p class="home-card-description">
+                    Accede directamente a cualquier caso de uso de IA para marketing
+                </p>
+                <div class="home-selector">
+                    <label for="caso-uso-selector">Ir a caso de uso:</label>
+                    <select id="caso-uso-selector" class="home-select" onchange="navigateToCasoUso(this.value)">
+                        <option value="">-- Selecciona un caso de uso --</option>
+                        {% if menu_config.menu_view_mode == 'roadmap' %}
+                            <optgroup label="🚀 Quick Wins (Año 1)">
+                                {% for category in menu_config.categories %}
+                                    {% for item in category.menu_items %}
+                                        {% if item.roadmap_group == 'quick_wins' %}
+                                            <option value="{{ item.endpoint }}">{{ item.icon }} {{ item.menu_name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="🎯 Año 2+ Wins">
+                                {% for category in menu_config.categories %}
+                                    {% for item in category.menu_items %}
+                                        {% if item.roadmap_group == 'year_2_plus' %}
+                                            <option value="{{ item.endpoint }}">{{ item.icon }} {{ item.menu_name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </optgroup>
+                        {% else %}
+                            {% for category in menu_config.categories %}
+                                <optgroup label="{{ category.title }}">
+                                    {% for item in category.menu_items %}
+                                        <option value="{{ item.endpoint }}">{{ item.icon }} {{ item.menu_name }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Integración -->
+        <div class="home-card home-card-with-selector">
+            <div class="home-card-icon">🔗</div>
+            <div class="home-card-content">
+                <h2 class="home-card-title">Integración</h2>
+                <p class="home-card-description">
+                    Gestiona integraciones de datos, APIs y conectores empresariales
+                </p>
+                <div class="home-selector">
+                    <label for="integracion-selector">Ir a sección:</label>
+                    <select id="integracion-selector" class="home-select" onchange="navigateToIntegracion(this.value)">
+                        <option value="">-- Selecciona una sección --</option>
+                        <option value="integracion_datos">🔌 Integración de Datos</option>
+                        <option value="integracion_apis">🔗 APIs & Conectores</option>
+                        <option value="laboratorio">🧪 Laboratorio de Datos</option>
+                        <option value="monitorizacion">📊 Monitorización & Auditoría</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Configuración -->
+        <a href="{{ url_for('configuracion') }}" class="home-card">
+            <div class="home-card-icon">⚙️</div>
+            <div class="home-card-content">
+                <h2 class="home-card-title">Configuración</h2>
+                <p class="home-card-description">
+                    Personaliza el menú, ajusta preferencias y configura la plataforma
+                </p>
+            </div>
+            <div class="home-card-arrow">→</div>
+        </a>
+    </div>
+
+    <!-- Stats rápidas -->
+    <div class="home-stats">
+        <div class="home-stat-item">
+            <div class="home-stat-icon">🚀</div>
+            <div class="home-stat-content">
+                <div class="home-stat-value">10</div>
+                <div class="home-stat-label">Casos de Uso IA</div>
+            </div>
+        </div>
+        <div class="home-stat-item">
+            <div class="home-stat-icon">🔌</div>
+            <div class="home-stat-content">
+                <div class="home-stat-value">8</div>
+                <div class="home-stat-label">Fuentes de Datos</div>
+            </div>
+        </div>
+        <div class="home-stat-item">
+            <div class="home-stat-icon">📊</div>
+            <div class="home-stat-content">
+                <div class="home-stat-value">15</div>
+                <div class="home-stat-label">Integraciones Activas</div>
+            </div>
+        </div>
+        <div class="home-stat-item">
+            <div class="home-stat-icon">✅</div>
+            <div class="home-stat-content">
+                <div class="home-stat-value">99.9%</div>
+                <div class="home-stat-label">Uptime</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function navigateToCasoUso(endpoint) {
+    if (endpoint) {
+        window.location.href = '/' + endpoint;
+    }
+}
+
+function navigateToIntegracion(endpoint) {
+    if (endpoint) {
+        window.location.href = '/' + endpoint.replace('_', '-');
+    }
+}
+</script>
+
+<!-- Incluir Asistente Virtual Fijo -->
+{% include 'asistente_panel_fijo.html' %}
+
+{% endblock %}
+
