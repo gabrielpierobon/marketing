@@ -70,7 +70,6 @@
                     <li><strong>Scores de Calidad:</strong> Legibilidad (Flesch-Kincaid), coherencia de marca, SEO score</li>
                     <li><strong>Sugerencias de Mejora:</strong> Recomendaciones de optimización basadas en análisis</li>
                 </ul>
-            </div>
                 
                 <p>
                     <strong>Ventajas Competitivas del Sistema:</strong>
@@ -137,8 +136,8 @@
                     terminología técnica, y mejores prácticas del sector. Integración nativa con sistemas de marketing 
                     (CMS, Marketing Automation, Analytics) para un workflow end-to-end sin fricciones.
                 </p>
-            </div>
-        </div>
+            </div> <!-- Cierre de doc-section-content -->
+        </div> <!-- Cierre de doc-section -->
         
         <!-- Modelos de IA -->
         <div class="doc-section">
@@ -586,6 +585,7 @@
                 <button class="tryout-tab" onclick="mostrarGenerador('social')">📱 Social</button>
                 <button class="tryout-tab" onclick="mostrarGenerador('blog')">📝 Blog</button>
                 <button class="tryout-tab" onclick="mostrarGenerador('landing')">🎯 Landing</button>
+                <button class="tryout-tab" onclick="mostrarGenerador('video')">🎬 Video IA</button>
             </div>
 
             <!-- Email Campaign Generator -->
@@ -837,6 +837,270 @@
                         <button class="btn btn-outline" onclick="previsualizarLanding()">👁️ Vista Previa</button>
                         <button class="btn btn-outline" onclick="editarLanding()">✏️ Editar</button>
                         <button class="btn btn-primary" onclick="exportarHTML()">💾 Exportar HTML</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Generator with Google AI -->
+            <div id="generator-video" class="tryout-generator">
+                <div class="tryout-form">
+                    <div class="video-generator-header">
+                        <div class="tech-badge-large">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%234285F4' d='M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z'/%3E%3C/svg%3E" alt="Google" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">
+                            <span>Google ViGenAiR</span>
+                        </div>
+                        <p class="video-generator-desc">Crea videos publicitarios optimizados para múltiples plataformas en segundos</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>Describe tu video publicitario</label>
+                            <textarea id="video-descripcion" class="form-control" rows="3" placeholder="Ejemplo: Un video de 15 segundos para promocionar nuestra tarifa de energía solar residencial, dirigido a familias jóvenes, con un tono optimista y moderno..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duración</label>
+                            <select id="video-duracion" class="form-control">
+                                <option value="15">15 segundos (Bumper Ad)</option>
+                                <option value="30" selected>30 segundos (Standard)</option>
+                                <option value="60">60 segundos (Extended)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Formato</label>
+                            <select id="video-formato" class="form-control">
+                                <option value="landscape">16:9 Horizontal (YouTube, Web)</option>
+                                <option value="vertical">9:16 Vertical (Stories, Reels)</option>
+                                <option value="square">1:1 Cuadrado (Feed Social)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Plataforma Objetivo</label>
+                            <select id="video-plataforma" class="form-control">
+                                <option value="youtube">YouTube</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="tiktok">TikTok</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="multi" selected>Multi-plataforma</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Estilo Visual</label>
+                            <select id="video-estilo" class="form-control">
+                                <option value="moderno">Moderno y Limpio</option>
+                                <option value="dinamico" selected>Dinámico con Movimiento</option>
+                                <option value="minimalista">Minimalista</option>
+                                <option value="cinematico">Cinemático</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Música de Fondo</label>
+                            <select id="video-musica" class="form-control">
+                                <option value="energetica">Energética</option>
+                                <option value="inspiradora" selected>Inspiradora</option>
+                                <option value="corporativa">Corporativa</option>
+                                <option value="none">Sin música</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Número de Variantes</label>
+                            <select id="video-variantes" class="form-control">
+                                <option value="1">1 versión</option>
+                                <option value="3" selected>3 variantes (A/B/C)</option>
+                                <option value="5">5 variantes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-generate" onclick="generarVideo()">
+                        <span class="btn-icon">🎬</span> Generar Video con IA
+                    </button>
+                </div>
+
+                <div id="video-resultado" class="tryout-resultado" style="display: none;">
+                    <div class="resultado-header">
+                        <h3>✅ Videos Generados con Google ViGenAiR</h3>
+                        <div class="resultado-badges">
+                            <span class="badge badge-success">3 Variantes</span>
+                            <span class="badge badge-info">Tiempo: 8.2s</span>
+                        </div>
+                    </div>
+
+                    <div class="video-variants-grid">
+                        <!-- Variante A -->
+                        <div class="video-variant-card">
+                            <div class="video-variant-header">
+                                <h4>🎬 Variante A - "Futuro Sostenible"</h4>
+                                <span class="badge badge-success">Recomendada</span>
+                            </div>
+                            <div class="video-preview-container">
+                                <div class="video-mockup">
+                                    <div class="video-play-icon">▶️</div>
+                                    <div class="video-timeline">0:00 / 0:30</div>
+                                </div>
+                            </div>
+                            <div class="video-details">
+                                <div class="video-detail-item">
+                                    <strong>🎨 Escenas:</strong>
+                                    <ul>
+                                        <li>Intro: Logo Iberdrola con animación solar (3s)</li>
+                                        <li>Familia feliz en hogar con paneles (8s)</li>
+                                        <li>Gráficos de ahorro animados (7s)</li>
+                                        <li>Transición a energía limpia (7s)</li>
+                                        <li>CTA: "Cambia hoy a solar" (5s)</li>
+                                    </ul>
+                                </div>
+                                <div class="video-detail-item">
+                                    <strong>📝 Texto en pantalla:</strong>
+                                    <p>"Energía Solar | Ahorra hasta 60% | 100% Renovable | Iberdrola"</p>
+                                </div>
+                                <div class="video-detail-item">
+                                    <strong>🎵 Audio:</strong>
+                                    <p>Música inspiradora + Voz en off femenina, tono optimista</p>
+                                </div>
+                                <div class="video-metrics">
+                                    <div class="metric-item">
+                                        <span class="metric-label">CTR Esperado:</span>
+                                        <span class="metric-value success">4.8%</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Engagement Score:</span>
+                                        <span class="metric-value success">8.2/10</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">View Completion:</span>
+                                        <span class="metric-value success">78%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Variante B -->
+                        <div class="video-variant-card">
+                            <div class="video-variant-header">
+                                <h4>🎬 Variante B - "Datos y Ahorro"</h4>
+                            </div>
+                            <div class="video-preview-container">
+                                <div class="video-mockup">
+                                    <div class="video-play-icon">▶️</div>
+                                    <div class="video-timeline">0:00 / 0:30</div>
+                                </div>
+                            </div>
+                            <div class="video-details">
+                                <div class="video-detail-item">
+                                    <strong>🎨 Escenas:</strong>
+                                    <ul>
+                                        <li>Intro: Problema factura alta (4s)</li>
+                                        <li>Infografías animadas de ahorro (10s)</li>
+                                        <li>Comparativa antes/después (8s)</li>
+                                        <li>Paneles solares en acción (5s)</li>
+                                        <li>CTA: "Calcula tu ahorro" (3s)</li>
+                                    </ul>
+                                </div>
+                                <div class="video-detail-item">
+                                    <strong>📝 Texto en pantalla:</strong>
+                                    <p>"Hasta 60% menos | 0€ instalación | ROI en 4 años"</p>
+                                </div>
+                                <div class="video-detail-item">
+                                    <strong>🎵 Audio:</strong>
+                                    <p>Música corporativa + Voz en off masculina, tono informativo</p>
+                                </div>
+                                <div class="video-metrics">
+                                    <div class="metric-item">
+                                        <span class="metric-label">CTR Esperado:</span>
+                                        <span class="metric-value">4.2%</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Engagement Score:</span>
+                                        <span class="metric-value">7.8/10</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">View Completion:</span>
+                                        <span class="metric-value">72%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Variante C -->
+                        <div class="video-variant-card">
+                            <div class="video-variant-header">
+                                <h4>🎬 Variante C - "Testimonial Real"</h4>
+                            </div>
+                            <div class="video-preview-container">
+                                <div class="video-mockup">
+                                    <div class="video-play-icon">▶️</div>
+                                    <div class="video-timeline">0:00 / 0:30</div>
+                                </div>
+                            </div>
+                            <div class="video-details">
+                                <div class="video-detail-item">
+                                    <strong>🎨 Escenas:</strong>
+                                    <ul>
+                                        <li>Cliente real hablando en su hogar (10s)</li>
+                                        <li>B-roll de instalación de paneles (8s)</li>
+                                        <li>Gráfico de ahorros reales (5s)</li>
+                                        <li>Cliente feliz con factura reducida (4s)</li>
+                                        <li>CTA: "Únete a 50,000+ clientes" (3s)</li>
+                                    </ul>
+                                </div>
+                                <div class="video-detail-item">
+                                    <strong>📝 Texto en pantalla:</strong>
+                                    <p>"María ahorró 720€ el primer año | Tu también puedes"</p>
+                                </div>
+                                <div class="video-detail-item">
+                                    <strong>🎵 Audio:</strong>
+                                    <p>Música suave + Audio natural del cliente testimonial</p>
+                                </div>
+                                <div class="video-metrics">
+                                    <div class="metric-item">
+                                        <span class="metric-label">CTR Esperado:</span>
+                                        <span class="metric-value warning">3.9%</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Engagement Score:</span>
+                                        <span class="metric-value">8.5/10</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">View Completion:</span>
+                                        <span class="metric-value success">82%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-export-options">
+                        <h4>📤 Opciones de Exportación</h4>
+                        <div class="export-options-grid">
+                            <div class="export-option">
+                                <input type="checkbox" id="export-youtube" checked>
+                                <label for="export-youtube">📺 YouTube Ads (1080p)</label>
+                            </div>
+                            <div class="export-option">
+                                <input type="checkbox" id="export-meta" checked>
+                                <label for="export-meta">📱 Meta Ads (Stories + Feed)</label>
+                            </div>
+                            <div class="export-option">
+                                <input type="checkbox" id="export-tiktok">
+                                <label for="export-tiktok">🎵 TikTok Ads (Vertical)</label>
+                            </div>
+                            <div class="export-option">
+                                <input type="checkbox" id="export-linkedin">
+                                <label for="export-linkedin">💼 LinkedIn Ads</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resultado-actions">
+                        <button class="btn btn-outline" onclick="regenerarVariantes()">🔄 Regenerar Variantes</button>
+                        <button class="btn btn-outline" onclick="editarTimeline()">✂️ Editar Timeline</button>
+                        <button class="btn btn-primary" onclick="exportarVideos()">💾 Exportar Videos (3)</button>
                     </div>
                 </div>
             </div>
@@ -1871,6 +2135,39 @@ function editarLanding() {
 
 function exportarHTML() {
     alert(`💾 Exportar HTML\n\nEn un entorno real, esto exportaría:\n\n✓ HTML completo optimizado\n✓ CSS inline o externo\n✓ JavaScript necesario\n✓ Assets (imágenes, iconos)\n✓ Listo para subir a servidor`);
+}
+
+// Video Generator Functions
+async function generarVideo() {
+    const button = event.target;
+    const resultadoDiv = document.getElementById('video-resultado');
+    
+    // Cambiar botón a estado "Generando..."
+    button.disabled = true;
+    button.innerHTML = '<span class="btn-icon">⏳</span> Generando videos con IA...';
+    
+    // Simular delay de generación realista
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // Mostrar resultado
+    resultadoDiv.style.display = 'block';
+    resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Restaurar botón
+    button.disabled = false;
+    button.innerHTML = '<span class="btn-icon">🎬</span> Generar Video con IA';
+}
+
+function regenerarVariantes() {
+    alert(`🔄 Regenerando Variantes\n\nEn un entorno real, Google ViGenAiR generaría nuevas versiones del video con:\n\n✓ Diferentes ángulos narrativos\n✓ Variaciones de duración\n✓ Estilos visuales alternativos\n✓ Múltiples CTAs\n✓ Optimizaciones por plataforma`);
+}
+
+function editarTimeline() {
+    alert(`✂️ Editor de Timeline\n\nEn un entorno real, esto abriría un editor visual donde podrías:\n\n✓ Arrastrar y reordenar escenas\n✓ Ajustar duración de cada clip\n✓ Modificar transiciones\n✓ Cambiar texto en pantalla\n✓ Reemplazar música\n✓ Añadir efectos y filtros`);
+}
+
+function exportarVideos() {
+    alert(`💾 Exportando Videos\n\nEn un entorno real, esto prepararía los 3 videos para:\n\n✓ YouTube Ads (1080p, landscape)\n✓ Meta Ads (Stories 9:16 + Feed 1:1)\n✓ Descarga en múltiples formatos (MP4, WebM)\n✓ Integración directa con plataformas publicitarias\n✓ Subtítulos automáticos incluidos`);
 }
 </script>
 {% endblock %}

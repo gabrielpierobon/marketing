@@ -117,13 +117,14 @@
 <script>
 function navigateToCasoUso(endpoint) {
     if (endpoint) {
-        window.location.href = '/' + endpoint;
+        // Convertir guiones bajos a guiones para que coincida con las rutas de Flask
+        window.location.href = '/' + endpoint.replace(/_/g, '-');
     }
 }
 
 function navigateToIntegracion(endpoint) {
     if (endpoint) {
-        window.location.href = '/' + endpoint.replace('_', '-');
+        window.location.href = '/' + endpoint.replace(/_/g, '-');
     }
 }
 </script>

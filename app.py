@@ -434,6 +434,14 @@ Clientes actuales están ganando €15-40/mes adicionales sin esfuerzo.''',
     
     return jsonify(resultado)
 
+# ==================== CASO DE USO: INTELIGENCIA COMPETITIVA CON GENAI ====================
+
+@app.route('/inteligencia-competitiva')
+@login_required
+def inteligencia_competitiva():
+    """Inteligencia Competitiva con GenAI - 3 herramientas en 1"""
+    return render_template('inteligencia_competitiva.html')
+
 # ==================== CASO DE USO 3: CHATBOT ====================
 
 @app.route('/chatbot')
@@ -2404,10 +2412,99 @@ def monitorizacion():
 @app.route('/introduccion')
 @login_required
 def introduccion():
-    # Estructura de documentación por categorías
+    # Estructura de documentación reorganizada según esquema Iberdrola
     casos_uso_docs = [
         {
-            'categoria': 'Customer Engagement',
+            'categoria': '1. Benchmark',
+            'numero': '1',
+            'descripcion': 'Estudio y seguimiento - Competencia y sectores',
+            'casos': [
+                {
+                    'id': 'monitorizacion_marca',
+                    'nombre': 'Monitorización de Marca',
+                    'icono': '📡',
+                    'descripcion': 'Seguimiento y análisis de menciones de marca en tiempo real con análisis de sentimiento.',
+                    'enfoque_ia': 'Utiliza NLP avanzado para análisis de sentimiento multi-clase y detección de temas emergentes en redes sociales.',
+                    'datos_entrada': 'Menciones en redes sociales (Twitter, Facebook, Instagram, LinkedIn), reviews, comentarios, artículos de prensa.',
+                    'procesamiento': 'Text mining para extraer menciones relevantes, análisis de sentimiento con modelos transformer, clustering de temas, detección de tendencias.',
+                    'salida': 'Score de sentimiento (positivo/neutral/negativo), temas trending, alertas de crisis, comparativa con competencia, insights accionables.',
+                    'modelos': ['BERT Sentiment', 'RoBERTa', 'Topic Modeling (LDA)', 'Named Entity Recognition', 'Trend Detection']
+                },
+                {
+                    'id': 'inteligencia_competitiva',
+                    'nombre': 'Inteligencia Competitiva con GenAI',
+                    'icono': '🔍',
+                    'descripcion': 'Sistema de inteligencia competitiva que combina web scraping, análisis de redes sociales y GenAI para monitorizar competidores, detectar campañas y generar respuestas automatizadas en <24h.',
+                    'enfoque_ia': 'Utiliza GPT-4 para generación de insights ejecutivos, Vision AI para análisis de creatividades competitivas, y BERT para análisis de sentimiento en menciones de competidores.',
+                    'datos_entrada': 'URLs y contenido de sitios web de competidores, posts y ads en redes sociales (Meta, LinkedIn, Twitter), comunicados de prensa, cambios en precios/tarifas, creatividades publicitarias (imágenes, videos, copy).',
+                    'procesamiento': 'Scrapers automáticos monitorizan webs cada hora, algoritmos ML detectan cambios significativos, Vision AI analiza creatividades, GPT-4 sintetiza insights ejecutivos, GenAI genera propuestas de contra-campañas con múltiples variantes creativas.',
+                    'salida': 'Informes semanales ejecutivos de actividad competitiva, alertas en tiempo real de lanzamientos/cambios, Battle Cards actualizadas Iberdrola vs competidores, mensajes de posicionamiento diferenciados, briefs completos de contra-campañas con creatividades y plan de medios.',
+                    'modelos': ['GPT-4', 'Claude 3', 'Vision AI', 'BERT Sentiment', 'Web Scraping (Scrapy/Selenium)', 'Change Detection Algorithms', 'Meta API', 'Google Ads API']
+                }
+            ]
+        },
+        {
+            'categoria': '2. Insights y Aprendizajes',
+            'numero': '2',
+            'descripcion': 'Análisis predictivo automatizado, reportes e insights',
+            'casos': [
+                {
+                    'id': 'prediccion_churn',
+                    'nombre': 'Predicción de Churn',
+                    'icono': '📈',
+                    'descripcion': 'Predicción temprana de abandono de clientes con análisis de factores de riesgo y recomendaciones de retención.',
+                    'enfoque_ia': 'Utiliza modelos de clasificación supervisada (XGBoost, Random Forest) con técnicas de survival analysis para predecir probabilidad y timing de churn.',
+                    'datos_entrada': 'Historial de uso del servicio, frecuencia de interacciones, tickets de soporte, cambios en patrones de consumo, datos de satisfacción.',
+                    'procesamiento': 'Feature engineering de señales de riesgo, balanceo de clases (SMOTE), entrenamiento de ensemble models, calibración de probabilidades.',
+                    'salida': 'Score de riesgo de churn (0-100), factores principales de riesgo, tiempo estimado hasta churn, acciones de retención recomendadas.',
+                    'modelos': ['XGBoost', 'Random Forest', 'Survival Analysis', 'SHAP (explicabilidad)', 'Calibrated Classifiers']
+                },
+                {
+                    'id': 'segmentacion_avanzada',
+                    'nombre': 'Segmentación Avanzada de Clientes',
+                    'icono': '🔍',
+                    'descripcion': 'Segmentación automática de clientes basada en comportamiento, valor y propensión usando clustering avanzado.',
+                    'enfoque_ia': 'Aplica algoritmos de clustering no supervisado (K-Means, DBSCAN) con reducción de dimensionalidad para identificar segmentos naturales.',
+                    'datos_entrada': 'Datos transaccionales, comportamiento digital, datos demográficos, interacciones con servicio al cliente, engagement con campañas.',
+                    'procesamiento': 'Feature engineering para crear variables significativas, PCA/t-SNE para reducción de dimensionalidad, clustering jerárquico y por densidad.',
+                    'salida': 'Segmentos de clientes con perfiles detallados, tamaño y valor de cada segmento, estrategias de marketing personalizadas por segmento.',
+                    'modelos': ['K-Means', 'DBSCAN', 'Hierarchical Clustering', 'PCA', 't-SNE', 'RFM Analysis']
+                },
+                {
+                    'id': 'attribution_marketing',
+                    'nombre': 'Modelos de Atribución',
+                    'icono': '🔗',
+                    'descripcion': 'Atribución multi-touch que determina la contribución real de cada canal al customer journey.',
+                    'enfoque_ia': 'Implementa modelos algorítmicos (Shapley Value, Markov Chains) para atribución data-driven vs. reglas simples.',
+                    'datos_entrada': 'Customer journeys completos, touchpoints en cada canal, timestamps, conversiones, valor de transacciones.',
+                    'procesamiento': 'Construcción de grafos de transición entre canales, cálculo de Shapley Values para contribución marginal, simulaciones de Markov.',
+                    'salida': 'Crédito de conversión por canal, ROI ajustado por atribución, recomendaciones de reasignación de presupuesto.',
+                    'modelos': ['Shapley Value Attribution', 'Markov Chain Models', 'Time Decay', 'Position-based', 'Data-driven Attribution']
+                }
+            ]
+        },
+        {
+            'categoria': '3. Estudio Creativo',
+            'numero': '3',
+            'descripcion': 'Creación y gestión del proceso de producción de piezas publicitarias digitales',
+            'casos': [
+                {
+                    'id': 'contenido_genai',
+                    'nombre': 'Generación de Contenido con GenAI',
+                    'icono': '✍️',
+                    'descripcion': 'Generación automatizada de contenido de marketing de alta calidad usando IA generativa.',
+                    'enfoque_ia': 'Emplea modelos de lenguaje generativos (GPT-4, Claude) con prompts especializados y fine-tuning para mantener el tono de marca.',
+                    'datos_entrada': 'Brief de campaña, tono de marca, audiencia objetivo, palabras clave, ejemplos de contenido previo, datos del producto/servicio.',
+                    'procesamiento': 'Los prompts se estructuran con contexto de marca y objetivos. El modelo genera múltiples variantes que se filtran por calidad y coherencia.',
+                    'salida': 'Emails de marketing, posts para redes sociales, artículos de blog, copy para landing pages, subject lines optimizados.',
+                    'modelos': ['GPT-4', 'Claude 3', 'Llama 2', 'Fine-tuned Models', 'Content Quality Scoring']
+                }
+            ]
+        },
+        {
+            'categoria': '4. Content Automation Tool',
+            'numero': '4',
+            'descripcion': 'Transferencia piezas creativas y Tráficado Automático',
             'casos': [
                 {
                     'id': 'personalizacion',
@@ -2432,8 +2529,26 @@ def introduccion():
                     'modelos': ['SVD', 'ALS', 'Item-based CF', 'Content-based', 'Hybrid Models']
                 },
                 {
+                    'id': 'ab_testing',
+                    'nombre': 'A/B Testing Automatizado',
+                    'icono': '🧪',
+                    'descripcion': 'Sistema de experimentación automatizada con análisis estadístico riguroso y optimización bayesiana.',
+                    'enfoque_ia': 'Utiliza inferencia bayesiana y Multi-Armed Bandits para balancear exploración y explotación durante los tests.',
+                    'datos_entrada': 'Variantes a testear, métricas objetivo, tráfico disponible, restricciones de tiempo, priors históricos.',
+                    'procesamiento': 'Cálculo de tamaño de muestra, asignación dinámica de tráfico con Thompson Sampling, análisis de significancia estadística continuo.',
+                    'salida': 'Variante ganadora con nivel de confianza, lift estimado, momento óptimo para terminar el test, insights sobre segmentos.',
+                    'modelos': ['Bayesian A/B Testing', 'Thompson Sampling', 'Sequential Testing', 'CUPED (variance reduction)']
+                }
+            ]
+        },
+        {
+            'categoria': '5. Brand Guardian',
+            'numero': '5',
+            'descripcion': 'Supervisión continua de todos los procesos que implican a la marca y su identidad',
+            'casos': [
+                {
                     'id': 'chatbot',
-                    'nombre': 'Chatbot IA',
+                    'nombre': 'Agentes Conversacionales',
                     'icono': '💬',
                     'descripcion': 'Asistente conversacional inteligente que atiende consultas de clientes 24/7 con comprensión de lenguaje natural.',
                     'enfoque_ia': 'Utiliza Large Language Models (LLMs) con Retrieval-Augmented Generation (RAG) para respuestas contextuales y precisas.',
@@ -2441,39 +2556,7 @@ def introduccion():
                     'procesamiento': 'El texto se procesa con NLU para extraer intención y entidades. RAG busca información relevante en la base de conocimiento y el LLM genera respuestas coherentes.',
                     'salida': 'Respuestas en lenguaje natural, acciones automatizadas (crear tickets, consultar estado), escalado a agente humano cuando necesario.',
                     'modelos': ['GPT-4', 'BERT (NLU)', 'Sentence Transformers', 'RAG', 'Intent Classification']
-                }
-            ]
-        },
-        {
-            'categoria': 'Content & Creative',
-            'casos': [
-                {
-                    'id': 'contenido_genai',
-                    'nombre': 'Generación de Contenido con GenAI',
-                    'icono': '✨',
-                    'descripcion': 'Generación automatizada de contenido de marketing de alta calidad usando IA generativa.',
-                    'enfoque_ia': 'Emplea modelos de lenguaje generativos (GPT-4, Claude) con prompts especializados y fine-tuning para mantener el tono de marca.',
-                    'datos_entrada': 'Brief de campaña, tono de marca, audiencia objetivo, palabras clave, ejemplos de contenido previo, datos del producto/servicio.',
-                    'procesamiento': 'Los prompts se estructuran con contexto de marca y objetivos. El modelo genera múltiples variantes que se filtran por calidad y coherencia.',
-                    'salida': 'Emails de marketing, posts para redes sociales, artículos de blog, copy para landing pages, subject lines optimizados.',
-                    'modelos': ['GPT-4', 'Claude 3', 'Llama 2', 'Fine-tuned Models', 'Content Quality Scoring']
                 },
-                {
-                    'id': 'monitorizacion_marca',
-                    'nombre': 'Monitorización de Marca',
-                    'icono': '📢',
-                    'descripcion': 'Seguimiento y análisis de menciones de marca en tiempo real con análisis de sentimiento.',
-                    'enfoque_ia': 'Utiliza NLP avanzado para análisis de sentimiento multi-clase y detección de temas emergentes en redes sociales.',
-                    'datos_entrada': 'Menciones en redes sociales (Twitter, Facebook, Instagram, LinkedIn), reviews, comentarios, artículos de prensa.',
-                    'procesamiento': 'Text mining para extraer menciones relevantes, análisis de sentimiento con modelos transformer, clustering de temas, detección de tendencias.',
-                    'salida': 'Score de sentimiento (positivo/neutral/negativo), temas trending, alertas de crisis, comparativa con competencia, insights accionables.',
-                    'modelos': ['BERT Sentiment', 'RoBERTa', 'Topic Modeling (LDA)', 'Named Entity Recognition', 'Trend Detection']
-                }
-            ]
-        },
-        {
-            'categoria': 'Campaign Optimization',
-            'casos': [
                 {
                     'id': 'optimizacion_publicitaria',
                     'nombre': 'Optimización Publicitaria',
@@ -2484,55 +2567,6 @@ def introduccion():
                     'procesamiento': 'Modelos predictivos estiman el performance de cada combinación creatividad-audiencia-bid. RL ajusta la estrategia en tiempo real.',
                     'salida': 'Recomendaciones de ajuste de bids, pausar/activar campañas, cambios de segmentación, nuevas creatividades a testear.',
                     'modelos': ['Thompson Sampling', 'Contextual Bandits', 'Prophet (forecasting)', 'XGBoost', 'LSTM']
-                },
-                {
-                    'id': 'ab_testing',
-                    'nombre': 'A/B Testing Automatizado',
-                    'icono': '🔬',
-                    'descripcion': 'Sistema de experimentación automatizada con análisis estadístico riguroso y optimización bayesiana.',
-                    'enfoque_ia': 'Utiliza inferencia bayesiana y Multi-Armed Bandits para balancear exploración y explotación durante los tests.',
-                    'datos_entrada': 'Variantes a testear, métricas objetivo, tráfico disponible, restricciones de tiempo, priors históricos.',
-                    'procesamiento': 'Cálculo de tamaño de muestra, asignación dinámica de tráfico con Thompson Sampling, análisis de significancia estadística continuo.',
-                    'salida': 'Variante ganadora con nivel de confianza, lift estimado, momento óptimo para terminar el test, insights sobre segmentos.',
-                    'modelos': ['Bayesian A/B Testing', 'Thompson Sampling', 'Sequential Testing', 'CUPED (variance reduction)']
-                },
-                {
-                    'id': 'attribution_marketing',
-                    'nombre': 'Modelos de Atribución',
-                    'icono': '🔗',
-                    'descripcion': 'Atribución multi-touch que determina la contribución real de cada canal al customer journey.',
-                    'enfoque_ia': 'Implementa modelos algorítmicos (Shapley Value, Markov Chains) para atribución data-driven vs. reglas simples.',
-                    'datos_entrada': 'Customer journeys completos, touchpoints en cada canal, timestamps, conversiones, valor de transacciones.',
-                    'procesamiento': 'Construcción de grafos de transición entre canales, cálculo de Shapley Values para contribución marginal, simulaciones de Markov.',
-                    'salida': 'Crédito de conversión por canal, ROI ajustado por atribución, recomendaciones de reasignación de presupuesto.',
-                    'modelos': ['Shapley Value Attribution', 'Markov Chain Models', 'Time Decay', 'Position-based', 'Data-driven Attribution']
-                }
-            ]
-        },
-        {
-            'categoria': 'Customer Intelligence',
-            'casos': [
-                {
-                    'id': 'segmentacion_avanzada',
-                    'nombre': 'Segmentación Avanzada de Clientes',
-                    'icono': '🎯',
-                    'descripcion': 'Segmentación automática de clientes basada en comportamiento, valor y propensión usando clustering avanzado.',
-                    'enfoque_ia': 'Aplica algoritmos de clustering no supervisado (K-Means, DBSCAN) con reducción de dimensionalidad para identificar segmentos naturales.',
-                    'datos_entrada': 'Datos transaccionales, comportamiento digital, datos demográficos, interacciones con servicio al cliente, engagement con campañas.',
-                    'procesamiento': 'Feature engineering para crear variables significativas, PCA/t-SNE para reducción de dimensionalidad, clustering jerárquico y por densidad.',
-                    'salida': 'Segmentos de clientes con perfiles detallados, tamaño y valor de cada segmento, estrategias de marketing personalizadas por segmento.',
-                    'modelos': ['K-Means', 'DBSCAN', 'Hierarchical Clustering', 'PCA', 't-SNE', 'RFM Analysis']
-                },
-                {
-                    'id': 'prediccion_churn',
-                    'nombre': 'Predicción de Churn',
-                    'icono': '📉',
-                    'descripcion': 'Predicción temprana de abandono de clientes con análisis de factores de riesgo y recomendaciones de retención.',
-                    'enfoque_ia': 'Utiliza modelos de clasificación supervisada (XGBoost, Random Forest) con técnicas de survival analysis para predecir probabilidad y timing de churn.',
-                    'datos_entrada': 'Historial de uso del servicio, frecuencia de interacciones, tickets de soporte, cambios en patrones de consumo, datos de satisfacción.',
-                    'procesamiento': 'Feature engineering de señales de riesgo, balanceo de clases (SMOTE), entrenamiento de ensemble models, calibración de probabilidades.',
-                    'salida': 'Score de riesgo de churn (0-100), factores principales de riesgo, tiempo estimado hasta churn, acciones de retención recomendadas.',
-                    'modelos': ['XGBoost', 'Random Forest', 'Survival Analysis', 'SHAP (explicabilidad)', 'Calibrated Classifiers']
                 }
             ]
         }

@@ -1,0 +1,926 @@
+{% extends "base.html" %}
+
+{% block title %}Inteligencia Competitiva con GenAI - Iberdrola AI{% endblock %}
+
+{% block page_title %}Inteligencia Competitiva con GenAI{% endblock %}
+
+{% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>🔍 Inteligencia Competitiva con GenAI</h2>
+            <p>Guía técnica completa del caso de uso</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <!-- Resumen -->
+        <section class="doc-section">
+            <h3 class="editable-content" contenteditable="false">🎯 Resumen Ejecutivo</h3>
+            <p class="editable-content" contenteditable="false">Sistema de Inteligencia Competitiva que combina web scraping, análisis de redes sociales y IA Generativa para monitorizar automáticamente a competidores, detectar nuevas campañas y generar propuestas de respuesta en tiempo real.</p>
+        </section>
+
+        <!-- Enfoque de IA -->
+        <section class="doc-section">
+            <h3 class="editable-content" contenteditable="false">🤖 Enfoque de IA</h3>
+            <p class="editable-content" contenteditable="false"><strong>Modelos Utilizados:</strong> GPT-4 para generación de insights y contenido, Vision AI para análisis de creatividades, BERT para análisis de sentimiento en menciones, y algoritmos de web scraping con detección de cambios.</p>
+        </section>
+
+        <!-- Datos de Entrada -->
+        <section class="doc-section">
+            <h3 class="editable-content" contenteditable="false">📥 Datos de Entrada</h3>
+            <ul>
+                <li class="editable-content" contenteditable="false">URLs y contenido de sitios web de competidores</li>
+                <li class="editable-content" contenteditable="false">Posts, ads y métricas de redes sociales (Meta, LinkedIn, Twitter)</li>
+                <li class="editable-content" contenteditable="false">Comunicados de prensa y noticias del sector energético</li>
+                <li class="editable-content" contenteditable="false">Cambios en precios, tarifas y promociones</li>
+                <li class="editable-content" contenteditable="false">Creatividades publicitarias (imágenes, videos, copy)</li>
+                <li class="editable-content" contenteditable="false">Datos históricos de campañas propias y de competencia</li>
+            </ul>
+        </section>
+
+        <!-- Procesamiento -->
+        <section class="doc-section">
+            <h3 class="editable-content" contenteditable="false">⚙️ Procesamiento</h3>
+            <p class="editable-content" contenteditable="false"><strong>Pipeline de Análisis:</strong></p>
+            <ol>
+                <li class="editable-content" contenteditable="false"><strong>Monitorización Continua:</strong> Scrapers automáticos revisan webs y redes sociales cada hora</li>
+                <li class="editable-content" contenteditable="false"><strong>Detección de Cambios:</strong> Algoritmos identifican modificaciones significativas (precios, nuevas páginas, posts)</li>
+                <li class="editable-content" contenteditable="false"><strong>Clasificación:</strong> ML clasifica los cambios por tipo (producto, precio, campaña, contenido)</li>
+                <li class="editable-content" contenteditable="false"><strong>Análisis de Creatividades:</strong> Vision AI extrae elementos visuales, copy, CTA de anuncios</li>
+                <li class="editable-content" contenteditable="false"><strong>Análisis de Sentimiento:</strong> NLP procesa menciones en redes y reviews de clientes</li>
+                <li class="editable-content" contenteditable="false"><strong>Generación de Insights:</strong> GPT-4 sintetiza toda la información en informes ejecutivos</li>
+                <li class="editable-content" contenteditable="false"><strong>Generación de Respuestas:</strong> GenAI crea propuestas de contra-campañas con múltiples variantes</li>
+                <li class="editable-content" contenteditable="false"><strong>Optimización:</strong> Algoritmos de predicción estiman performance de cada variante</li>
+            </ol>
+        </section>
+
+        <!-- Salidas del Sistema -->
+        <section class="doc-section">
+            <h3 class="editable-content" contenteditable="false">📤 Salidas del Sistema</h3>
+            <ul>
+                <li class="editable-content" contenteditable="false"><strong>Informes Semanales:</strong> Resumen ejecutivo de actividad competitiva</li>
+                <li class="editable-content" contenteditable="false"><strong>Alertas en Tiempo Real:</strong> Notificaciones de cambios críticos (lanzamientos, bajadas de precio)</li>
+                <li class="editable-content" contenteditable="false"><strong>Battle Cards:</strong> Comparativas Iberdrola vs cada competidor actualizadas</li>
+                <li class="editable-content" contenteditable="false"><strong>Mensajes de Posicionamiento:</strong> Copy diferenciado por segmento y competidor</li>
+                <li class="editable-content" contenteditable="false"><strong>Briefs de Contra-Campañas:</strong> Propuestas completas con creatividades, plan de medios y timeline</li>
+                <li class="editable-content" contenteditable="false"><strong>Gap Analysis:</strong> Oportunidades de mercado no cubiertas por competencia</li>
+                <li class="editable-content" contenteditable="false"><strong>Recomendaciones Accionables:</strong> Sugerencias priorizadas por impacto esperado</li>
+            </ul>
+        </section>
+
+        <!-- Modelos y Tecnologías -->
+        <section class="doc-section">
+            <h3 class="editable-content" contenteditable="false">🔧 Modelos y Tecnologías</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">GPT-4</span>
+                <span class="tech-badge">Claude 3</span>
+                <span class="tech-badge">Vision AI</span>
+                <span class="tech-badge">BERT Sentiment</span>
+                <span class="tech-badge">Scrapy / Selenium</span>
+                <span class="tech-badge">BeautifulSoup</span>
+                <span class="tech-badge">Meta API</span>
+                <span class="tech-badge">Google Ads API</span>
+                <span class="tech-badge">Diffbot</span>
+                <span class="tech-badge">Change Detection</span>
+            </div>
+        </section>
+
+        <!-- Por Qué es Quick Win -->
+        <section class="doc-section">
+            <h3 class="editable-content" contenteditable="false">⚡ Por Qué es Quick Win</h3>
+            <ul>
+                <li class="editable-content" contenteditable="false">✅ <strong>Baja dependencia de datos internos:</strong> Se alimenta principalmente de fuentes públicas</li>
+                <li class="editable-content" contenteditable="false">✅ <strong>APIs disponibles:</strong> Herramientas de scraping y análisis ya existen en el mercado</li>
+                <li class="editable-content" contenteditable="false">✅ <strong>Valor inmediato:</strong> Insights desde el primer día de funcionamiento</li>
+                <li class="editable-content" contenteditable="false">✅ <strong>ROI medible:</strong> Reducción del time-to-market de respuesta a competencia</li>
+                <li class="editable-content" contenteditable="false">✅ <strong>Implementación modular:</strong> Se puede empezar solo con Intelligence Copilot</li>
+                <li class="editable-content" contenteditable="false">✅ <strong>Tecnología probada:</strong> Componentes ya validados en otros sectores</li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+<div class="use-case-container">
+    <!-- Header -->
+    <div class="use-case-header">
+        <div class="use-case-icon">🔍</div>
+        <div class="use-case-title-section">
+            <h1 class="use-case-title">Inteligencia Competitiva con GenAI</h1>
+            <p class="use-case-subtitle">Monitorización y análisis automatizado de competidores con IA Generativa</p>
+        </div>
+        <div class="use-case-badge badge-quick-win">⚡ Quick Win</div>
+    </div>
+
+    <!-- Tabs de las 3 ideas -->
+    <div class="competitive-tabs">
+        <button class="competitive-tab active" onclick="switchCompetitiveTab('copilot')">
+            <span class="tab-icon">📊</span>
+            <span class="tab-name">Intelligence Copilot</span>
+        </button>
+        <button class="competitive-tab" onclick="switchCompetitiveTab('positioning')">
+            <span class="tab-icon">🎯</span>
+            <span class="tab-name">Positioning Generator</span>
+        </button>
+        <button class="competitive-tab" onclick="switchCompetitiveTab('campaign-spy')">
+            <span class="tab-icon">🔍</span>
+            <span class="tab-name">Campaign Spy & Adapt</span>
+        </button>
+    </div>
+
+    <!-- TAB 1: Intelligence Copilot -->
+    <div id="copilot-tab" class="competitive-tab-content active">
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 Competitive Intelligence Copilot</h2>
+                <p>Analista IA autónomo que monitoriza competidores y genera informes ejecutivos</p>
+            </div>
+            <div class="card-body">
+                <!-- Controles -->
+                <div class="demo-controls">
+                    <div class="control-group">
+                        <label>Selecciona competidores a analizar:</label>
+                        <div class="competitor-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked> <span class="competitor-logo">⚡</span> Endesa
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked> <span class="competitor-logo">🔥</span> Naturgy
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked> <span class="competitor-logo">🛢️</span> Repsol
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox"> <span class="competitor-logo">💡</span> EDP España
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateCopilotReport()">
+                        🤖 Generar Informe Semanal
+                    </button>
+                </div>
+
+                <!-- Resultado simulado -->
+                <div id="copilot-result" class="simulation-result" style="display: none;">
+                    <div class="result-header">
+                        <h3>📄 Informe Competitivo - Semana del 30 Sep 2024</h3>
+                        <span class="badge badge-success">Generado por IA</span>
+                    </div>
+
+                    <div class="competitor-insights">
+                        <!-- Endesa -->
+                        <div class="competitor-card">
+                            <div class="competitor-header">
+                                <span class="competitor-logo-big">⚡</span>
+                                <h4>Endesa</h4>
+                                <span class="activity-badge high">Alta actividad</span>
+                            </div>
+                            <div class="insight-content">
+                                <div class="insight-item">
+                                    <span class="insight-icon">💰</span>
+                                    <div>
+                                        <strong>Cambio de Precios:</strong>
+                                        <p>Reducción del 8% en tarifa indexada. Detectado el 28/09.</p>
+                                    </div>
+                                </div>
+                                <div class="insight-item">
+                                    <span class="insight-icon">📢</span>
+                                    <div>
+                                        <strong>Nueva Campaña:</strong>
+                                        <p>"Energía Sin Sorpresas" - Tarifa plana para pymes. Inversión estimada: €1.2M.</p>
+                                    </div>
+                                </div>
+                                <div class="insight-item">
+                                    <span class="insight-icon">📱</span>
+                                    <div>
+                                        <strong>Social Media:</strong>
+                                        <p>+35% engagement en Instagram. Contenido sobre sostenibilidad resuena bien.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation">
+                                <strong>💡 Recomendación IA:</strong> Considerar respuesta con oferta de estabilidad de precios para pymes. Su campaña está ganando tracción en segmento corporativo.
+                            </div>
+                        </div>
+
+                        <!-- Naturgy -->
+                        <div class="competitor-card">
+                            <div class="competitor-header">
+                                <span class="competitor-logo-big">🔥</span>
+                                <h4>Naturgy</h4>
+                                <span class="activity-badge medium">Actividad media</span>
+                            </div>
+                            <div class="insight-content">
+                                <div class="insight-item">
+                                    <span class="insight-icon">🌱</span>
+                                    <div>
+                                        <strong>Nuevo Producto:</strong>
+                                        <p>Lanzamiento de "Gas Verde Certificado" para hogares.</p>
+                                    </div>
+                                </div>
+                                <div class="insight-item">
+                                    <span class="insight-icon">⚠️</span>
+                                    <div>
+                                        <strong>Servicio al Cliente:</strong>
+                                        <p>Incremento del 12% en quejas en redes sociales sobre facturación.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation">
+                                <strong>💡 Recomendación IA:</strong> Oportunidad de capitalizar su problema de servicio al cliente. Comunicar nuestro índice de satisfacción superior.
+                            </div>
+                        </div>
+
+                        <!-- Repsol -->
+                        <div class="competitor-card">
+                            <div class="competitor-header">
+                                <span class="competitor-logo-big">🛢️</span>
+                                <h4>Repsol</h4>
+                                <span class="activity-badge low">Actividad baja</span>
+                            </div>
+                            <div class="insight-content">
+                                <div class="insight-item">
+                                    <span class="insight-icon">🔌</span>
+                                    <div>
+                                        <strong>Expansión:</strong>
+                                        <p>Apertura de 15 nuevos puntos de recarga ultrarrápida en autopistas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation">
+                                <strong>💡 Recomendación IA:</strong> Monitorear expansión en electromovilidad. Considerar alianzas estratégicas en este segmento.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gap Analysis -->
+                    <div class="gap-analysis">
+                        <h4>🎯 Oportunidades de Mercado Detectadas</h4>
+                        <div class="gap-grid">
+                            <div class="gap-item">
+                                <div class="gap-icon">💼</div>
+                                <strong>Segmento Pymes</strong>
+                                <p>Ningún competidor ofrece gestión energética integral para pymes. Gap de €45M.</p>
+                            </div>
+                            <div class="gap-item">
+                                <div class="gap-icon">🏠</div>
+                                <strong>Hogar Inteligente</strong>
+                                <p>Mercado de domótica energética desatendido. Solo el 12% penetración.</p>
+                            </div>
+                            <div class="gap-item">
+                                <div class="gap-icon">📊</div>
+                                <strong>Transparencia Tarifaria</strong>
+                                <p>Los clientes demandan claridad. Oportunidad de diferenciación.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: Positioning Generator -->
+    <div id="positioning-tab" class="competitive-tab-content">
+        <div class="card">
+            <div class="card-header">
+                <h2>🎯 Smart Positioning Generator</h2>
+                <p>Genera mensajes de posicionamiento diferenciados vs. competencia</p>
+            </div>
+            <div class="card-body">
+                <!-- Controles -->
+                <div class="demo-controls">
+                    <div class="control-group">
+                        <label>Selecciona competidor para analizar:</label>
+                        <select id="positioning-competitor" class="form-control">
+                            <option value="endesa">⚡ Endesa</option>
+                            <option value="naturgy">🔥 Naturgy</option>
+                            <option value="repsol">🛢️ Repsol</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Segmento objetivo:</label>
+                        <select id="positioning-segment" class="form-control">
+                            <option value="hogar">🏠 Hogar</option>
+                            <option value="pyme">💼 Pyme</option>
+                            <option value="empresa">🏢 Gran Empresa</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="generatePositioning()">
+                        ✨ Generar Posicionamiento
+                    </button>
+                </div>
+
+                <!-- Resultado simulado -->
+                <div id="positioning-result" class="simulation-result" style="display: none;">
+                    <div class="positioning-comparison">
+                        <div class="comparison-column competitor-column">
+                            <h4>⚡ Endesa - Su Posicionamiento</h4>
+                            <div class="value-props">
+                                <div class="value-prop">
+                                    <span class="prop-icon">💰</span>
+                                    <p><strong>Precio:</strong> "Tarifas competitivas"</p>
+                                </div>
+                                <div class="value-prop">
+                                    <span class="prop-icon">⚡</span>
+                                    <p><strong>Servicio:</strong> "Energía estable y segura"</p>
+                                </div>
+                                <div class="value-prop">
+                                    <span class="prop-icon">📱</span>
+                                    <p><strong>Digital:</strong> "App funcional"</p>
+                                </div>
+                            </div>
+                            <div class="weaknesses">
+                                <h5>🔍 Debilidades detectadas por IA:</h5>
+                                <ul>
+                                    <li>Mensaje genérico sin diferenciación clara</li>
+                                    <li>No menciona sostenibilidad</li>
+                                    <li>Poca innovación percibida</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="comparison-column iberdrola-column">
+                            <h4>⚡ Iberdrola - Posicionamiento Generado</h4>
+                            <div class="value-props highlighted">
+                                <div class="value-prop">
+                                    <span class="prop-icon">🌱</span>
+                                    <p><strong>Sostenibilidad Real:</strong> "100% energía verde certificada, no solo palabras"</p>
+                                </div>
+                                <div class="value-prop">
+                                    <span class="prop-icon">🤖</span>
+                                    <p><strong>Innovación:</strong> "IA que predice y optimiza tu consumo"</p>
+                                </div>
+                                <div class="value-prop">
+                                    <span class="prop-icon">💎</span>
+                                    <p><strong>Transparencia:</strong> "Factura clara, sin letra pequeña"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Battle Card -->
+                    <div class="battle-card">
+                        <h4>⚔️ Battle Card: Iberdrola vs Endesa</h4>
+                        <div class="battle-grid">
+                            <div class="battle-item win">
+                                <strong>✅ Ganas en:</strong>
+                                <ul>
+                                    <li>Sostenibilidad (100% renovable vs 65%)</li>
+                                    <li>Innovación tecnológica</li>
+                                    <li>Transparencia tarifaria</li>
+                                    <li>Experiencia digital superior</li>
+                                </ul>
+                            </div>
+                            <div class="battle-item lose">
+                                <strong>⚠️ Ellos tienen ventaja en:</strong>
+                                <ul>
+                                    <li>Reconocimiento de marca (histórico)</li>
+                                    <li>Cobertura puntos físicos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mensajes generados -->
+                    <div class="generated-messages">
+                        <h4>📝 Mensajes de Marketing Generados</h4>
+                        <div class="message-variants">
+                            <div class="message-card">
+                                <div class="message-label">Variante A - Emocional</div>
+                                <p class="message-text">"Mientras otros hablan de verde, nosotros lo hacemos. Iberdrola: 100% energía renovable, 100% transparente, 100% tuya."</p>
+                                <div class="message-meta">Para: Jóvenes 25-40, eco-conscientes</div>
+                            </div>
+                            <div class="message-card">
+                                <div class="message-label">Variante B - Racional</div>
+                                <p class="message-text">"Compara y comprueba: nuestra energía es 100% renovable, nuestras tarifas son claras y nuestra IA te ahorra hasta un 25%. Los números hablan."</p>
+                                <div class="message-meta">Para: Pymes, decisores racionales</div>
+                            </div>
+                            <div class="message-card">
+                                <div class="message-label">Variante C - Innovación</div>
+                                <p class="message-text">"¿Tu compañía eléctrica usa IA para optimizar tu factura? La nuestra sí. Bienvenido al futuro de la energía."</p>
+                                <div class="message-meta">Para: Early adopters, tech-savvy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: Campaign Spy & Adapt -->
+    <div id="campaign-spy-tab" class="competitive-tab-content">
+        <div class="card">
+            <div class="card-header">
+                <h2>🔍 Campaign Spy & Adapt</h2>
+                <p>Detecta campañas competitivas y genera respuestas automatizadas en <24h</p>
+            </div>
+            <div class="card-body">
+                <!-- Timeline de detección -->
+                <div class="detection-timeline">
+                    <h4>⏱️ Última Campaña Detectada</h4>
+                    <div class="timeline-item detected">
+                        <div class="timeline-marker">📡</div>
+                        <div class="timeline-content">
+                            <span class="timeline-time">Hace 4 horas</span>
+                            <p><strong>Campaña detectada:</strong> Endesa lanza "Tarifa Plana Verde 2025"</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item analyzed">
+                        <div class="timeline-marker">🤖</div>
+                        <div class="timeline-content">
+                            <span class="timeline-time">Hace 2 horas</span>
+                            <p><strong>Análisis completado:</strong> IA ha procesado creatividades, mensajes y estrategia</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item generated">
+                        <div class="timeline-marker">✨</div>
+                        <div class="timeline-content">
+                            <span class="timeline-time">Hace 30 min</span>
+                            <p><strong>Respuesta generada:</strong> Propuesta de contra-campaña lista para revisión</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-large" onclick="showCampaignAnalysis()">
+                    👀 Ver Análisis Completo y Respuesta
+                </button>
+
+                <!-- Análisis de campaña competitiva -->
+                <div id="campaign-analysis" class="simulation-result" style="display: none;">
+                    <div class="campaign-detected">
+                        <h4>📢 Campaña Detectada: "Tarifa Plana Verde 2025" - Endesa</h4>
+                        <div class="campaign-overview">
+                            <div class="campaign-visual">
+                                <div class="mock-ad">
+                                    <div class="mock-ad-header">⚡ ENDESA</div>
+                                    <div class="mock-ad-content">
+                                        <h3>Tarifa Plana Verde</h3>
+                                        <p>Paga lo mismo todos los meses</p>
+                                        <p class="price">79€/mes*</p>
+                                        <button class="mock-btn">Contratar ahora</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="campaign-insights">
+                                <h5>🤖 Análisis IA</h5>
+                                <div class="insight-grid">
+                                    <div class="insight-box">
+                                        <strong>🎯 Objetivo:</strong>
+                                        <p>Captar clientes preocupados por volatilidad de precios</p>
+                                    </div>
+                                    <div class="insight-box">
+                                        <strong>👥 Audiencia:</strong>
+                                        <p>Hogares 30-55 años, ingresos medios-altos</p>
+                                    </div>
+                                    <div class="insight-box">
+                                        <strong>📱 Canales:</strong>
+                                        <p>Facebook, Instagram, Google Ads, TV</p>
+                                    </div>
+                                    <div class="insight-box">
+                                        <strong>💰 Inversión estimada:</strong>
+                                        <p>€800K - €1.2M (nacional)</p>
+                                    </div>
+                                    <div class="insight-box">
+                                        <strong>💪 Fortalezas:</strong>
+                                        <p>Mensaje simple, precio visible, verde</p>
+                                    </div>
+                                    <div class="insight-box">
+                                        <strong>⚠️ Debilidades:</strong>
+                                        <p>Precio fijo puede ser caro, letra pequeña</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Propuesta de respuesta -->
+                    <div class="response-proposal">
+                        <h4>⚡ Propuesta de Contra-Campaña Generada por IA</h4>
+                        
+                        <div class="proposal-header">
+                            <div class="proposal-badge">Recomendada</div>
+                            <h5>"Iberdrola Energía Inteligente: Paga Justo, No Pagues Más"</h5>
+                        </div>
+
+                        <div class="proposal-content">
+                            <div class="proposal-section">
+                                <h6>📝 Brief Ejecutivo</h6>
+                                <p><strong>Concepto:</strong> Contrastar "tarifa plana" (pagas de más) vs "tarifa inteligente" (pagas lo justo gracias a IA)</p>
+                                <p><strong>Ángulo de Ataque:</strong> No pagues por energía que no usas. Nuestra IA optimiza tu factura en tiempo real.</p>
+                                <p><strong>Tono:</strong> Transparente, educativo, empoderador</p>
+                            </div>
+
+                            <div class="proposal-section">
+                                <h6>🎨 Variantes Creativas</h6>
+                                <div class="creative-variants">
+                                    <div class="variant-card">
+                                        <div class="variant-label">Opción 1 - Educativa</div>
+                                        <div class="mock-ad iberdrola">
+                                            <div class="mock-ad-header">⚡ IBERDROLA</div>
+                                            <div class="mock-ad-content">
+                                                <h3>¿Tarifa Plana?</h3>
+                                                <p>Mejor: Tarifa Inteligente</p>
+                                                <p class="highlight">Paga solo lo que consumes<br>+ IA que te ahorra hasta 25%</p>
+                                                <button class="mock-btn">Calcula tu ahorro</button>
+                                            </div>
+                                        </div>
+                                        <div class="variant-metrics">
+                                            <span>💰 CPA estimado: €28</span>
+                                            <span>📊 CTR esperado: 3.2%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="variant-card">
+                                        <div class="variant-label">Opción 2 - Comparativa</div>
+                                        <div class="mock-ad iberdrola">
+                                            <div class="mock-ad-header">⚡ IBERDROLA</div>
+                                            <div class="mock-ad-content">
+                                                <h3>Tarifa Plana: 79€</h3>
+                                                <h3>Tarifa Inteligente: 52-68€*</h3>
+                                                <p class="highlight">¿Por qué pagar más?<br>100% renovable + IA</p>
+                                                <button class="mock-btn">Compara y ahorra</button>
+                                            </div>
+                                        </div>
+                                        <div class="variant-metrics">
+                                            <span>💰 CPA estimado: €24</span>
+                                            <span>📊 CTR esperado: 4.1%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="variant-card recommended">
+                                        <div class="variant-label">Opción 3 - Storytelling ⭐</div>
+                                        <div class="mock-ad iberdrola">
+                                            <div class="mock-ad-header">⚡ IBERDROLA</div>
+                                            <div class="mock-ad-content">
+                                                <h3>Energía que se adapta a ti</h3>
+                                                <p>No tú a ella</p>
+                                                <p class="highlight">Nuestra IA aprende tus hábitos<br>y optimiza tu factura cada mes</p>
+                                                <button class="mock-btn">Prueba gratis 3 meses</button>
+                                            </div>
+                                        </div>
+                                        <div class="variant-metrics">
+                                            <span>💰 CPA estimado: €22</span>
+                                            <span>📊 CTR esperado: 4.8%</span>
+                                            <span class="recommended-badge">Recomendada por IA</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="proposal-section">
+                                <h6>📍 Plan de Medios Recomendado</h6>
+                                <table class="media-plan-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Canal</th>
+                                            <th>Inversión</th>
+                                            <th>Alcance Est.</th>
+                                            <th>Timing</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>📱 Meta Ads (FB + IG)</td>
+                                            <td>€450K</td>
+                                            <td>2.8M impresiones</td>
+                                            <td>Lanzar en 48h</td>
+                                        </tr>
+                                        <tr>
+                                            <td>🔍 Google Ads</td>
+                                            <td>€300K</td>
+                                            <td>1.5M impresiones</td>
+                                            <td>Lanzar en 72h</td>
+                                        </tr>
+                                        <tr>
+                                            <td>📺 YouTube</td>
+                                            <td>€150K</td>
+                                            <td>5M views</td>
+                                            <td>Semana 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>📧 Email Marketing</td>
+                                            <td>€20K</td>
+                                            <td>850K clientes</td>
+                                            <td>Inmediato</td>
+                                        </tr>
+                                        <tr class="total-row">
+                                            <td><strong>TOTAL</strong></td>
+                                            <td><strong>€920K</strong></td>
+                                            <td><strong>10M+ alcance</strong></td>
+                                            <td><strong>30 días</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="proposal-section">
+                                <h6>⏱️ Timeline de Ejecución</h6>
+                                <div class="execution-timeline">
+                                    <div class="timeline-step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <strong>Hoy:</strong> Aprobación de creatividades
+                                        </div>
+                                    </div>
+                                    <div class="timeline-step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <strong>Mañana:</strong> Producción final de assets
+                                        </div>
+                                    </div>
+                                    <div class="timeline-step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <strong>+48h:</strong> Lanzamiento en Meta y Email
+                                        </div>
+                                    </div>
+                                    <div class="timeline-step">
+                                        <div class="step-number">4</div>
+                                        <div class="step-content">
+                                            <strong>+72h:</strong> Activación Google Ads
+                                        </div>
+                                    </div>
+                                    <div class="timeline-step">
+                                        <div class="step-number">5</div>
+                                        <div class="step-content">
+                                            <strong>Semana 2:</strong> Amplificación con YouTube
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="proposal-section success-metrics">
+                                <h6>📊 KPIs de Éxito Esperados</h6>
+                                <div class="kpi-grid">
+                                    <div class="kpi-card">
+                                        <div class="kpi-value">12,500</div>
+                                        <div class="kpi-label">Leads Calificados</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-value">€24</div>
+                                        <div class="kpi-label">CPA Objetivo</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-value">4.2%</div>
+                                        <div class="kpi-label">CTR Esperado</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-value">8,200</div>
+                                        <div class="kpi-label">Conversiones Est.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="proposal-actions">
+                            <button class="btn btn-primary btn-large">✅ Aprobar y Lanzar Campaña</button>
+                            <button class="btn btn-secondary">📝 Solicitar Ajustes</button>
+                            <button class="btn btn-secondary">📥 Descargar Brief Completo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ==================== STREAMING WORD-BY-WORD EFFECT ====================
+
+function streamText(element, text, speed = 30) {
+    return new Promise((resolve) => {
+        const originalText = text;
+        element.textContent = '';
+        element.classList.add('streaming');
+        const words = originalText.split(' ');
+        let currentIndex = 0;
+        
+        const interval = setInterval(() => {
+            if (currentIndex < words.length) {
+                element.textContent += (currentIndex > 0 ? ' ' : '') + words[currentIndex];
+                currentIndex++;
+            } else {
+                clearInterval(interval);
+                element.classList.remove('streaming');
+                resolve();
+            }
+        }, speed);
+    });
+}
+
+function streamHTML(element, htmlContent, speed = 30) {
+    return new Promise((resolve) => {
+        // Crear un elemento temporal para parsear el HTML
+        const temp = document.createElement('div');
+        temp.innerHTML = htmlContent;
+        
+        // Obtener todo el texto
+        const text = temp.textContent;
+        const words = text.split(' ');
+        let currentIndex = 0;
+        
+        element.textContent = '';
+        element.style.opacity = '0.7';
+        
+        const interval = setInterval(() => {
+            if (currentIndex < words.length) {
+                element.textContent += (currentIndex > 0 ? ' ' : '') + words[currentIndex];
+                currentIndex++;
+            } else {
+                clearInterval(interval);
+                element.style.opacity = '1';
+                // Restaurar el HTML completo al final
+                element.innerHTML = htmlContent;
+                resolve();
+            }
+        }, speed);
+    });
+}
+
+async function streamCompetitorCard(card) {
+    const insights = card.querySelectorAll('.insight-item p');
+    const recommendation = card.querySelector('.recommendation');
+    
+    for (let insight of insights) {
+        const originalText = insight.textContent;
+        await streamText(insight, originalText, 25);
+    }
+    
+    if (recommendation) {
+        // Buscar todo el texto después del <strong>
+        const fullText = recommendation.textContent;
+        const strongText = recommendation.querySelector('strong').textContent;
+        const recText = fullText.replace(strongText, '').trim();
+        
+        if (recText) {
+            const textNode = Array.from(recommendation.childNodes).find(node => 
+                node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+            );
+            if (textNode) {
+                const span = document.createElement('span');
+                span.textContent = textNode.textContent;
+                textNode.replaceWith(span);
+                await streamText(span, recText, 20);
+            }
+        }
+    }
+}
+
+async function streamGapAnalysis() {
+    const gapItems = document.querySelectorAll('.gap-item p');
+    for (let item of gapItems) {
+        const originalText = item.textContent;
+        await streamText(item, originalText, 25);
+    }
+}
+
+function switchCompetitiveTab(tabName) {
+    // Ocultar todos los tabs
+    document.querySelectorAll('.competitive-tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.competitive-tab').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Mostrar tab seleccionado
+    document.getElementById(tabName + '-tab').classList.add('active');
+    event.target.closest('.competitive-tab').classList.add('active');
+}
+
+async function generateCopilotReport() {
+    const resultDiv = document.getElementById('copilot-result');
+    const button = event.target;
+    
+    // Cambiar botón a "Generando..."
+    button.disabled = true;
+    button.innerHTML = '⏳ Generando informe con IA...';
+    
+    // Simular delay inicial
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Mostrar resultado
+    resultDiv.style.display = 'block';
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Esperar a que termine el scroll
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Stream cada tarjeta de competidor
+    const competitorCards = resultDiv.querySelectorAll('.competitor-card');
+    for (let card of competitorCards) {
+        await streamCompetitorCard(card);
+    }
+    
+    // Stream gap analysis
+    await streamGapAnalysis();
+    
+    // Restaurar botón
+    button.disabled = false;
+    button.innerHTML = '🤖 Generar Informe Semanal';
+}
+
+async function generatePositioning() {
+    const resultDiv = document.getElementById('positioning-result');
+    const button = event.target;
+    
+    // Cambiar botón a "Generando..."
+    button.disabled = true;
+    button.innerHTML = '⏳ Generando posicionamiento con IA...';
+    
+    // Simular delay inicial
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Mostrar resultado
+    resultDiv.style.display = 'block';
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Stream weaknesses
+    const weaknesses = resultDiv.querySelectorAll('.weaknesses li');
+    for (let weakness of weaknesses) {
+        const originalText = weakness.textContent;
+        await streamText(weakness, originalText, 30);
+    }
+    
+    // Stream value props de Iberdrola
+    const valueProps = resultDiv.querySelectorAll('.iberdrola-column .value-prop p');
+    for (let prop of valueProps) {
+        const originalText = prop.textContent;
+        await streamText(prop, originalText, 25);
+    }
+    
+    // Stream battle items
+    const battleItems = resultDiv.querySelectorAll('.battle-item li');
+    for (let item of battleItems) {
+        const originalText = item.textContent;
+        await streamText(item, originalText, 30);
+    }
+    
+    // Stream message variants
+    const messages = resultDiv.querySelectorAll('.message-text');
+    for (let message of messages) {
+        const originalText = message.textContent;
+        await streamText(message, originalText, 20);
+    }
+    
+    // Restaurar botón
+    button.disabled = false;
+    button.innerHTML = '✨ Generar Posicionamiento';
+}
+
+async function showCampaignAnalysis() {
+    const resultDiv = document.getElementById('campaign-analysis');
+    const button = event.target;
+    
+    // Cambiar botón a "Analizando..."
+    button.disabled = true;
+    button.innerHTML = '⏳ Analizando campaña con IA...';
+    
+    // Simular delay inicial
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Mostrar resultado
+    resultDiv.style.display = 'block';
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Stream insight boxes
+    const insightBoxes = resultDiv.querySelectorAll('.insight-box p');
+    for (let box of insightBoxes) {
+        const originalText = box.textContent;
+        await streamText(box, originalText, 30);
+    }
+    
+    // Stream brief ejecutivo
+    const briefPs = resultDiv.querySelectorAll('.proposal-section p');
+    for (let p of briefPs) {
+        const originalText = p.textContent;
+        if (originalText.trim().length > 0) {
+            await streamText(p, originalText, 25);
+        }
+    }
+    
+    // Restaurar botón
+    button.disabled = false;
+    button.innerHTML = '👀 Ver Análisis Completo y Respuesta';
+}
+</script>
+
+{% endblock %}
+
