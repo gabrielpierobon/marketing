@@ -93,16 +93,35 @@
                         <option value="">-- Selecciona una sección --</option>
                         <option value="integracion_datos">🔌 Integración de Datos</option>
                         <option value="integracion_apis">🔗 APIs & Conectores</option>
+                        <option value="knowledge_base">🧠 Knowledge Base</option>
                         <option value="laboratorio">🧪 Laboratorio de Datos</option>
                         <option value="monitorizacion">📊 Monitorización & Auditoría</option>
+                    </select>                </div>
+            </div>
+        </div>
+
+        <!-- 5. Backend -->
+        <div class="home-card home-card-with-selector">
+            <div class="home-card-icon">⚙️</div>
+            <div class="home-card-content">
+                <h2 class="home-card-title">Backend</h2>
+                <p class="home-card-description">
+                    Gestión de modelos ML y agentes de IA que alimentan los casos de uso
+                </p>
+                <div class="home-selector">
+                    <label for="backend-selector">Ir a sección:</label>
+                    <select id="backend-selector" class="home-select" onchange="navigateToBackend(this.value)">
+                        <option value="">-- Selecciona una sección --</option>
+                        <option value="mlops">🤖 MLOps</option>
+                        <option value="agent_gallery">🎭 Agent Gallery</option>
                     </select>
                 </div>
             </div>
         </div>
 
-        <!-- 5. Configuración - Ocupa 2 columnas -->
-        <a href="{{ url_for('configuracion') }}" class="home-card home-card-full-width">
-            <div class="home-card-icon">⚙️</div>
+        <!-- 6. Configuración -->
+        <a href="{{ url_for('configuracion') }}" class="home-card">
+            <div class="home-card-icon">🔧</div>
             <div class="home-card-content">
                 <h2 class="home-card-title">Configuración</h2>
                 <p class="home-card-description">
@@ -125,6 +144,12 @@ function navigateToCasoUso(endpoint) {
 function navigateToIntegracion(endpoint) {
     if (endpoint) {
         window.location.href = '/' + endpoint.replace(/_/g, '-');
+    }
+}
+
+function navigateToBackend(endpoint) {
+    if (endpoint) {
+        window.location.href = '/' + endpoint.replace(/_/g, '_');
     }
 }
 </script>

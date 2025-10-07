@@ -135,6 +135,27 @@
                         <span class="nav-icon">{{ menu_config.monitorizacion.icon }}</span>
                         <span class="nav-text">{{ menu_config.monitorizacion.menu_name }}</span>
                     </a>
+                    
+                    <a href="{{ url_for('knowledge_base') }}" class="nav-item nav-subitem {% if request.endpoint == 'knowledge_base' %}active{% endif %}">
+                        <span class="nav-icon">{{ menu_config.knowledge_base.icon }}</span>
+                        <span class="nav-text">{{ menu_config.knowledge_base.menu_name }}</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Backend con desplegable -->
+            <div class="nav-section collapsible-section">
+                <div class="nav-section-header" onclick="toggleSection(this)">
+                    <span class="nav-section-title">{{ menu_config.backend.title }}</span>
+                    <span class="nav-section-arrow">▼</span>
+                </div>
+                <div class="nav-section-content">
+                    {% for item in menu_config.backend.submenu %}
+                    <a href="{{ url_for(item.endpoint) }}" class="nav-item nav-subitem {% if request.endpoint == item.endpoint %}active{% endif %}">
+                        <span class="nav-icon">{{ item.icon }}</span>
+                        <span class="nav-text">{{ item.menu_name }}</span>
+                    </a>
+                    {% endfor %}
                 </div>
             </div>
         </nav>

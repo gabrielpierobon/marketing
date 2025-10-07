@@ -166,9 +166,33 @@
     "menu_name": "Monitorización & Auditoría",
     "page_title": "Monitorización y Auditoría del Sistema"
   },
+  "knowledge_base": {
+    "icon": "🧠",
+    "menu_name": "Knowledge Base",
+    "page_title": "Knowledge Base - RAG & Knowledge Graphs"
+  },
   "introduccion": {
     "icon": "📚",
     "menu_name": "Introducción",
     "page_title": "Introducción - IA para Marketing"
+  },
+  "backend": {
+    "title": "Backend",
+    "icon": "⚙️",
+    "menu_name": "Backend",
+    "submenu": [
+      {
+        "endpoint": "mlops",
+        "icon": "🤖",
+        "menu_name": "MLOps",
+        "page_title": "MLOps - Gestión de Modelos ML"
+      },
+      {
+        "endpoint": "agent_gallery",
+        "icon": "🎭",
+        "menu_name": "Agent Gallery",
+        "page_title": "Agent Gallery - Agentes de IA"
+      }
+    ]
   }
 }

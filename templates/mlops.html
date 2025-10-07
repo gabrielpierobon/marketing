@@ -1,0 +1,771 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>🤖 MLOps - Gestión de Modelos ML</h2>
+            <p>Sistema de gestión del ciclo de vida de modelos</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📋</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    <strong>MLOps</strong> (Machine Learning Operations) es la práctica de gestionar el ciclo de vida 
+                    completo de los modelos de machine learning en producción. Este sistema centraliza el monitoreo, 
+                    versionado, deployment, y optimización de todos los modelos ML que alimentan los casos de uso.
+                </p>
+                <p>
+                    Los modelos pasan por diferentes estados: <strong>Desarrollo</strong> (training y validación), 
+                    <strong>En Revisión</strong> (auditoría de seguridad y compliance), <strong>Producción</strong> 
+                    (serving predictions en tiempo real), y <strong>Archivado</strong> (modelos deprecados).
+                </p>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🤖</span>
+                Modelos de IA Aplicados
+            </h3>
+            <div class="doc-section-content">
+                <p>Actualmente gestionamos <strong>22 modelos</strong> en diferentes estados:</p>
+                <ul>
+                    <li><strong>12 en Producción:</strong> Sirviendo predicciones en tiempo real</li>
+                    <li><strong>8 en Desarrollo:</strong> Training, validación, y testing</li>
+                    <li><strong>2 en Revisión:</strong> Auditoría de seguridad y compliance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="use-case-container">
+    <div class="content-header">
+        <div class="header-content">
+            <h1>🤖 MLOps - Gestión de Modelos ML</h1>
+            <p class="subtitle">Panel de control para modelos de Machine Learning en producción y desarrollo</p>
+        </div>
+        <button class="btn btn-primary btn-add-new" onclick="showAddModelModal()">
+            <span class="icon">➕</span> Nuevo Modelo ML
+        </button>
+    </div>
+
+    <!-- Métricas Generales -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon">🚀</div>
+            <div class="metric-info">
+                <div class="metric-value">12</div>
+                <div class="metric-label">Modelos en Producción</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">🔬</div>
+            <div class="metric-info">
+                <div class="metric-value">8</div>
+                <div class="metric-label">Modelos en Desarrollo</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">⚠️</div>
+            <div class="metric-info">
+                <div class="metric-value">2</div>
+                <div class="metric-label">Modelos en Revisión</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">📊</div>
+            <div class="metric-info">
+                <div class="metric-value">94.3%</div>
+                <div class="metric-label">Precisión Promedio</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-container card">
+        <div class="card-header">
+            <h3>🔍 Filtros de Búsqueda</h3>
+        </div>
+        <div class="card-body">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Estado:</label>
+                    <select id="statusFilter" onchange="filterModels()">
+                        <option value="all">Todos</option>
+                        <option value="production">Producción</option>
+                        <option value="development">Desarrollo</option>
+                        <option value="review">En Revisión</option>
+                        <option value="archived">Archivado</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Caso de Uso:</label>
+                    <select id="useCaseFilter" onchange="filterModels()">
+                        <option value="all">Todos</option>
+                        <option value="benchmark">Benchmark</option>
+                        <option value="insights">Insights</option>
+                        <option value="creative">Estudio Creativo</option>
+                        <option value="automation">Content Automation</option>
+                        <option value="guardian">Brand Guardian</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Buscar:</label>
+                    <input type="text" id="searchFilter" placeholder="Nombre del modelo..." oninput="filterModels()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Modelos -->
+    <div class="models-grid">
+        <!-- Modelo 1: Predicción de Churn -->
+        <div class="model-card card" data-status="production" data-usecase="insights">
+            <div class="card-header model-header">
+                <div class="model-title">
+                    <span class="model-icon">📈</span>
+                    <h3>Churn Prediction Model v3.2</h3>
+                </div>
+                <span class="model-status status-production">Producción</span>
+            </div>
+            <div class="card-body">
+                <div class="model-info-grid">
+                    <div class="model-info-item">
+                        <span class="info-label">Caso de Uso:</span>
+                        <span class="info-value">Predicción de Abandonos</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Tipo:</span>
+                        <span class="info-value">XGBoost Classifier</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Precisión:</span>
+                        <span class="info-value">92.4%</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Última Actualización:</span>
+                        <span class="info-value">15/09/2024</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Predicciones/día:</span>
+                        <span class="info-value">~15,000</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Latencia:</span>
+                        <span class="info-value">45ms</span>
+                    </div>
+                </div>
+                <div class="model-metrics">
+                    <div class="metric-bar">
+                        <span class="metric-name">Recall:</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 89%"></div>
+                            <span class="bar-value">89%</span>
+                        </div>
+                    </div>
+                    <div class="metric-bar">
+                        <span class="metric-name">F1-Score:</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 90%"></div>
+                            <span class="bar-value">90%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer model-actions">
+                <button class="btn btn-secondary" onclick="viewModelDetails('churn-v3.2')">Ver Detalles</button>
+                <button class="btn btn-primary" onclick="viewModelMetrics('churn-v3.2')">Métricas</button>
+            </div>
+        </div>
+
+        <!-- Modelo 2: Segmentación Avanzada -->
+        <div class="model-card card" data-status="production" data-usecase="insights">
+            <div class="card-header model-header">
+                <div class="model-title">
+                    <span class="model-icon">🔍</span>
+                    <h3>Customer Segmentation Model v2.1</h3>
+                </div>
+                <span class="model-status status-production">Producción</span>
+            </div>
+            <div class="card-body">
+                <div class="model-info-grid">
+                    <div class="model-info-item">
+                        <span class="info-label">Caso de Uso:</span>
+                        <span class="info-value">Segmentación de Clientes</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Tipo:</span>
+                        <span class="info-value">K-Means + Deep Learning</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Silhouette Score:</span>
+                        <span class="info-value">0.87</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Última Actualización:</span>
+                        <span class="info-value">22/09/2024</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Clientes Procesados:</span>
+                        <span class="info-value">~1.2M</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Segmentos:</span>
+                        <span class="info-value">12 clusters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer model-actions">
+                <button class="btn btn-secondary" onclick="viewModelDetails('segmentation-v2.1')">Ver Detalles</button>
+                <button class="btn btn-primary" onclick="viewModelMetrics('segmentation-v2.1')">Métricas</button>
+            </div>
+        </div>
+
+        <!-- Modelo 3: Motor de Recomendaciones -->
+        <div class="model-card card" data-status="production" data-usecase="automation">
+            <div class="card-header model-header">
+                <div class="model-title">
+                    <span class="model-icon">🎁</span>
+                    <h3>Recommendation Engine v4.0</h3>
+                </div>
+                <span class="model-status status-production">Producción</span>
+            </div>
+            <div class="card-body">
+                <div class="model-info-grid">
+                    <div class="model-info-item">
+                        <span class="info-label">Caso de Uso:</span>
+                        <span class="info-value">Motor de Recomendaciones</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Tipo:</span>
+                        <span class="info-value">Collaborative Filtering + Neural CF</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Precisión@10:</span>
+                        <span class="info-value">94.8%</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Última Actualización:</span>
+                        <span class="info-value">05/10/2024</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Recomendaciones/día:</span>
+                        <span class="info-value">~250,000</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">CTR Lift:</span>
+                        <span class="info-value">+127%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer model-actions">
+                <button class="btn btn-secondary" onclick="viewModelDetails('recommendation-v4.0')">Ver Detalles</button>
+                <button class="btn btn-primary" onclick="viewModelMetrics('recommendation-v4.0')">Métricas</button>
+            </div>
+        </div>
+
+        <!-- Modelo 4: Content Generation (En Desarrollo) -->
+        <div class="model-card card" data-status="development" data-usecase="creative">
+            <div class="card-header model-header">
+                <div class="model-title">
+                    <span class="model-icon">✍️</span>
+                    <h3>Content Generator GPT-4 Fine-tune v0.5</h3>
+                </div>
+                <span class="model-status status-development">Desarrollo</span>
+            </div>
+            <div class="card-body">
+                <div class="model-info-grid">
+                    <div class="model-info-item">
+                        <span class="info-label">Caso de Uso:</span>
+                        <span class="info-value">Generación de Contenido</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Tipo:</span>
+                        <span class="info-value">GPT-4 Fine-tuned</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Estado:</span>
+                        <span class="info-value">Training (Epoch 3/10)</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Dataset:</span>
+                        <span class="info-value">12,500 ejemplos</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">Perplexity:</span>
+                        <span class="info-value">2.84</span>
+                    </div>
+                    <div class="model-info-item">
+                        <span class="info-label">ETA Producción:</span>
+                        <span class="info-value">2 semanas</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer model-actions">
+                <button class="btn btn-secondary" onclick="viewModelDetails('content-gen-v0.5')">Ver Detalles</button>
+                <button class="btn btn-secondary" disabled>Métricas</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Agregar Nuevo Modelo -->
+<div id="addModelModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>➕ Agregar Nuevo Modelo ML</h2>
+            <button class="modal-close" onclick="closeAddModelModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre del Modelo:</label>
+                <input type="text" id="modelName" placeholder="Ej: Customer LTV Predictor v1.0">
+            </div>
+            <div class="form-group">
+                <label>Tipo de Modelo:</label>
+                <select id="modelType">
+                    <option>XGBoost Classifier</option>
+                    <option>Random Forest</option>
+                    <option>Neural Network</option>
+                    <option>LSTM</option>
+                    <option>Transformer</option>
+                    <option>GPT Fine-tuned</option>
+                    <option>BERT Fine-tuned</option>
+                    <option>Reinforcement Learning</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Caso de Uso Asociado:</label>
+                <select id="modelUseCase">
+                    <option>Benchmark</option>
+                    <option>Insights y Aprendizajes</option>
+                    <option>Estudio Creativo</option>
+                    <option>Content Automation</option>
+                    <option>Brand Guardian</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Estado Inicial:</label>
+                <select id="modelStatus">
+                    <option value="development">Desarrollo</option>
+                    <option value="review">En Revisión</option>
+                    <option value="production">Producción</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAddModelModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="createNewModel()">Crear Modelo</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.btn-add-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.btn-add-new .icon {
+    font-size: 1.2rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-m);
+    padding: var(--spacing-l);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.metric-icon {
+    font-size: 2.5rem;
+}
+
+.metric-info {
+    flex: 1;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.filters-container {
+    margin-bottom: var(--spacing-xl);
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-s);
+    background: var(--bg-primary);
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.models-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.model-card {
+    transition: all 0.3s ease;
+}
+
+.model-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.model-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(0, 207, 79, 0.1), rgba(0, 159, 227, 0.1));
+}
+
+.model-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.model-icon {
+    font-size: 1.5rem;
+}
+
+.model-title h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.model-status {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-production {
+    background: #10b98133;
+    color: #10b981;
+}
+
+.status-development {
+    background: #f59e0b33;
+    color: #f59e0b;
+}
+
+.status-review {
+    background: #8b5cf633;
+    color: #8b5cf6;
+}
+
+.model-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+}
+
+.model-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.info-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.model-metrics {
+    margin-top: var(--spacing-l);
+    padding-top: var(--spacing-l);
+    border-top: 1px solid var(--border-color);
+}
+
+.metric-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+}
+
+.metric-bar:last-child {
+    margin-bottom: 0;
+}
+
+.metric-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    min-width: 100px;
+}
+
+.bar-container {
+    flex: 1;
+    height: 24px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 12px;
+    transition: width 0.3s ease;
+}
+
+.bar-value {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.model-actions {
+    display: flex;
+    gap: var(--spacing-m);
+}
+
+.model-actions .btn {
+    flex: 1;
+}
+
+.model-card.hidden {
+    display: none;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: var(--border-radius-l);
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid #e0e0e0;
+}
+
+.modal-header {
+    padding: var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--text-color);
+}
+
+.modal-body {
+    padding: var(--spacing-xl);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-l);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: var(--border-radius-s);
+    background: #ffffff;
+    color: #1a1a1a;
+    font-size: 1rem;
+}
+
+.modal-footer {
+    padding: var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--spacing-m);
+    justify-content: flex-end;
+}
+</style>
+
+<script>
+function viewModelDetails(modelId) {
+    alert(`Ver detalles del modelo: ${modelId}\n\nEsta funcionalidad mostraría:\n- Arquitectura completa\n- Hiperparámetros\n- Training history\n- Versiones anteriores\n- Logs de entrenamiento`);
+}
+
+function viewModelMetrics(modelId) {
+    alert(`Ver métricas del modelo: ${modelId}\n\nEsta funcionalidad mostraría:\n- Gráficos de rendimiento en tiempo real\n- Drift detection\n- Latencia p50, p95, p99\n- Error analysis\n- Feature importance`);
+}
+
+function filterModels() {
+    const statusFilter = document.getElementById('statusFilter').value;
+    const useCaseFilter = document.getElementById('useCaseFilter').value;
+    const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+    
+    const cards = document.querySelectorAll('.model-card');
+    
+    cards.forEach(card => {
+        const status = card.getAttribute('data-status');
+        const useCase = card.getAttribute('data-usecase');
+        const title = card.querySelector('.model-title h3').textContent.toLowerCase();
+        
+        const statusMatch = statusFilter === 'all' || status === statusFilter;
+        const useCaseMatch = useCaseFilter === 'all' || useCase === useCaseFilter;
+        const searchMatch = searchFilter === '' || title.includes(searchFilter);
+        
+        if (statusMatch && useCaseMatch && searchMatch) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+function showAddModelModal() {
+    document.getElementById('addModelModal').classList.add('active');
+}
+
+function closeAddModelModal() {
+    document.getElementById('addModelModal').classList.remove('active');
+}
+
+function createNewModel() {
+    const name = document.getElementById('modelName').value;
+    const type = document.getElementById('modelType').value;
+    const useCase = document.getElementById('modelUseCase').value;
+    const status = document.getElementById('modelStatus').value;
+    
+    if (!name) {
+        alert('Por favor ingresa un nombre para el modelo');
+        return;
+    }
+    
+    alert(`✅ Modelo creado exitosamente!\n\nNombre: ${name}\nTipo: ${type}\nCaso de Uso: ${useCase}\nEstado: ${status}\n\nEl modelo ha sido agregado al sistema MLOps y comenzará su ciclo de vida.`);
+    
+    closeAddModelModal();
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+    const modal = document.getElementById('addModelModal');
+    if (event.target === modal) {
+        closeAddModelModal();
+    }
+}
+</script>
+
+<!-- Incluir Asistente Virtual -->
+{% include 'asistente_panel_fijo.html' %}
+
+{% endblock %}

@@ -56,9 +56,21 @@ def get_page_title(endpoint):
     if endpoint == 'monitorizacion':
         return MENU_CONFIG.get('monitorizacion', {}).get('page_title', 'Monitorización')
     
+    # Buscar en knowledge base
+    if endpoint == 'knowledge_base':
+        return MENU_CONFIG.get('knowledge_base', {}).get('page_title', 'Knowledge Base')
+    
     # Buscar en introducción
     if endpoint == 'introduccion':
         return MENU_CONFIG.get('introduccion', {}).get('page_title', 'Introducción')
+    
+    # Buscar en backend
+    if endpoint in ['mlops', 'agent_gallery']:
+        for item in MENU_CONFIG.get('backend', {}).get('submenu', []):
+            # Convertir endpoint con guiones a underscores para comparación
+            endpoint_normalized = item.get('endpoint', '').replace('-', '_')
+            if endpoint_normalized == endpoint or item.get('endpoint') == endpoint:
+                return item.get('page_title', 'Backend')
     
     # Buscar en categorías
     for category in MENU_CONFIG.get('categories', []):
@@ -441,6 +453,22 @@ Clientes actuales están ganando €15-40/mes adicionales sin esfuerzo.''',
 def inteligencia_competitiva():
     """Inteligencia Competitiva con GenAI - 3 herramientas en 1"""
     return render_template('inteligencia_competitiva.html')
+
+# ==================== BACKEND: MLOPS ====================
+
+@app.route('/mlops')
+@login_required
+def mlops():
+    """MLOps - Gestión de Modelos ML"""
+    return render_template('mlops.html', page_title=get_page_title('mlops'))
+
+# ==================== BACKEND: AGENT GALLERY ====================
+
+@app.route('/agent_gallery')
+@login_required
+def agent_gallery():
+    """Agent Gallery - Galería de Agentes de IA"""
+    return render_template('agent_gallery.html', page_title=get_page_title('agent_gallery'))
 
 # ==================== CASO DE USO 3: CHATBOT ====================
 
@@ -2307,6 +2335,12 @@ def laboratorio():
     return render_template('laboratorio.html',
                          notebooks_ejemplos=notebooks_ejemplos,
                          fuentes_disponibles=fuentes_disponibles)
+
+@app.route('/knowledge-base')
+@login_required
+def knowledge_base():
+    """Knowledge Base - RAG & Knowledge Graphs"""
+    return render_template('knowledge_base.html', page_title=get_page_title('knowledge_base'))
 
 @app.route('/monitorizacion')
 @login_required

@@ -3705,7 +3705,7 @@ a, button, input, select, textarea {
 
 .home-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-xxl);
 }
@@ -3851,6 +3851,12 @@ a, button, input, select, textarea {
 
 /* Responsive */
 @media (max-width: 1200px) {
+    .home-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 968px) {
     .home-grid {
         grid-template-columns: 1fr;
     }

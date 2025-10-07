@@ -484,6 +484,24 @@ const assistantFixedResponses = {
         'Muéstrame un ejemplo': 'Por ejemplo, puedes navegar a la sección de "Personalización" para entender cómo funciona el motor de recomendaciones, qué datos utiliza y cómo se procesa la información.',
         '¿Cómo integro esto?': 'Cada caso de uso tiene ejemplos de código en Python, JavaScript y cURL. También puedes ver la documentación completa de las APIs en la sección "API Reference".'
     },
+    'mlops': {
+        '¿Cómo funciona esta sección?': 'MLOps es tu centro de gestión del ciclo de vida de modelos ML. Aquí monitorizas todos los modelos en producción, desarrollo y revisión. Puedes ver métricas de rendimiento, latencia, costes y gestionar versiones.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver todos los modelos ML activos, 2) Monitorizar métricas de producción en tiempo real, 3) Agregar nuevos modelos con el botón [+], 4) Filtrar por estado y caso de uso, 5) Ver detalles técnicos de cada modelo.',
+        'Muéstrame un ejemplo': 'Por ejemplo, el modelo "Churn Prediction v3.2" está en producción con 92.4% de precisión, procesa ~15,000 predicciones/día con 45ms de latencia. Puedes hacer clic en "Ver Métricas" para análisis detallado.',
+        '¿Cómo integro esto?': 'Los modelos se despliegan automáticamente como APIs REST. Cada modelo tiene su endpoint dedicado documentado en la sección "APIs & Conectores".'
+    },
+    'agent_gallery': {
+        '¿Cómo funciona esta sección?': 'La Agent Gallery es tu catálogo de agentes de IA especializados. Estos son los "motores internos" que ejecutan tareas en los casos de uso: generan contenido, analizan datos, optimizan campañas. Puedes conectarlos a MCP servers o crear sistemas multi-agent.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Ver todos los agentes activos (18 actualmente), 2) Crear nuevos agentes con [+ Nuevo Agente], 3) Conectar agentes a MCP servers para acceso a herramientas externas, 4) Crear sistemas multi-agent con orquestación, 5) Ver métricas de uso y costes.',
+        'Muéstrame un ejemplo': 'Por ejemplo, el "Content Generator Agent" usa GPT-4 + RAG para generar contenido de marketing. Procesa ~850 requests/día con 8.2s de latencia y costo de €0.12 por request. Puedes conectarlo a un MCP server para que acceda a datos en tiempo real.',
+        '¿Cómo integro esto?': 'Los agentes se integran en los casos de uso mediante APIs. También puedes usar MCP (Model Context Protocol) para conectar agentes a bases de datos, APIs externas, o herramientas. Los sistemas multi-agent usan frameworks como CrewAI o AutoGen para orquestar múltiples agentes especializados.'
+    },
+    'knowledge_base': {
+        '¿Cómo funciona esta sección?': 'Knowledge Base es tu sistema centralizado para gestionar el conocimiento que alimenta los agentes de IA. Soporta RAG (bases de datos vectoriales para búsqueda semántica) y Knowledge Graphs (grafos con entidades y relaciones). Actualmente tienes 2,847 documentos indexados en 8 colecciones, y 2 Knowledge Graphs activos.',
+        '¿Qué puedo hacer aquí?': 'Puedes: 1) Subir documentos (PDF, DOCX, TXT) con [📤 Subir Documentos], 2) Crear colecciones RAG con diferentes embeddings (OpenAI, Cohere, BERT), 3) Crear Knowledge Graphs con Neo4j, 4) Probar búsquedas semánticas, 5) Ejecutar queries Cypher, 6) Ver qué agentes usan cada base de conocimiento.',
+        'Muéstrame un ejemplo': 'Por ejemplo, la colección "Base de Conocimiento Marketing" tiene 1,284 documentos vectorizados con Cohere embed-v3 en Weaviate. 8 agentes la usan para generar contenido preciso. Puedes probar una búsqueda como "¿Cuáles son nuestros productos de energía solar?" y obtendrás los top 5 chunks más relevantes con scores de similaridad.',
+        '¿Cómo integro esto?': 'Las colecciones RAG y Knowledge Graphs se conectan automáticamente a los agentes que las necesitan. Los agentes usan RAG para búsqueda semántica (vector similarity search) y Knowledge Graphs para razonamiento complejo con relaciones. Puedes configurar qué agentes tienen acceso a qué bases de conocimiento en la Agent Gallery.'
+    },
     'default': {
         '¿Cómo funciona esta sección?': 'Esta sección te permite aprovechar las capacidades de IA para mejorar tus operaciones de marketing. Explora las diferentes opciones disponibles en el menú lateral.',
         '¿Qué puedo hacer aquí?': 'Puedes acceder a múltiples casos de uso de IA: personalización, predicción de churn, optimización de campañas, generación de contenido y más.',
@@ -615,5 +633,8 @@ document.addEventListener('DOMContentLoaded', function() {
     else if (path.includes('monitorizacion')) currentPageFixed = 'monitorizacion';
     else if (path.includes('configuracion')) currentPageFixed = 'configuracion';
     else if (path.includes('introduccion')) currentPageFixed = 'introduccion';
+    else if (path.includes('mlops')) currentPageFixed = 'mlops';
+    else if (path.includes('agent_gallery')) currentPageFixed = 'agent_gallery';
+    else if (path.includes('knowledge')) currentPageFixed = 'knowledge_base';
 });
 </script>

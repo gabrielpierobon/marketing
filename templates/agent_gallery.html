@@ -1,0 +1,936 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>🎭 Agent Gallery - Agentes de IA</h2>
+            <p>Galería de agentes especializados</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📋</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    Los <strong>agentes de IA</strong> son sistemas autónomos especializados que ejecutan tareas 
+                    específicas dentro de los casos de uso. A diferencia de los agentes conversacionales que crea 
+                    el cliente para sus servicios, estos agentes son los <strong>"motores internos"</strong> que 
+                    generan contenido, analizan datos, optimizan campañas y toman decisiones en tiempo real.
+                </p>
+                <p>
+                    Estos agentes pueden conectarse a <strong>MCP Servers</strong> (Model Context Protocol) para 
+                    acceder a herramientas externas, bases de datos, APIs, y otros recursos. También pueden 
+                    organizarse en <strong>sistemas multi-agent</strong> donde múltiples agentes especializados 
+                    colaboran bajo un orquestador central.
+                </p>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🔧</span>
+                Capacidades Avanzadas
+            </h3>
+            <div class="doc-section-content">
+                <ul>
+                    <li><strong>MCP Integration:</strong> Conexión a servidores MCP para acceso a herramientas</li>
+                    <li><strong>Multi-Agent Systems:</strong> Orquestación de múltiples agentes especializados</li>
+                    <li><strong>RAG (Retrieval Augmented Generation):</strong> Acceso a bases de conocimiento</li>
+                    <li><strong>Fine-tuning:</strong> Personalización con datos propios</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="use-case-container">
+    <div class="content-header">
+        <div class="header-content">
+            <h1>🎭 Agent Gallery - Agentes de IA</h1>
+            <p class="subtitle">Galería de agentes especializados que alimentan los casos de uso de marketing</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="showMultiAgentModal()">
+                <span class="icon">🔀</span> Sistema Multi-Agent
+            </button>
+            <button class="btn btn-primary" onclick="showAddAgentModal()">
+                <span class="icon">➕</span> Nuevo Agente
+            </button>
+        </div>
+    </div>
+
+    <!-- Métricas Generales -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon">🤖</div>
+            <div class="metric-info">
+                <div class="metric-value">18</div>
+                <div class="metric-label">Agentes Activos</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">⚡</div>
+            <div class="metric-info">
+                <div class="metric-value">1.2M</div>
+                <div class="metric-label">Ejecuciones/día</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">💰</div>
+            <div class="metric-info">
+                <div class="metric-value">€4.2K</div>
+                <div class="metric-label">Coste mensual API</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-info">
+                <div class="metric-value">98.7%</div>
+                <div class="metric-label">Tasa de Éxito</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-container card">
+        <div class="card-header">
+            <h3>🔍 Filtros de Búsqueda</h3>
+        </div>
+        <div class="card-body">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Categoría:</label>
+                    <select id="categoryFilter" onchange="filterAgents()">
+                        <option value="all">Todas</option>
+                        <option value="generation">Generación de Contenido</option>
+                        <option value="analysis">Análisis & Insights</option>
+                        <option value="optimization">Optimización</option>
+                        <option value="intelligence">Inteligencia Competitiva</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Modelo Base:</label>
+                    <select id="modelFilter" onchange="filterAgents()">
+                        <option value="all">Todos</option>
+                        <option value="gpt4">GPT-4</option>
+                        <option value="claude">Claude 3.5</option>
+                        <option value="gemini">Gemini 1.5</option>
+                        <option value="custom">Custom Models</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Buscar:</label>
+                    <input type="text" id="searchFilter" placeholder="Nombre del agente..." oninput="filterAgents()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Galería de Agentes -->
+    <div class="agents-grid">
+        <!-- Agente 1: Content Generator -->
+        <div class="agent-card card" data-category="generation" data-model="gpt4">
+            <div class="card-header agent-header">
+                <div class="agent-avatar">✍️</div>
+                <div class="agent-title">
+                    <h3>Content Generator Agent</h3>
+                    <span class="agent-type">Generación de Contenido</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="agent-description">
+                    Genera contenido de marketing en múltiples formatos: blogs, emails, social media, landing pages. 
+                    Utiliza RAG para mantener consistencia de marca.
+                </p>
+                <div class="agent-tech">
+                    <span class="tech-badge">GPT-4 Turbo</span>
+                    <span class="tech-badge">RAG (Pinecone)</span>
+                    <span class="tech-badge">LangChain</span>
+                </div>
+                <div class="agent-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Uso/día:</span>
+                        <span class="stat-value">~850</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Latencia:</span>
+                        <span class="stat-value">8.2s</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Coste/req:</span>
+                        <span class="stat-value">€0.12</span>
+                    </div>
+                </div>
+                <div class="agent-used-in">
+                    <strong>Usado en:</strong> Generación de Contenido GenAI
+                </div>
+            </div>
+            <div class="card-footer agent-actions">
+                <button class="btn btn-secondary btn-sm" onclick="addMCPServer('content-generator')">
+                    <span class="icon">🔌</span> MCP Server
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="viewAgentDetails('content-generator')">
+                    Ver Detalles
+                </button>
+            </div>
+        </div>
+
+        <!-- Agente 2: Campaign Creator (Multi-Agent System) -->
+        <div class="agent-card card multi-agent-system" data-category="generation" data-model="gpt4">
+            <div class="card-header agent-header">
+                <div class="agent-avatar">🎨</div>
+                <div class="agent-title">
+                    <h3>Campaign Creator Agent</h3>
+                    <span class="agent-type">Generación de Contenido</span>
+                </div>
+                <span class="multi-agent-badge">🔀 Multi-Agent</span>
+            </div>
+            <div class="card-body">
+                <p class="agent-description">
+                    Genera campañas completas: conceptos creativos, copy multicanal, keywords SEO/SEM, briefings visuales. 
+                    Coordina múltiples sub-agentes especializados.
+                </p>
+                <div class="agent-tech">
+                    <span class="tech-badge">GPT-4 Turbo</span>
+                    <span class="tech-badge">Multi-Agent</span>
+                    <span class="tech-badge">CrewAI</span>
+                </div>
+                <div class="agent-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Uso/día:</span>
+                        <span class="stat-value">~320</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Latencia:</span>
+                        <span class="stat-value">15.4s</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Sub-agents:</span>
+                        <span class="stat-value">5</span>
+                    </div>
+                </div>
+                <div class="agent-used-in">
+                    <strong>Usado en:</strong> Generación de Contenido GenAI
+                </div>
+            </div>
+            <div class="card-footer agent-actions">
+                <button class="btn btn-secondary btn-sm" onclick="viewOrchestration('campaign-creator')">
+                    <span class="icon">🔀</span> Ver Orquestación
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="viewAgentDetails('campaign-creator')">
+                    Ver Detalles
+                </button>
+            </div>
+        </div>
+
+        <!-- Agente 3: Video Generator -->
+        <div class="agent-card card" data-category="generation" data-model="gemini">
+            <div class="card-header agent-header">
+                <div class="agent-avatar">🎬</div>
+                <div class="agent-title">
+                    <h3>Video Generator Agent</h3>
+                    <span class="agent-type">Generación de Contenido</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="agent-description">
+                    Genera storyboards y scripts de video publicitario utilizando Google ViGenAiR. Crea variantes A/B/C 
+                    con diferentes enfoques creativos.
+                </p>
+                <div class="agent-tech">
+                    <span class="tech-badge">Gemini 1.5 Pro</span>
+                    <span class="tech-badge">ViGenAiR</span>
+                    <span class="tech-badge">Vertex AI</span>
+                </div>
+                <div class="agent-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Uso/día:</span>
+                        <span class="stat-value">~180</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Latencia:</span>
+                        <span class="stat-value">12.8s</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Coste/req:</span>
+                        <span class="stat-value">€0.22</span>
+                    </div>
+                </div>
+                <div class="agent-used-in">
+                    <strong>Usado en:</strong> Generación de Contenido GenAI
+                </div>
+            </div>
+            <div class="card-footer agent-actions">
+                <button class="btn btn-secondary btn-sm" onclick="addMCPServer('video-generator')">
+                    <span class="icon">🔌</span> MCP Server
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="viewAgentDetails('video-generator')">
+                    Ver Detalles
+                </button>
+            </div>
+        </div>
+
+        <!-- Agente 4: Competitive Intel Copilot -->
+        <div class="agent-card card" data-category="intelligence" data-model="claude">
+            <div class="card-header agent-header">
+                <div class="agent-avatar">🔍</div>
+                <div class="agent-title">
+                    <h3>Competitive Intel Copilot</h3>
+                    <span class="agent-type">Inteligencia Competitiva</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="agent-description">
+                    Analiza competidores en tiempo real: posicionamiento, mensajes clave, ventajas competitivas. 
+                    Genera análisis de brechas y propuestas de diferenciación.
+                </p>
+                <div class="agent-tech">
+                    <span class="tech-badge">Claude 3.5 Sonnet</span>
+                    <span class="tech-badge">Web Scraping</span>
+                    <span class="tech-badge">RAG</span>
+                </div>
+                <div class="agent-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Uso/día:</span>
+                        <span class="stat-value">~420</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Latencia:</span>
+                        <span class="stat-value">6.5s</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Coste/req:</span>
+                        <span class="stat-value">€0.08</span>
+                    </div>
+                </div>
+                <div class="agent-used-in">
+                    <strong>Usado en:</strong> Inteligencia Competitiva GenAI
+                </div>
+            </div>
+            <div class="card-footer agent-actions">
+                <button class="btn btn-secondary btn-sm" onclick="addMCPServer('competitive-intel')">
+                    <span class="icon">🔌</span> MCP Server
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="viewAgentDetails('competitive-intel')">
+                    Ver Detalles
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Agregar Nuevo Agente -->
+<div id="addAgentModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>➕ Agregar Nuevo Agente de IA</h2>
+            <button class="modal-close" onclick="closeAddAgentModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre del Agente:</label>
+                <input type="text" id="agentName" placeholder="Ej: SEO Content Optimizer Agent">
+            </div>
+            <div class="form-group">
+                <label>Modelo Base:</label>
+                <select id="agentModel">
+                    <option>GPT-4 Turbo</option>
+                    <option>GPT-4</option>
+                    <option>Claude 3.5 Sonnet</option>
+                    <option>Claude 3 Opus</option>
+                    <option>Gemini 1.5 Pro</option>
+                    <option>Custom Fine-tuned Model</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Categoría:</label>
+                <select id="agentCategory">
+                    <option>Generación de Contenido</option>
+                    <option>Análisis & Insights</option>
+                    <option>Optimización</option>
+                    <option>Inteligencia Competitiva</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Caso de Uso Asociado:</label>
+                <select id="agentUseCase">
+                    <option>Generación de Contenido</option>
+                    <option>Inteligencia Competitiva</option>
+                    <option>Predicción de Abandonos</option>
+                    <option>Segmentación de Clientes</option>
+                    <option>Optimización Publicitaria</option>
+                    <option>Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="useMCP"> Conectar a MCP Server
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAddAgentModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="createNewAgent()">Crear Agente</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Sistema Multi-Agent -->
+<div id="multiAgentModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>🔀 Crear Sistema Multi-Agent</h2>
+            <button class="modal-close" onclick="closeMultiAgentModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre del Sistema:</label>
+                <input type="text" id="systemName" placeholder="Ej: Content Production Crew">
+            </div>
+            <div class="form-group">
+                <label>Framework de Orquestación:</label>
+                <select id="orchestrationFramework">
+                    <option>CrewAI</option>
+                    <option>AutoGen</option>
+                    <option>LangGraph</option>
+                    <option>Custom Orchestrator</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Número de Sub-Agentes:</label>
+                <select id="numSubAgents">
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tipo de Colaboración:</label>
+                <select id="collaborationType">
+                    <option>Sequential (Pipeline)</option>
+                    <option>Parallel (Independent)</option>
+                    <option>Hierarchical (Manager-Workers)</option>
+                    <option>Consensus (Voting)</option>
+                </select>
+            </div>
+            <div class="info-box">
+                <strong>ℹ️ Ejemplo de uso:</strong> Un sistema multi-agent para creación de campañas podría tener:
+                <ul>
+                    <li>🎯 Strategy Agent: Define objetivos y audiencia</li>
+                    <li>✍️ Copywriter Agent: Genera textos</li>
+                    <li>🎨 Creative Agent: Propone conceptos visuales</li>
+                    <li>📊 Analyst Agent: Valida con datos históricos</li>
+                    <li>🔍 QA Agent: Revisa coherencia y calidad</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeMultiAgentModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="createMultiAgentSystem()">Crear Sistema</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Agregar MCP Server -->
+<div id="mcpServerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>🔌 Conectar MCP Server</h2>
+            <button class="modal-close" onclick="closeMCPModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>MCP Server:</label>
+                <select id="mcpServer">
+                    <option>Enhanced MCP Server (filesystem, web, weather, etc.)</option>
+                    <option>Database MCP Server (PostgreSQL, MongoDB)</option>
+                    <option>API Integration MCP Server (REST, GraphQL)</option>
+                    <option>Analytics MCP Server (Google Analytics, Adobe)</option>
+                    <option>CRM MCP Server (Salesforce, HubSpot)</option>
+                    <option>Custom MCP Server</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Herramientas Disponibles:</label>
+                <div class="tools-list">
+                    <label><input type="checkbox" checked> 🌐 Web Scraping</label>
+                    <label><input type="checkbox" checked> 📁 File System Access</label>
+                    <label><input type="checkbox"> 🗄️ Database Queries</label>
+                    <label><input type="checkbox"> 📊 Analytics Data</label>
+                    <label><input type="checkbox"> 🔍 Search APIs</label>
+                    <label><input type="checkbox"> 💬 Social Media APIs</label>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>ℹ️ MCP (Model Context Protocol):</strong> Permite que los agentes accedan a herramientas 
+                externas, bases de datos, APIs, y otros recursos de forma estandarizada. Los agentes pueden usar 
+                estas herramientas para enriquecer sus respuestas con datos en tiempo real.
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeMCPModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="connectMCPServer()">Conectar MCP</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.header-actions {
+    display: flex;
+    gap: var(--spacing-m);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-xl);
+}
+
+.metric-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-m);
+    padding: var(--spacing-l);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+}
+
+.filters-container {
+    margin-bottom: var(--spacing-xl);
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-s);
+    background: var(--bg-primary);
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.agent-card {
+    transition: all 0.3s ease;
+}
+
+.agent-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.agent-header {
+    display: flex;
+    gap: var(--spacing-m);
+    align-items: center;
+    background: linear-gradient(135deg, rgba(0, 207, 79, 0.08), rgba(0, 159, 227, 0.08));
+    position: relative;
+}
+
+.agent-avatar {
+    font-size: 2.5rem;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-m);
+    border: 2px solid var(--border-color);
+}
+
+.agent-title h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+}
+
+.agent-type {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.multi-agent-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    background: #8b5cf633;
+    color: #8b5cf6;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.agent-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-m);
+}
+
+.agent-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--spacing-m);
+}
+
+.tech-badge {
+    padding: 6px 12px;
+    background: rgba(0, 207, 79, 0.15);
+    border: 1px solid rgba(0, 207, 79, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.agent-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-m);
+    padding: var(--spacing-m);
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-s);
+    margin-bottom: var(--spacing-m);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.agent-used-in {
+    padding: var(--spacing-m);
+    background: rgba(0, 159, 227, 0.08);
+    border-radius: var(--border-radius-s);
+    font-size: 0.9rem;
+    border-left: 3px solid var(--secondary-color);
+}
+
+.agent-actions {
+    display: flex;
+    gap: var(--spacing-m);
+}
+
+.agent-actions .btn {
+    flex: 1;
+}
+
+.btn-sm {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+}
+
+.agent-card.hidden {
+    display: none;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: var(--border-radius-l);
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid #e0e0e0;
+}
+
+.modal-header {
+    padding: var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--text-color);
+}
+
+.modal-body {
+    padding: var(--spacing-xl);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-l);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: var(--border-radius-s);
+    background: #ffffff;
+    color: #1a1a1a;
+    font-size: 1rem;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.tools-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-m);
+}
+
+.tools-list label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+}
+
+.info-box {
+    padding: var(--spacing-l);
+    background: rgba(0, 159, 227, 0.1);
+    border-left: 3px solid var(--secondary-color);
+    border-radius: var(--border-radius-s);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+}
+
+.info-box ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
+
+.info-box li {
+    margin-bottom: 6px;
+}
+
+.modal-footer {
+    padding: var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--spacing-m);
+    justify-content: flex-end;
+}
+</style>
+
+<script>
+let currentAgentForMCP = null;
+
+function viewAgentDetails(agentId) {
+    alert(`Ver detalles del agente: ${agentId}\n\nEsta funcionalidad mostraría:\n- Configuración completa\n- Prompts y templates\n- Historial de ejecuciones\n- Logs y debugging\n- Métricas de rendimiento`);
+}
+
+function filterAgents() {
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const modelFilter = document.getElementById('modelFilter').value;
+    const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+    
+    const cards = document.querySelectorAll('.agent-card');
+    
+    cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        const model = card.getAttribute('data-model');
+        const title = card.querySelector('.agent-title h3').textContent.toLowerCase();
+        
+        const categoryMatch = categoryFilter === 'all' || category === categoryFilter;
+        const modelMatch = modelFilter === 'all' || model === modelFilter;
+        const searchMatch = searchFilter === '' || title.includes(searchFilter);
+        
+        if (categoryMatch && modelMatch && searchMatch) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+function showAddAgentModal() {
+    document.getElementById('addAgentModal').classList.add('active');
+}
+
+function closeAddAgentModal() {
+    document.getElementById('addAgentModal').classList.remove('active');
+}
+
+function createNewAgent() {
+    const name = document.getElementById('agentName').value;
+    const model = document.getElementById('agentModel').value;
+    const category = document.getElementById('agentCategory').value;
+    const useCase = document.getElementById('agentUseCase').value;
+    const useMCP = document.getElementById('useMCP').checked;
+    
+    if (!name) {
+        alert('Por favor ingresa un nombre para el agente');
+        return;
+    }
+    
+    let message = `✅ Agente creado exitosamente!\n\nNombre: ${name}\nModelo Base: ${model}\nCategoría: ${category}\nCaso de Uso: ${useCase}`;
+    
+    if (useMCP) {
+        message += '\n\n🔌 MCP Server configurado con herramientas activas';
+    }
+    
+    alert(message);
+    closeAddAgentModal();
+}
+
+function showMultiAgentModal() {
+    document.getElementById('multiAgentModal').classList.add('active');
+}
+
+function closeMultiAgentModal() {
+    document.getElementById('multiAgentModal').classList.remove('active');
+}
+
+function createMultiAgentSystem() {
+    const name = document.getElementById('systemName').value;
+    const framework = document.getElementById('orchestrationFramework').value;
+    const numAgents = document.getElementById('numSubAgents').value;
+    const collaboration = document.getElementById('collaborationType').value;
+    
+    if (!name) {
+        alert('Por favor ingresa un nombre para el sistema');
+        return;
+    }
+    
+    alert(`✅ Sistema Multi-Agent creado exitosamente!\n\nNombre: ${name}\nFramework: ${framework}\nSub-Agentes: ${numAgents}\nColaboración: ${collaboration}\n\nEl sistema ha sido inicializado y está listo para configurar los roles de cada sub-agente.`);
+    
+    closeMultiAgentModal();
+}
+
+function addMCPServer(agentId) {
+    currentAgentForMCP = agentId;
+    document.getElementById('mcpServerModal').classList.add('active');
+}
+
+function closeMCPModal() {
+    document.getElementById('mcpServerModal').classList.remove('active');
+    currentAgentForMCP = null;
+}
+
+function connectMCPServer() {
+    const server = document.getElementById('mcpServer').value;
+    
+    alert(`✅ MCP Server conectado al agente: ${currentAgentForMCP}\n\nServidor: ${server}\n\nEl agente ahora tiene acceso a las herramientas configuradas y puede usarlas durante su ejecución.`);
+    
+    closeMCPModal();
+}
+
+function viewOrchestration(agentId) {
+    alert(`🔀 Sistema Multi-Agent: ${agentId}\n\nEste sistema coordina 5 sub-agentes especializados:\n\n1. Strategy Agent: Define objetivos y audiencia\n2. Copywriter Agent: Genera textos persuasivos\n3. Creative Agent: Propone conceptos visuales\n4. SEO Agent: Optimiza para buscadores\n5. QA Agent: Valida coherencia y calidad\n\nEl orquestador coordina la ejecución secuencial de todos los agentes y consolida los resultados.`);
+}
+
+// Cerrar modales al hacer clic fuera
+window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+}
+</script>
+
+<!-- Incluir Asistente Virtual -->
+{% include 'asistente_panel_fijo.html' %}
+
+{% endblock %}

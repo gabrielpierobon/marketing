@@ -1,0 +1,1056 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<!-- Documentation Panel Toggle -->
+<button class="doc-panel-toggle" aria-label="Ocultar documentación">
+    <span class="icon">📚</span>
+    <span>Ocultar Panel</span>
+</button>
+
+<!-- Documentation Panel -->
+<div class="doc-panel">
+    <div class="doc-panel-header">
+        <div class="doc-panel-title">
+            <h2>🧠 Knowledge Base</h2>
+            <p>Gestión de bases de conocimiento para IA</p>
+        </div>
+        <div class="doc-panel-header-actions">
+            <button class="doc-edit-btn" aria-label="Editar documentación">
+                <span>✏️</span> Editar
+            </button>
+            <button class="doc-panel-close" aria-label="Cerrar">×</button>
+        </div>
+    </div>
+    
+    <div class="doc-panel-content">
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">📋</span>
+                Resumen Ejecutivo
+            </h3>
+            <div class="doc-section-content">
+                <p>
+                    La <strong>Knowledge Base</strong> es el sistema centralizado para gestionar el conocimiento 
+                    que alimenta a los agentes de IA. Soporta dos tecnologías principales:
+                </p>
+                <ul>
+                    <li><strong>RAG (Retrieval Augmented Generation):</strong> Bases de datos vectoriales para búsqueda semántica</li>
+                    <li><strong>Knowledge Graphs:</strong> Grafos de conocimiento con entidades y relaciones</li>
+                </ul>
+                <p>
+                    Estos sistemas permiten que los agentes accedan a información actualizada y específica del 
+                    dominio, mejorando significativamente la precisión y relevancia de sus respuestas.
+                </p>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h3 class="doc-section-title">
+                <span class="icon">🔍</span>
+                Tecnologías
+            </h3>
+            <div class="doc-section-content">
+                <p><strong>Vector Databases:</strong> Pinecone, Weaviate, Chroma, FAISS</p>
+                <p><strong>Knowledge Graphs:</strong> Neo4j, Amazon Neptune, GraphDB</p>
+                <p><strong>Embeddings:</strong> OpenAI ada-002, Cohere, Sentence Transformers</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="use-case-container">
+    <div class="content-header">
+        <div class="header-content">
+            <h1>🧠 Knowledge Base</h1>
+            <p class="subtitle">Gestión de bases de conocimiento para RAG y Knowledge Graphs</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="showUploadModal()">
+                <span class="icon">📤</span> Subir Documentos
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabs para RAG vs Knowledge Graph -->
+    <div class="kb-tabs">
+        <button class="kb-tab active" onclick="switchKBTab('rag')" id="tab-rag">
+            🔍 RAG (Vector DB)
+        </button>
+        <button class="kb-tab" onclick="switchKBTab('kg')" id="tab-kg">
+            🕸️ Knowledge Graphs
+        </button>
+    </div>
+
+    <!-- RAG Section -->
+    <div id="rag-section" class="kb-section active">
+        <!-- Métricas RAG -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">📄</div>
+                <div class="metric-info">
+                    <div class="metric-value">2,847</div>
+                    <div class="metric-label">Documentos Indexados</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔢</div>
+                <div class="metric-info">
+                    <div class="metric-value">1.2M</div>
+                    <div class="metric-label">Chunks Vectorizados</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🗄️</div>
+                <div class="metric-info">
+                    <div class="metric-value">8</div>
+                    <div class="metric-label">Colecciones Activas</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚡</div>
+                <div class="metric-info">
+                    <div class="metric-value">45ms</div>
+                    <div class="metric-label">Latencia Búsqueda</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colecciones RAG -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📚 Colecciones de Vectores</h2>
+                <button class="btn btn-secondary btn-sm" onclick="showCreateCollectionModal()">
+                    ➕ Nueva Colección
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="collections-grid">
+                    <!-- Colección 1: Documentación Producto -->
+                    <div class="collection-card">
+                        <div class="collection-header">
+                            <div class="collection-icon">📖</div>
+                            <div class="collection-info">
+                                <h3>Documentación de Producto</h3>
+                                <span class="collection-meta">482 documentos • 125K chunks</span>
+                            </div>
+                        </div>
+                        <div class="collection-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Vector DB:</span>
+                                <span class="stat-value">Pinecone</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Embedding:</span>
+                                <span class="stat-value">text-embedding-ada-002</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Dimensiones:</span>
+                                <span class="stat-value">1536</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Usado por:</span>
+                                <span class="stat-value">5 agentes</span>
+                            </div>
+                        </div>
+                        <div class="collection-actions">
+                            <button class="btn btn-sm btn-secondary" onclick="queryCollection('product-docs')">🔍 Consultar</button>
+                            <button class="btn btn-sm btn-secondary" onclick="manageCollection('product-docs')">⚙️ Gestionar</button>
+                        </div>
+                    </div>
+
+                    <!-- Colección 2: Base de Conocimiento Marketing -->
+                    <div class="collection-card">
+                        <div class="collection-header">
+                            <div class="collection-icon">📊</div>
+                            <div class="collection-info">
+                                <h3>Base de Conocimiento Marketing</h3>
+                                <span class="collection-meta">1,284 documentos • 380K chunks</span>
+                            </div>
+                        </div>
+                        <div class="collection-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Vector DB:</span>
+                                <span class="stat-value">Weaviate</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Embedding:</span>
+                                <span class="stat-value">Cohere embed-v3</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Dimensiones:</span>
+                                <span class="stat-value">1024</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Usado por:</span>
+                                <span class="stat-value">8 agentes</span>
+                            </div>
+                        </div>
+                        <div class="collection-actions">
+                            <button class="btn btn-sm btn-secondary" onclick="queryCollection('marketing-kb')">🔍 Consultar</button>
+                            <button class="btn btn-sm btn-secondary" onclick="manageCollection('marketing-kb')">⚙️ Gestionar</button>
+                        </div>
+                    </div>
+
+                    <!-- Colección 3: Políticas y Compliance -->
+                    <div class="collection-card">
+                        <div class="collection-header">
+                            <div class="collection-icon">📋</div>
+                            <div class="collection-info">
+                                <h3>Políticas y Compliance</h3>
+                                <span class="collection-meta">156 documentos • 48K chunks</span>
+                            </div>
+                        </div>
+                        <div class="collection-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Vector DB:</span>
+                                <span class="stat-value">Chroma</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Embedding:</span>
+                                <span class="stat-value">Sentence-BERT</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Dimensiones:</span>
+                                <span class="stat-value">768</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Usado por:</span>
+                                <span class="stat-value">3 agentes</span>
+                            </div>
+                        </div>
+                        <div class="collection-actions">
+                            <button class="btn btn-sm btn-secondary" onclick="queryCollection('compliance')">🔍 Consultar</button>
+                            <button class="btn btn-sm btn-secondary" onclick="manageCollection('compliance')">⚙️ Gestionar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test RAG -->
+        <div class="card">
+            <div class="card-header">
+                <h2>🧪 Probar Búsqueda Semántica</h2>
+            </div>
+            <div class="card-body">
+                <div class="test-rag-container">
+                    <div class="form-group">
+                        <label>Colección:</label>
+                        <select id="test-collection" class="form-control">
+                            <option value="product-docs">Documentación de Producto</option>
+                            <option value="marketing-kb">Base de Conocimiento Marketing</option>
+                            <option value="compliance">Políticas y Compliance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Consulta:</label>
+                        <input type="text" id="test-query" class="form-control" placeholder="Ej: ¿Cuáles son nuestros productos de energía solar?">
+                    </div>
+                    <div class="form-group">
+                        <label>Top K resultados:</label>
+                        <input type="number" id="test-k" class="form-control" value="5" min="1" max="20">
+                    </div>
+                    <button class="btn btn-primary" onclick="testRAGSearch()">🔍 Buscar</button>
+                </div>
+                <div id="rag-results" class="rag-results" style="display: none;">
+                    <!-- Los resultados se mostrarán aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Knowledge Graph Section -->
+    <div id="kg-section" class="kb-section" style="display: none;">
+        <!-- Métricas KG -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">🔵</div>
+                <div class="metric-info">
+                    <div class="metric-value">45,328</div>
+                    <div class="metric-label">Nodos (Entidades)</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔗</div>
+                <div class="metric-info">
+                    <div class="metric-value">128,942</div>
+                    <div class="metric-label">Relaciones</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🗂️</div>
+                <div class="metric-info">
+                    <div class="metric-value">24</div>
+                    <div class="metric-label">Tipos de Entidades</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚡</div>
+                <div class="metric-info">
+                    <div class="metric-value">28ms</div>
+                    <div class="metric-label">Latencia Query</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Graphs -->
+        <div class="card">
+            <div class="card-header">
+                <h2>🕸️ Knowledge Graphs</h2>
+                <button class="btn btn-secondary btn-sm" onclick="showCreateKGModal()">
+                    ➕ Nuevo Grafo
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="kg-grid">
+                    <!-- Grafo 1: Productos y Servicios -->
+                    <div class="kg-card">
+                        <div class="kg-header">
+                            <div class="kg-icon">⚡</div>
+                            <div class="kg-info">
+                                <h3>Productos y Servicios Iberdrola</h3>
+                                <span class="kg-meta">Neo4j • 8,452 nodos • 24,128 relaciones</span>
+                            </div>
+                        </div>
+                        <div class="kg-schema">
+                            <div class="schema-item">
+                                <span class="schema-label">Tipos de nodos:</span>
+                                <div class="schema-tags">
+                                    <span class="schema-tag">Producto</span>
+                                    <span class="schema-tag">Servicio</span>
+                                    <span class="schema-tag">Tarifa</span>
+                                    <span class="schema-tag">Cliente</span>
+                                    <span class="schema-tag">Región</span>
+                                </div>
+                            </div>
+                            <div class="schema-item">
+                                <span class="schema-label">Relaciones:</span>
+                                <div class="schema-tags">
+                                    <span class="schema-tag-rel">OFRECE</span>
+                                    <span class="schema-tag-rel">INCLUYE</span>
+                                    <span class="schema-tag-rel">REQUIERE</span>
+                                    <span class="schema-tag-rel">DISPONIBLE_EN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kg-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Usado por:</span>
+                                <span class="stat-value">6 agentes</span>
+                            </div>
+                        </div>
+                        <div class="kg-actions">
+                            <button class="btn btn-sm btn-secondary" onclick="visualizeKG('products')">👁️ Visualizar</button>
+                            <button class="btn btn-sm btn-secondary" onclick="queryKG('products')">🔍 Consultar</button>
+                        </div>
+                    </div>
+
+                    <!-- Grafo 2: Organizacional -->
+                    <div class="kg-card">
+                        <div class="kg-header">
+                            <div class="kg-icon">🏢</div>
+                            <div class="kg-info">
+                                <h3>Estructura Organizacional</h3>
+                                <span class="kg-meta">Neo4j • 2,845 nodos • 8,120 relaciones</span>
+                            </div>
+                        </div>
+                        <div class="kg-schema">
+                            <div class="schema-item">
+                                <span class="schema-label">Tipos de nodos:</span>
+                                <div class="schema-tags">
+                                    <span class="schema-tag">Empleado</span>
+                                    <span class="schema-tag">Departamento</span>
+                                    <span class="schema-tag">Proyecto</span>
+                                    <span class="schema-tag">Skill</span>
+                                </div>
+                            </div>
+                            <div class="schema-item">
+                                <span class="schema-label">Relaciones:</span>
+                                <div class="schema-tags">
+                                    <span class="schema-tag-rel">TRABAJA_EN</span>
+                                    <span class="schema-tag-rel">REPORTA_A</span>
+                                    <span class="schema-tag-rel">TIENE_SKILL</span>
+                                    <span class="schema-tag-rel">PARTICIPA_EN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kg-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Usado por:</span>
+                                <span class="stat-value">4 agentes</span>
+                            </div>
+                        </div>
+                        <div class="kg-actions">
+                            <button class="btn btn-sm btn-secondary" onclick="visualizeKG('org')">👁️ Visualizar</button>
+                            <button class="btn btn-sm btn-secondary" onclick="queryKG('org')">🔍 Consultar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cypher Query Playground -->
+        <div class="card">
+            <div class="card-header">
+                <h2>💻 Cypher Query Playground</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Grafo:</label>
+                    <select id="cypher-graph" class="form-control">
+                        <option value="products">Productos y Servicios</option>
+                        <option value="org">Estructura Organizacional</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Query Cypher:</label>
+                    <textarea id="cypher-query" class="form-control code-editor" rows="6" placeholder="MATCH (p:Producto)-[:INCLUYE]->(s:Servicio)&#10;WHERE p.tipo = 'Solar'&#10;RETURN p.nombre, s.nombre&#10;LIMIT 10"></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="executeCypherQuery()">▶️ Ejecutar Query</button>
+                <div id="cypher-results" class="cypher-results" style="display: none;">
+                    <!-- Los resultados se mostrarán aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Subir Documentos -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>📤 Subir Documentos a Knowledge Base</h2>
+            <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Tipo de Knowledge Base:</label>
+                <select id="upload-type" class="form-control" onchange="toggleUploadOptions()">
+                    <option value="rag">RAG (Vector Database)</option>
+                    <option value="kg">Knowledge Graph</option>
+                </select>
+            </div>
+
+            <!-- Opciones RAG -->
+            <div id="rag-options" class="upload-options">
+                <div class="form-group">
+                    <label>Colección de destino:</label>
+                    <select id="upload-collection" class="form-control">
+                        <option value="product-docs">Documentación de Producto</option>
+                        <option value="marketing-kb">Base de Conocimiento Marketing</option>
+                        <option value="compliance">Políticas y Compliance</option>
+                        <option value="new">➕ Crear nueva colección</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Opciones KG -->
+            <div id="kg-options" class="upload-options" style="display: none;">
+                <div class="form-group">
+                    <label>Grafo de destino:</label>
+                    <select id="upload-graph" class="form-control">
+                        <option value="products">Productos y Servicios</option>
+                        <option value="org">Estructura Organizacional</option>
+                        <option value="new">➕ Crear nuevo grafo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Método de extracción:</label>
+                    <select id="extraction-method" class="form-control">
+                        <option value="llm">LLM Entity/Relation Extraction (GPT-4)</option>
+                        <option value="ner">NER + Relation Extraction (SpaCy)</option>
+                        <option value="manual">Definición manual de schema</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Archivos:</label>
+                <div class="file-upload-zone" onclick="document.getElementById('file-input').click()">
+                    <div class="upload-icon">📁</div>
+                    <p>Click para seleccionar archivos o arrastra aquí</p>
+                    <p class="upload-note">PDF, DOCX, TXT, MD, CSV • Max 100MB por archivo</p>
+                </div>
+                <input type="file" id="file-input" multiple style="display: none;" onchange="handleFileSelect(event)">
+                <div id="file-list" class="file-list"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Opciones de procesamiento:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" checked> Chunk automático (512 tokens)</label>
+                    <label><input type="checkbox" checked> Generar embeddings</label>
+                    <label><input type="checkbox"> OCR para imágenes/PDFs escaneados</label>
+                    <label><input type="checkbox"> Extraer metadatos</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeUploadModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="uploadDocuments()">📤 Subir y Procesar</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.kb-tabs {
+    display: flex;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.kb-tab {
+    padding: var(--spacing-m) var(--spacing-xl);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.kb-tab:hover {
+    color: var(--text-color);
+}
+
+.kb-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.kb-section {
+    display: none;
+}
+
+.kb-section.active {
+    display: block;
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.collection-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-m);
+    padding: var(--spacing-l);
+    transition: all 0.3s ease;
+}
+
+.collection-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.collection-header {
+    display: flex;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+}
+
+.collection-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 207, 79, 0.1), rgba(0, 159, 227, 0.1));
+    border-radius: var(--border-radius-m);
+}
+
+.collection-info h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+}
+
+.collection-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.collection-stats {
+    padding: var(--spacing-m);
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-s);
+    margin-bottom: var(--spacing-m);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.collection-actions {
+    display: flex;
+    gap: var(--spacing-m);
+}
+
+.test-rag-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+    max-width: 800px;
+}
+
+.rag-results {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 2px solid var(--border-color);
+}
+
+.result-item {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--primary-color);
+    padding: var(--spacing-l);
+    margin-bottom: var(--spacing-m);
+    border-radius: var(--border-radius-s);
+}
+
+.result-score {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.result-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.result-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Knowledge Graph Styles */
+.kg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: var(--spacing-l);
+}
+
+.kg-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-m);
+    padding: var(--spacing-l);
+    transition: all 0.3s ease;
+}
+
+.kg-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.kg-header {
+    display: flex;
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+}
+
+.kg-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(0, 159, 227, 0.1));
+    border-radius: var(--border-radius-m);
+}
+
+.kg-info h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+}
+
+.kg-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.kg-schema {
+    margin-bottom: var(--spacing-m);
+}
+
+.schema-item {
+    margin-bottom: var(--spacing-m);
+}
+
+.schema-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.schema-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.schema-tag {
+    padding: 4px 10px;
+    background: rgba(0, 207, 79, 0.15);
+    border: 1px solid rgba(0, 207, 79, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.schema-tag-rel {
+    padding: 4px 10px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #8b5cf6;
+}
+
+.kg-stats {
+    padding: var(--spacing-m);
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-s);
+    margin-bottom: var(--spacing-m);
+}
+
+.kg-actions {
+    display: flex;
+    gap: var(--spacing-m);
+}
+
+.code-editor {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-s);
+    padding: var(--spacing-m);
+}
+
+.cypher-results {
+    margin-top: var(--spacing-l);
+    padding: var(--spacing-l);
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-s);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* File Upload */
+.file-upload-zone {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius-m);
+    padding: var(--spacing-xxl);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-upload-zone:hover {
+    border-color: var(--primary-color);
+    background: rgba(0, 207, 79, 0.05);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-m);
+}
+
+.upload-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.file-list {
+    margin-top: var(--spacing-m);
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-m);
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-s);
+    margin-bottom: 8px;
+}
+
+.file-name {
+    font-size: 0.9rem;
+}
+
+.file-size {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+}
+
+/* Modal Overrides */
+.modal-content {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+.modal-header h2 {
+    color: #1a1a1a;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: var(--border-radius-s);
+    background: #ffffff;
+    color: #1a1a1a;
+    font-size: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+</style>
+
+<script>
+let selectedFiles = [];
+
+function switchKBTab(tab) {
+    // Update tabs
+    document.querySelectorAll('.kb-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+    
+    // Update sections
+    document.querySelectorAll('.kb-section').forEach(s => s.style.display = 'none');
+    document.getElementById(`${tab}-section`).style.display = 'block';
+}
+
+function showUploadModal() {
+    document.getElementById('uploadModal').classList.add('active');
+}
+
+function closeUploadModal() {
+    document.getElementById('uploadModal').classList.remove('active');
+    selectedFiles = [];
+    document.getElementById('file-list').innerHTML = '';
+}
+
+function toggleUploadOptions() {
+    const type = document.getElementById('upload-type').value;
+    document.getElementById('rag-options').style.display = type === 'rag' ? 'block' : 'none';
+    document.getElementById('kg-options').style.display = type === 'kg' ? 'block' : 'none';
+}
+
+function handleFileSelect(event) {
+    selectedFiles = Array.from(event.target.files);
+    displayFileList();
+}
+
+function displayFileList() {
+    const fileList = document.getElementById('file-list');
+    fileList.innerHTML = '';
+    
+    selectedFiles.forEach((file, index) => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.innerHTML = `
+            <div>
+                <div class="file-name">📄 ${file.name}</div>
+                <div class="file-size">${(file.size / 1024).toFixed(2)} KB</div>
+            </div>
+            <button class="btn btn-sm btn-danger" onclick="removeFile(${index})">❌</button>
+        `;
+        fileList.appendChild(fileItem);
+    });
+}
+
+function removeFile(index) {
+    selectedFiles.splice(index, 1);
+    displayFileList();
+}
+
+function uploadDocuments() {
+    if (selectedFiles.length === 0) {
+        alert('Por favor selecciona al menos un archivo');
+        return;
+    }
+    
+    const type = document.getElementById('upload-type').value;
+    const collection = type === 'rag' ? document.getElementById('upload-collection').value : document.getElementById('upload-graph').value;
+    
+    // Simular proceso de subida
+    alert(`✅ Subida iniciada!\n\nArchivos: ${selectedFiles.length}\nTipo: ${type === 'rag' ? 'RAG (Vector DB)' : 'Knowledge Graph'}\nDestino: ${collection}\n\nProcesando en segundo plano:\n1. Extracción de texto\n2. Chunking y tokenización\n3. Generación de embeddings\n4. Indexación en base de datos\n\nRecibirás una notificación cuando termine.`);
+    
+    closeUploadModal();
+}
+
+function showCreateCollectionModal() {
+    alert('Crear nueva colección de vectores:\n\n1. Nombre de la colección\n2. Seleccionar vector database (Pinecone/Weaviate/Chroma)\n3. Seleccionar modelo de embeddings\n4. Configurar dimensionalidad\n5. Configurar metadatos y filtros');
+}
+
+function showCreateKGModal() {
+    alert('Crear nuevo Knowledge Graph:\n\n1. Nombre del grafo\n2. Definir tipos de nodos (entidades)\n3. Definir tipos de relaciones\n4. Configurar propiedades\n5. Seleccionar motor (Neo4j/Neptune)');
+}
+
+function queryCollection(collectionId) {
+    alert(`Consultar colección: ${collectionId}\n\nAbriría un playground para hacer búsquedas semánticas con diferentes parámetros:\n- Top K resultados\n- Threshold de similaridad\n- Filtros de metadatos\n- Híbrido (keyword + semantic)`);
+}
+
+function manageCollection(collectionId) {
+    alert(`Gestionar colección: ${collectionId}\n\nOpciones:\n- Ver estadísticas detalladas\n- Reindexar documentos\n- Actualizar embeddings\n- Configurar acceso\n- Exportar/Importar\n- Eliminar colección`);
+}
+
+function testRAGSearch() {
+    const query = document.getElementById('test-query').value;
+    const k = document.getElementById('test-k').value;
+    
+    if (!query) {
+        alert('Por favor ingresa una consulta');
+        return;
+    }
+    
+    // Simular búsqueda
+    const resultsDiv = document.getElementById('rag-results');
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p>🔍 Buscando...</p>';
+    
+    setTimeout(() => {
+        resultsDiv.innerHTML = `
+            <h3>Top ${k} resultados más relevantes:</h3>
+            <div class="result-item">
+                <span class="result-score">Similaridad: 0.94</span>
+                <div class="result-text">
+                    <strong>Resultado 1:</strong> Nuestros productos de energía solar incluyen paneles fotovoltaicos de alta eficiencia, 
+                    sistemas de almacenamiento con baterías, y soluciones de autoconsumo tanto para hogares como para empresas...
+                </div>
+                <div class="result-meta">Fuente: catalogo_productos.pdf • Página 15</div>
+            </div>
+            <div class="result-item">
+                <span class="result-score">Similaridad: 0.89</span>
+                <div class="result-text">
+                    <strong>Resultado 2:</strong> La tarifa solar incluye descuentos especiales para clientes que instalen 
+                    paneles solares, con ahorros de hasta 40% en la factura mensual durante los primeros 2 años...
+                </div>
+                <div class="result-meta">Fuente: tarifas_2024.pdf • Página 8</div>
+            </div>
+            <div class="result-item">
+                <span class="result-score">Similaridad: 0.86</span>
+                <div class="result-text">
+                    <strong>Resultado 3:</strong> Instalación de sistemas solares: ofrecemos instalación profesional con garantía 
+                    de 10 años, mantenimiento incluido los primeros 5 años, y monitorización en tiempo real...
+                </div>
+                <div class="result-meta">Fuente: servicios_instalacion.pdf • Página 3</div>
+            </div>
+        `;
+    }, 1000);
+}
+
+function visualizeKG(graphId) {
+    alert(`Visualizar Knowledge Graph: ${graphId}\n\nAbriría una visualización interactiva del grafo con:\n- Nodos coloreados por tipo\n- Relaciones etiquetadas\n- Zoom y pan\n- Click para ver propiedades\n- Búsqueda de nodos\n- Filtros por tipo`);
+}
+
+function queryKG(graphId) {
+    alert(`Consultar Knowledge Graph: ${graphId}\n\nAbriría un query builder visual para:\n- Búsquedas por patrón\n- Paths entre nodos\n- Recomendaciones basadas en grafo\n- Agregaciones\n- Exportar resultados`);
+}
+
+function executeCypherQuery() {
+    const query = document.getElementById('cypher-query').value;
+    
+    if (!query) {
+        alert('Por favor ingresa una query Cypher');
+        return;
+    }
+    
+    // Simular ejecución
+    const resultsDiv = document.getElementById('cypher-results');
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p>⚡ Ejecutando query...</p>';
+    
+    setTimeout(() => {
+        resultsDiv.innerHTML = `
+            <h4>Resultados (10 rows):</h4>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="background: #f0f0f0; font-weight: 600;">
+                    <td style="padding: 8px; border: 1px solid #ddd;">p.nombre</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">s.nombre</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Tarifa Solar Plus</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Instalación paneles</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Tarifa Solar Plus</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Mantenimiento anual</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Autoconsumo Solar</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Monitorización 24/7</td>
+                </tr>
+            </table>
+            <p style="margin-top: 12px; color: #666;">Query ejecutada en 28ms</p>
+        `;
+    }, 800);
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+    const modal = document.getElementById('uploadModal');
+    if (event.target === modal) {
+        closeUploadModal();
+    }
+}
+</script>
+
+<!-- Incluir Asistente Virtual -->
+{% include 'asistente_panel_fijo.html' %}
+
+{% endblock %}
+
