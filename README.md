@@ -1,29 +1,56 @@
 # AI Marketing Suite
 
-Plataforma SaaS completa de Inteligencia Artificial para Marketing Digital en el Sector Energético.
+Plataforma SaaS completa de Inteligencia Artificial para Marketing Digital.
 
-## 🚀 Características
+## 🚀 Características Principales
 
-- **10 Casos de Uso de IA** completamente funcionales
+- **Casos de Uso de IA** completamente funcionales y demo-ready
 - **Autenticación de usuarios** con sesiones seguras
 - **Dashboard interactivo** con métricas en tiempo real
-- **Interfaz moderna** con sidebar de navegación
-- **Demos interactivos** para cada caso de uso
-- **Simulación de datos realistas** sin necesidad de backend complejo
+- **Interfaz moderna y responsive** con sidebar de navegación
+- **Demos interactivos** para cada funcionalidad
+- **Backend Management** con MLOps y Agent Gallery
+- **Knowledge Base** con RAG y Knowledge Graphs
 - **100% en Español** - Interfaz completamente localizada
 
-## 📋 Casos de Uso Implementados
+## 📋 Arquitectura de la Plataforma
 
-1. **Personalización Hiperpersonalizada** - Ofertas únicas por cliente
-2. **Generación de Contenido GenAI** - Creación automática de campañas
-3. **Chatbot IA Conversacional** - Asistente virtual 24/7
-4. **Predicción de Churn** - Identificación de clientes en riesgo
-5. **Optimización Publicitaria** - Mejora automática de campañas
-6. **Segmentación Avanzada** - Agrupación inteligente de clientes
-7. **A/B Testing Automatizado** - Experimentación continua
-8. **Monitorización de Marca** - Análisis de sentimiento en tiempo real
-9. **Motor de Recomendaciones** - Sugerencias personalizadas
-10. **Attribution Marketing** - Optimización de inversión multi-touch
+### Casos de Uso por Categoría
+
+#### 🔍 Benchmark
+- **Monitorización de Marca** - Análisis de sentimiento en tiempo real
+- **Inteligencia Competitiva GenAI** - Análisis competitivo con IA
+
+#### 📊 Insights y Aprendizajes
+- **Predicción de Abandonos** - Identificación de clientes en riesgo
+- **Segmentación Avanzada** - Agrupación inteligente de clientes
+- **Attribution Marketing** - Optimización de inversión multi-touch
+
+#### 🎨 Estudio Creativo
+- **Generación de Contenido GenAI** - Creación automática de campañas y videos
+
+#### 🤖 Content Automation Tool
+- **Personalización de Experiencias** - Ofertas únicas por cliente
+- **Motor de Recomendaciones** - Sugerencias personalizadas
+- **A/B Testing Automatizado** - Experimentación continua
+
+#### 🛡️ Brand Guardian
+- **Agentes Conversacionales** - Chatbots IA 24/7
+- **Optimización Publicitaria** - Mejora automática de campañas
+
+### Backend Infrastructure
+
+#### ⚙️ Backend
+- **MLOps** - Gestión del ciclo de vida de modelos ML (12 modelos en producción)
+- **Agent Gallery** - 18 agentes especializados de IA con soporte para MCP servers y sistemas multi-agent
+
+### Data & Integración
+
+- **Integración de Datos** - Conectores con CRM, ERP, Analytics
+- **APIs & Conectores** - Endpoints REST para integración empresarial
+- **Knowledge Base** - RAG (Vector DBs) y Knowledge Graphs para alimentar agentes
+- **Laboratorio de Datos** - Notebooks Python para análisis exploratorio
+- **Monitorización & Auditoría** - Seguimiento del sistema en producción
 
 ## 🛠️ Instalación
 
@@ -34,9 +61,10 @@ Plataforma SaaS completa de Inteligencia Artificial para Marketing Digital en el
 
 ### Pasos de Instalación
 
-1. **Clonar o navegar al directorio del proyecto:**
+1. **Clonar el repositorio:**
 ```bash
-cd ...
+git clone <repository-url>
+cd marketing-ai-suite
 ```
 
 2. **Crear y activar el entorno virtual:**
@@ -71,65 +99,112 @@ Utiliza cualquiera de estas credenciales para acceder a la plataforma:
 
 | Email | Contraseña | Rol |
 |-------|-----------|-----|
-| admin@iberdrola.com | demo2025 | Administrador |
-| marketing@iberdrola.com | demo2025 | Director Marketing |
-| demo@iberdrola.com | demo2025 | Analista Marketing |
+| admin@company.com | demo2025 | Administrador |
+| marketing@company.com | demo2025 | Director Marketing |
+| demo@company.com | demo2025 | Analista Marketing |
 
 ## 📁 Estructura del Proyecto
 
 ```
-iberdrola/
+marketing-ai-suite/
 ├── app.py                          # Aplicación Flask principal
 ├── requirements.txt                # Dependencias Python
 ├── README.md                       # Este archivo
+├── config/
+│   └── menu_config.json           # Configuración del menú
 ├── templates/                      # Plantillas HTML
-│   ├── base.html                  # Template base
+│   ├── base.html                  # Template base con sidebar
 │   ├── login.html                 # Página de login
-│   ├── dashboard.html             # Dashboard principal
-│   ├── personalizacion.html       # Caso de uso 1
-│   ├── contenido_genai.html       # Caso de uso 2
-│   ├── chatbot.html               # Caso de uso 3
-│   ├── prediccion_churn.html      # Caso de uso 4
-│   ├── optimizacion_publicitaria.html  # Caso de uso 5
-│   ├── segmentacion_avanzada.html # Caso de uso 6
-│   ├── ab_testing.html            # Caso de uso 7
-│   ├── monitorizacion_marca.html  # Caso de uso 8
-│   ├── motor_recomendaciones.html # Caso de uso 9
-│   ├── attribution_marketing.html # Caso de uso 10
-│   ├── configuracion.html         # Configuración
+│   ├── home.html                  # Home con 6 botones principales
+│   ├── dashboard.html             # Dashboard principal (Torre de Control)
+│   ├── introduccion.html          # Documentación técnica editable
+│   │
+│   ├── # Casos de Uso
+│   ├── personalizacion.html       
+│   ├── contenido_genai.html       # Incluye generador de videos con Google ViGenAiR
+│   ├── chatbot.html               
+│   ├── prediccion_churn.html      
+│   ├── optimizacion_publicitaria.html
+│   ├── segmentacion_avanzada.html 
+│   ├── ab_testing.html            
+│   ├── monitorizacion_marca.html  
+│   ├── motor_recomendaciones.html 
+│   ├── attribution_marketing.html 
+│   ├── inteligencia_competitiva.html  # Competitive Intelligence Copilot
+│   │
+│   ├── # Backend
+│   ├── mlops.html                 # Gestión de modelos ML
+│   ├── agent_gallery.html         # Galería de agentes de IA
+│   │
+│   ├── # Data & Integración
+│   ├── integracion_datos.html     
+│   ├── integracion_apis.html      
+│   ├── knowledge_base.html        # RAG & Knowledge Graphs
+│   ├── laboratorio.html           
+│   ├── monitorizacion.html        
+│   │
+│   ├── # Sistema
+│   ├── configuracion.html         # Configuración (vista de menú)
+│   ├── asistente_panel_fijo.html  # Asistente virtual contextual
 │   ├── 404.html                   # Error 404
 │   └── 500.html                   # Error 500
+│
 └── static/                         # Archivos estáticos
-    ├── css/
-    │   └── style.css              # Estilos CSS
-    ├── js/
-    │   └── main.js                # JavaScript principal
-    └── img/                        # Imágenes (vacío por ahora)
+    └── css/
+        └── style.css              # Estilos CSS centralizados
 ```
 
 ## 🎯 Características Técnicas
 
 ### Backend (Flask)
 - **Autenticación basada en sesiones** con Flask sessions
-- **Rutas RESTful** para cada caso de uso
+- **Rutas RESTful** para cada funcionalidad
 - **APIs JSON** para interacciones dinámicas
+- **Configuración dinámica del menú** con menu_config.json
 - **Simulación de datos** realista sin necesidad de base de datos
 - **Manejo de errores** con páginas 404 y 500 personalizadas
 
 ### Frontend
 - **Diseño responsive** que funciona en móviles, tablets y desktop
-- **Sidebar fijo** con navegación intuitiva
+- **Sidebar fijo colapsable** con navegación intuitiva
+- **Menú configurable** con vistas por categoría o roadmap (Quick Wins vs Año 2+)
 - **Animaciones suaves** con CSS transitions
 - **Componentes interactivos** con JavaScript vanilla
-- **Interfaz moderna** inspirada en Microsoft Fluent Design
+- **Asistente virtual contextual** en páginas clave
+- **Paneles de documentación técnica** editables con persistencia en localStorage
+
+### Knowledge Management
+- **RAG (Retrieval Augmented Generation)**:
+  - 3 colecciones vectoriales simuladas (Pinecone, Weaviate, Chroma)
+  - 2,847 documentos indexados
+  - 1.2M chunks vectorizados
+  - Playground de búsqueda semántica
+  
+- **Knowledge Graphs**:
+  - 2 grafos Neo4j simulados
+  - 45K nodos y 129K relaciones
+  - Cypher Query Playground
+  - Visualización de schema
+
+### Backend Infrastructure
+- **MLOps**:
+  - 12 modelos en producción
+  - 8 modelos en desarrollo
+  - Métricas de rendimiento en tiempo real
+  - Modal para crear nuevos modelos
+  
+- **Agent Gallery**:
+  - 18 agentes especializados
+  - Conexión a MCP servers
+  - Sistemas multi-agent con orquestación
+  - Frameworks: CrewAI, AutoGen, LangGraph
 
 ### Seguridad
 - **Sesiones seguras** con secret key
 - **Decorador @login_required** para proteger rutas
 - **Validación de formularios** en cliente y servidor
-- **Preparado para ISO/IEC 42001** (mencionado en la interfaz)
 
-## 📊 Métricas y KPIs
+## 📊 Métricas y KPIs Simulados
 
 La plataforma simula métricas realistas basadas en investigación del sector:
 
@@ -153,15 +228,23 @@ app.run(host='0.0.0.0', port=5555, debug=True)  # Cambia 5555 por tu puerto
 Edita el diccionario `USERS_DB` en `app.py`:
 ```python
 USERS_DB = {
-    'nuevo@iberdrola.com': {
+    'nuevo@company.com': {
         'password': 'contraseña',
         'nombre': 'Nombre Completo',
         'rol': 'Rol del Usuario',
-        'empresa': 'Iberdrola España',
+        'empresa': 'Tu Empresa',
         'avatar': 'NC'
     }
 }
 ```
+
+### Configurar el Menú
+
+Edita `config/menu_config.json` para:
+- Cambiar la vista del menú (categoría vs roadmap)
+- Agregar/eliminar casos de uso
+- Modificar categorías
+- Ajustar grupos de roadmap (Quick Wins vs Año 2+)
 
 ### Modificar Estilos
 
@@ -169,10 +252,9 @@ Los estilos están centralizados en `static/css/style.css`. Las variables CSS es
 
 ```css
 :root {
-    --primary: #0078D4;
-    --success: #107C10;
-    --warning: #FFB900;
-    --danger: #D13438;
+    --primary-color: #00cf4f;
+    --secondary-color: #009fe3;
+    --text-color: #1a1a1a;
     /* ... más variables */
 }
 ```
@@ -199,25 +281,53 @@ gunicorn -w 4 -b 0.0.0.0:5555 app:app
 
 4. **Configurar HTTPS** con certificados SSL
 
-5. **Implementar base de datos real** (PostgreSQL, MySQL, etc.)
+5. **Implementar base de datos real** (PostgreSQL, MySQL, MongoDB)
 
-6. **Agregar autenticación robusta** (OAuth, 2FA, etc.)
+6. **Agregar autenticación robusta** (OAuth, SAML, 2FA)
 
-## 📈 Próximas Mejoras
+7. **Integrar APIs reales de IA**:
+   - OpenAI GPT-4 / Claude / Gemini para agentes
+   - Vector databases reales (Pinecone, Weaviate)
+   - Neo4j para Knowledge Graphs
 
-- [ ] Integración con base de datos real
-- [ ] APIs reales de IA (OpenAI, Claude, Gemini)
-- [ ] Exportación de reportes en PDF
-- [ ] Gráficos interactivos con Chart.js
-- [ ] Notificaciones en tiempo real con WebSockets
-- [ ] Multi-idioma (English, Português)
-- [ ] Modo oscuro
-- [ ] Panel de administración avanzado
+## 📈 Roadmap de Funcionalidades
+
+### Quick Wins (Implementables en Año 1)
+- Monitorización de Marca
+- Inteligencia Competitiva GenAI
+- Generación de Contenido GenAI
+- A/B Testing Automatizado
+- Agentes Conversacionales
+
+### Año 2+ Wins (Visión a Largo Plazo)
+- Predicción de Abandonos
+- Segmentación Avanzada
+- Attribution Marketing
+- Personalización de Experiencias
+- Motor de Recomendaciones
+- Optimización Publicitaria
+
+## 🏗️ Stack Tecnológico
+
+- **Backend:** Python + Flask
+- **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
+- **Simulaciones de IA:**
+  - GPT-4, Claude 3.5, Gemini 1.5 (simulados)
+  - XGBoost, Random Forest, Neural Networks (simulados)
+  - RAG con Pinecone, Weaviate, Chroma (simulados)
+  - Knowledge Graphs con Neo4j (simulados)
+  - MCP (Model Context Protocol)
+  - Multi-Agent Systems (CrewAI, AutoGen)
 
 ## 📝 Licencia
 
 Este proyecto es una demostración para fines educativos y de presentación.
 
-## 👥 Contacto
+## 👥 Soporte
 
-Para más información sobre la implementación de soluciones de IA en marketing digital para el sector energético, contacta con el equipo de Capgemini.
+Para más información sobre la implementación de soluciones de IA en marketing digital, contacta con tu equipo técnico.
+
+---
+
+**Versión:** 2.0  
+**Última actualización:** Octubre 2024
